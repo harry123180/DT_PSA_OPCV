@@ -1,0 +1,103 @@
+.knob-container {
+    background-color: var(--background-container-color);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    margin: 2px;
+    flex-direction: row;
+}
+
+.knob-label {
+    -unity-text-align: middle-center;
+    font-size: 10px;
+    background-color: var(--background-label-color);
+    white-space: normal;
+    padding: 0;
+    margin: 0;
+    color: rgb(210, 210, 210);
+    flex-shrink: 1;
+    flex-grow: 1;
+}
+
+.knob-background {
+    flex-grow: 1;
+    background-color: var(--background-button-color);
+    border-radius: 100px;
+    margin: 6px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.knob-base {
+    flex-grow: 0;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+}
+
+.knob {
+    flex-grow: 1;
+    background-color: rgb(71, 96, 134);
+    border-radius: 100px;
+    margin: 10px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.knob:active {
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+}
+
+.unity-label {
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: rgba(0, 0, 0, 255);
+    border-right-color: rgba(0, 0, 0, 255);
+    border-top-color: rgba(0, 0, 0, 255);
+    border-bottom-color: rgba(0, 0, 0, 255);
+    min-width: 96px;
+}
+
+.unity-text-element {
+}
+
+.knob-active {
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+}

@@ -1,0 +1,6 @@
+:root {
+    --background-container-color: rgb(50, 50, 50);
+    --background-button-color: rgb(35, 35, 35);
+    --background-label-color: rgb(27, 27, 27);
+    --background-group-color: rgba(40, 40, 40, 0.63);
+}

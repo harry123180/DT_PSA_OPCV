@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Packages/com.open-commissioning.ui/Runtime/System/Resources/StyleSheet/default-theme.uss?fileID=7433441132597879392&amp;guid=b23db22233d395f489bf8e1b30bae7bd&amp;type=3#default-theme"/>
+    <Style src="project://database/Packages/com.open-commissioning.ui/Runtime/System/Resources/StyleSheet/time_control.uss?fileID=7433441132597879392&amp;guid=b25b3c6ab43ff6a428ac52a363199771&amp;type=3#time_control"/>
+    <ui:VisualElement picking-mode="Ignore" name="container" class="time-control-container">
+        <OC.UI.Toolbar.Toggle name="toggle" style="background-image: resource(&quot;Icons/d_PauseButton@2x&quot;); background-size: 70% 70%;"/>
+        <ui:SliderInt picking-mode="Ignore" value="1" high-value="10" low-value="1" name="slider" style="width: 125px;"/>
+        <ui:VisualElement picking-mode="Ignore" style="flex-direction: row; flex-grow: 1; justify-content: space-between;">
+            <ui:Label text="x110" display-tooltip-when-elided="true" name="sliderValue" picking-mode="Ignore" class="label" style="width: 40px;"/>
+            <ui:Label text="10:11:22" display-tooltip-when-elided="true" name="timeValue" picking-mode="Ignore" class="label" style="width: 65px;"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,23 @@
+{
+  "name": "com.open-commissioning.ui",
+  "version": "1.1.6",
+  "displayName": "Open Commissioning UI",
+  "description": "Runtime UI for Open Commissioning",
+  "unity": "6000.3",
+  "author": {
+    "name": "SpiraTec AG",
+    "url": "https://www.spiratec.com/de/kontakt/"
+  },
+  "samples": [
+    {
+      "displayName": "Demo",
+      "description": "Demo scenes with basic components",
+      "path": "Samples~/Demo"
+    },
+    {
+      "displayName": "Environment",
+      "description": "Base environment",
+      "path": "Samples~/Environment"
+    }
+  ]
+}

@@ -1,0 +1,167 @@
+using System;
+using OC.Communication;
+using UnityEngine;
+using UnityEngine.Events;
+
+namespace OC.Components
+{
+    [AddComponentMenu("Open Commissioning/Actor/Cylinder")]
+    [SelectionBase]
+    [DisallowMultipleComponent]
+    public class Cylinder : Actor, IDevice, IInteractable
+    {
+        public Type ReferenceType => typeof(Cylinder);
+        public Link Link => _link;
+        public IProperty<bool> Override => _override;
+        public IProperty<bool> Minus => _minus;
+        public IProperty<bool> Plus => _plus;
+        public IPropertyReadOnly<float> Progress => _progress;
+        public IPropertyReadOnly<bool> IsActive => _isActive;
+        public IPropertyReadOnly<bool> OnLimitMin => _onLimitMin;
+        public IPropertyReadOnly<bool> OnLimitMax => _onLimitMax;
+        public IProperty<Vector2> Limits => _limits;
+        public IProperty<CylinderType> Type => _type;
+        public IProperty<float> TimeToMin => _timeToMin;
+        public IProperty<float> TimeToMax => _timeToMax;
+        
+        [SerializeField]
+        protected Property<bool> _override = new (false);
+        [SerializeField]
+        protected Property<bool> _minus = new (false);
+        [SerializeField]
+        protected Property<bool> _plus = new (false);
+        [SerializeField]
+        protected Property<float> _progress = new (0);
+        [SerializeField]
+        protected Property<bool> _isActive = new (false);
+        [SerializeField]
+        protected Property<bool> _onLimitMin = new (false);
+        [SerializeField]
+        protected Property<bool> _onLimitMax = new (false);
+        [SerializeField]
+        protected Property<Vector2> _limits = new (new Vector2(0, 100));
+        [SerializeField]
+        protected Property<CylinderType> _type = new (CylinderType.DoubleActing);
+        [SerializeField]
+        protected Property<float> _timeToMin = new (0.5f);
+        [SerializeField]
+        protected Property<float> _timeToMax = new (0.5f);
+        [SerializeField]
+        private AnimationCurve _profile = AnimationCurve.Linear(0, 0, 1, 1);
+        
+        public UnityEvent<bool> OnActiveChanged;
+        public UnityEvent<bool> OnLimitMinEvent;
+        public UnityEvent<bool> OnLimitMaxEvent;
+        public UnityEvent<float> OnValueChanged;
+        public UnityEvent<float> OnProgressChanged;
+        
+        public bool JogMinus
+        {
+            set => _minus.Value = value;
+            get => _minus;
+        }
+        
+        public bool JogPlus
+        {
+            set => _plus.Value = value;
+            get => _plus;
+        }
+        
+        [SerializeField]
+        protected Link _link = new() { Type = "FB_Cylinder" };
+
+        protected void Start()
+        {
+            _link.Initialize(this);
+        }
+
+        protected void OnEnable()
+        {
+            _isActive.Subscribe(OnActiveChanged.Invoke);
+            _onLimitMin.Subscribe(OnLimitMinEvent.Invoke);
+            _onLimitMax.Subscribe(OnLimitMaxEvent.Invoke);
+            _value.Subscribe(OnValueChanged.Invoke);
+            _progress.Subscribe(OnProgressChanged.Invoke);
+        }
+
+        protected void OnDisable()
+        {
+            _isActive.Unsubscribe(OnActiveChanged.Invoke);
+            _onLimitMin.Unsubscribe(OnLimitMinEvent.Invoke);
+            _onLimitMax.Unsubscribe(OnLimitMaxEvent.Invoke);
+            _value.Unsubscribe(OnValueChanged.Invoke);
+            _progress.Unsubscribe(OnProgressChanged.Invoke);
+        }
+
+        protected void OnValidate()
+        {
+            _minus.OnValidate();
+            _plus.OnValidate();
+        }
+
+        protected void FixedUpdate()
+        {
+            GetLinkData();
+            Operation(Time.fixedDeltaTime);
+            SetLinkData();
+        }
+
+        private void GetLinkData()
+        {
+            if (_override || !_link.Connected) return;
+            _minus.Value = _link.Control.GetBit(0);
+            _plus.Value = _link.Control.GetBit(1);
+        }
+
+        private void SetLinkData()
+        {
+            _link.Status.SetBit(0, _onLimitMin.Value);
+            _link.Status.SetBit(1, _onLimitMax.Value);
+        }
+
+        private void Operation(float deltaTime)
+        {
+            switch (_type.Value)
+            {
+                case CylinderType.DoubleActing:
+                    if (_minus.Value ^ _plus.Value) IntegrateProgress(deltaTime, _plus.Value ? _timeToMax.Value : -_timeToMin.Value);
+                    break;
+                case CylinderType.SingleActingNegative:
+                    IntegrateProgress(deltaTime, _plus.Value ? _timeToMax.Value : -_timeToMin.Value);
+                    break;
+                case CylinderType.SingleActingPositive:
+                    IntegrateProgress(deltaTime, _minus.Value ? -_timeToMin.Value : _timeToMax.Value);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            
+            UpdateState();
+        }
+
+        public enum CylinderType
+        {
+            DoubleActing,
+            SingleActingPositive,
+            SingleActingNegative
+        }
+
+        public void SetProgress(float value) =>  _progress.Value = Mathf.Clamp01(value);
+        
+        private void IntegrateProgress(float deltaTime, float duration)
+        {
+            var progress = _progress.Value + deltaTime / duration;
+            _progress.Value = Mathf.Clamp01(progress);
+        }
+
+        private void UpdateState()
+        {
+            _target.Value = Mathf.Lerp(_limits.Value.x, _limits.Value.y, _profile.Evaluate(_progress.Value));
+            _isActive.Value = !Math.FastApproximately(_target.Value, _value.Value, 1e-1f);
+            _value.Value = _target.Value;
+            _onLimitMin.Value = Math.FastApproximately(_value.Value, _limits.Value.x, 1e-3f);
+            _onLimitMax.Value = Math.FastApproximately(_value.Value, _limits.Value.y, 1e-3f);
+        }
+    }
+}
+

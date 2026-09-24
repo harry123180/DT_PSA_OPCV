@@ -1,0 +1,59 @@
+.toolbar-container {
+    flex-shrink: 0;
+    background-color: var(--toolbar-background);
+    border-radius: var(--toolbar-border-radius);
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.toolbar-button-icon {
+    position: relative;
+    max-width: 20px;
+    max-height: 20px;
+    width: 20px;
+    height: 20px;
+    margin: 2px;
+
+}
+
+.toolbar-button {
+    width: auto;
+    height: auto;
+    border-width: 0;
+    border-radius: var(--border-radius);
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    flex-grow: 0;
+    flex-shrink: 0;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    background-color: var(--toolbar_button-background);
+}
+
+.toolbar-button__label{
+    display: none;
+    -unity-text-align: middle-center;
+    margin: 0;
+    padding: 0 3px 0 0;
+}
+
+.toolbar-button:hover {
+    background-color: var(--toolbar_button-background-hover);
+}
+
+.toolbar-button:checked {
+    background-color: var(--toolbar_button-background-cheked);
+}

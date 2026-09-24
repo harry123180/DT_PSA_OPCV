@@ -1,0 +1,19 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Assets/com.onoff.planx.ui/Runtime/Panels/Resources/StyleSheet/planx-panel-field.uss?fileID=7433441132597879392&amp;guid=77668d43da3ff1448a84e36ac30006f8&amp;type=3#planx-panel-field" />
+    <PlanX.UI.Panel.PanelProgressBarWithLimits value="44" />
+    <PlanX.UI.Panel.PanelBinaryStatusField label="Bool" style="flex-grow: 0;" />
+    <PlanX.UI.Panel.PanelStringField name="StringField" value="1212" label="2121212" />
+    <ui:VisualElement style="flex-grow: 1;">
+        <PlanX.UI.Panel.PanelButton text="Button" />
+        <ui:VisualElement style="flex-grow: 0; flex-direction: row; justify-content: flex-start;">
+            <PlanX.UI.Panel.PanelButton text="Button" style="flex-grow: 1;" />
+            <PlanX.UI.Panel.PanelButton text="Button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement class="panel-field-entrydata panel-field-container" style="flex-grow: 1; flex-direction: row; align-items: stretch; justify-content: flex-end;">
+        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+        <PlanX.UI.Panel.PanelStringField label="Data" value="123123" style="flex-grow: 1;" />
+    </ui:VisualElement>
+    <PlanX.UI.Panel.PanelStringField value="3342342" multiline="false" auto-correction="false" readonly="false" hide-mobile-input="false" />
+    <PlanX.UI.Panel.PanelGroupContainer />
+</ui:UXML>

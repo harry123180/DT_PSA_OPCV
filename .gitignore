@@ -36,3 +36,10 @@
 
 **/scheduled_tasks.lock
 __pycache__/
+
+# Python Link（網頁版建置與測試產物）
+Build/
+build_webgl.log
+python/devices.json
+python/e2e_*.png
+python/__pycache__/

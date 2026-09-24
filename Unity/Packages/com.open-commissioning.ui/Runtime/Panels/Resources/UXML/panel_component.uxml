@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:VisualElement name="container" class="panel-container">
+        <ui:VisualElement name="header" class="panel-header" style="align-items: center;">
+            <ui:Label text="Title" display-tooltip-when-elided="true" name="title" class="panel-label" />
+            <ui:VisualElement name="bottons" class="panel-header-bar" style="right: 2px;">
+                <ui:Button display-tooltip-when-elided="false" enable-rich-text="false" name="focus" class="panel-header-button" style="background-image: resource(&apos;Icons/d_ViewToolZoom@2x&apos;); -unity-slice-left: 2; -unity-slice-top: 2; -unity-slice-right: 2; -unity-slice-bottom: 2;" />
+                <ui:Button display-tooltip-when-elided="false" enable-rich-text="false" name="pin" class="panel-header-button" style="background-image: url(&apos;project://database/Packages/com.unity.timeline/Editor/StyleSheets/Images/Icons/d_TrackMarkerButtonEnabled@2x.png?fileID=2800000&amp;guid=6192986415256ca47a97a97507406f5e&amp;type=3#d_TrackMarkerButtonEnabled@2x&apos;); -unity-slice-left: 2; -unity-slice-top: 2; -unity-slice-right: 2; -unity-slice-bottom: 2;" />
+                <ui:Button display-tooltip-when-elided="false" enable-rich-text="false" name="close" class="panel-header-button" style="background-image: resource(&apos;Icons/d_winbtn_win_close_a@2x&apos;);" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="content" class="panel-content" style="flex-grow: 1;" />
+    </ui:VisualElement>
+</ui:UXML>

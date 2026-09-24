@@ -1,0 +1,29 @@
+{
+    "name": "PILLAR.Context.Pipeline",
+    "rootNamespace": "PILLAR.Context.Pipeline",
+    "references": [
+        "PILLAR.Context",
+        "PILLAR.Context.Editor",
+        "Unity.Pipeline",
+        "Unity.Pipeline.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "PILLAR_UNITY_PIPELINE"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.unity.pipeline",
+            "expression": "",
+            "define": "PILLAR_UNITY_PIPELINE"
+        }
+    ],
+    "noEngineReferences": false
+}

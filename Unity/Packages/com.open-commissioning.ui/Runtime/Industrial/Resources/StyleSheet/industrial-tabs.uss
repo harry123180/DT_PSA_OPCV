@@ -1,0 +1,71 @@
+.tab-content {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    flex-shrink: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.tab-bar {
+    flex-shrink: 0;
+    background-color: var(--toolbar-background);
+    border-radius: var(--toolbar-border-radius);
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.tab-label {
+    background-color: var(--toolbar_button-background);
+    -unity-font-style: normal;
+    font-size: 14px;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border-radius: var(--border-radius);
+    min-width: 100px;
+    -unity-text-align: middle-center;
+    min-height: 24px;
+    color: rgb(210, 210, 210);
+}
+
+.tab-container {
+    align-items: flex-end;
+    flex-shrink: 0;
+}
+
+.tab-menu {
+    flex-direction: column-reverse;
+    flex-shrink: 0;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.tab-selected {
+    background-color: var(--toolbar_button-background-cheked);
+}
+
+.tab-content-unselected {
+    display: none;
+}

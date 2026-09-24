@@ -1,0 +1,28 @@
+{
+    "name": "PILLAR.Context.OpenCommissioning",
+    "rootNamespace": "PILLAR.Context.OpenCommissioning",
+    "references": [
+        "PILLAR.Context",
+        "PILLAR.Context.Editor",
+        "OC"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "PILLAR_OC"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.open-commissioning.core",
+            "expression": "",
+            "define": "PILLAR_OC"
+        }
+    ],
+    "noEngineReferences": false
+}

@@ -1,0 +1,19 @@
+{
+    "name": "PythonLink.Editor",
+    "rootNamespace": "PythonLink.Editor",
+    "references": [
+        "OC",
+        "PythonLink"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

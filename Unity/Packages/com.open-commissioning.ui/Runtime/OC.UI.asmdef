@@ -1,0 +1,40 @@
+{
+    "name": "OC.UI",
+    "rootNamespace": "OC.UI",
+    "references": [
+        "OC",
+        "UniTask",
+        "Unity.TextMeshPro",
+        "NaughtyAttributes.Core",
+        "Unity.Cinemachine",
+        "Unity.InputSystem",
+        "com.cqf.outline",
+        "Unity.RenderPipelines.Core.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "WindowsStandalone32",
+        "WindowsStandalone64",
+        "WebGL"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.cinememachine",
+            "expression": "[3.0,3.1.5]",
+            "define": "CINEMACHINE_3_0_OR_NEWER"
+        },
+        {
+            "name": "com.unity.inputsystem",
+            "expression": "[1.17.0]",
+            "define": "INPUTSYSTEM_1_17_0_OR_NEWER"
+        }
+    ],
+    "noEngineReferences": false
+}

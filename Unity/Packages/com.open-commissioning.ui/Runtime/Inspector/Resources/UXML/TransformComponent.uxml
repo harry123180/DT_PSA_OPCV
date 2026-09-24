@@ -1,0 +1,9 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Packages/com.open-commissioning.ui/Runtime/Inspector/Resources/StyleSheet/inspector-component.uss?fileID=7433441132597879392&amp;guid=75581460ce60d1f44a03e98e43058af8&amp;type=3#inspector-component"/>
+    <OC.UI.Panel.PanelGroupContainer name="header" Label="TRANSFORM"/>
+    <ui:VisualElement name="content" style="flex-grow: 1;">
+        <ui:Vector3Field label="Position" name="position" value="1212,1212,2.121212E+08" is-delayed="true" class="component-field"/>
+        <ui:Vector3Field label="Rotation" name="rotation" value="1212,1212,12125" is-delayed="true" class="component-field"/>
+        <ui:Vector3Field label="Scale" name="scale" value="1212,1212,2.121111E+09" is-delayed="true" class="component-field"/>
+    </ui:VisualElement>
+</ui:UXML>

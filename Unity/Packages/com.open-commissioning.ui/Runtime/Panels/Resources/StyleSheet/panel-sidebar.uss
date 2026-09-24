@@ -1,0 +1,81 @@
+.sidebar-scrollView {
+    background-color: rgba(0, 0, 0, 0.04);
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    min-width: auto;
+    width: auto;
+    height: auto;
+}
+
+.unity-scroller {
+    width: 6px;
+}
+
+.unity-repeat-button {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+.unity-slider {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-direction: row;
+    width: auto;
+    height: auto;
+    min-width: auto;
+    min-height: auto;
+    max-width: none;
+    max-height: none;
+}
+
+.unity-base-slider__tracker {
+    display: none;
+}
+
+.unity-base-slider__dragger {
+    background-color: rgb(32, 32, 32);
+    position: absolute;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    max-width: none;
+    max-height: none;
+    min-width: auto;
+    min-height: auto;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    flex-grow: 1;
+    flex-direction: row;
+    width: auto;
+    height: auto;
+}
+
+.unity-base-slider__drag-container {
+}
+
+.unity-slider__input {
+}

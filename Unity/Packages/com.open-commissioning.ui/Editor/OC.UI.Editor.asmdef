@@ -1,0 +1,19 @@
+{
+    "name": "OC.UI.Editor",
+    "rootNamespace": "OC.UI.Editor",
+    "references": [
+        "OC",
+        "OC.UI"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

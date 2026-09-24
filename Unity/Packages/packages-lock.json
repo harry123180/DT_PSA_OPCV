@@ -22,25 +22,22 @@
       "hash": "b11d62b28c5fcbe242988f9f8d451deb925cf23b"
     },
     "com.open-commissioning.core": {
-      "version": "https://github.com/OpenCommissioning/OC_Unity_Core.git#upm",
+      "version": "file:com.open-commissioning.core",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "113ebf7a1c427a88e802076a90b25a117ba28298"
+      "source": "embedded",
+      "dependencies": {}
     },
     "com.open-commissioning.ui": {
-      "version": "https://github.com/OpenCommissioning/OC_Unity_UI.git#upm",
+      "version": "file:com.open-commissioning.ui",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "59a681433b60466bd0c792d9417f293a0711566e"
+      "source": "embedded",
+      "dependencies": {}
     },
     "com.pillar.context": {
-      "version": "https://github.com/Preliy/unity-pillar-context.git#upm",
+      "version": "file:com.pillar.context",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "291f75ff214d75d7b646334ec0101dc5b44d3db9"
+      "source": "embedded",
+      "dependencies": {}
     },
     "com.unity.ai.navigation": {
       "version": "2.0.13",

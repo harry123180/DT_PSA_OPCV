@@ -1,0 +1,30 @@
+:root {
+    --main-color: rgb(104, 104, 104);
+    --secondary-color: rgb(251, 244, 244);
+    --accent-color: rgb(84, 84, 84);
+    --panel-color: rgba(0, 0, 0, 0.9);
+    --text-color-1: rgb(195, 196, 195);
+    --selected-color: rgb(70, 96, 124);
+    --selected-hover-color: rgb(31, 90, 145);
+    --button-hover-transition-time: 0.5s;
+    --button-color: rgb(50, 60, 80);
+    --button-color-hover: rgb(60, 70, 90);
+    --button-color-checked: rgb(68, 100, 140);
+    --border-radius: 4px;
+    --toggle-switch-active: rgb(158, 255, 195);
+    --alternative-collection-color: rgba(0, 0, 0, 0.3);
+    --unity-cursor-color: rgb(255, 255, 255);
+    --console-background: rgba(25, 25, 25, 0.5);
+    --scrollview-alternative-item: rgba(255, 255, 255, 0.06);
+    --scrollview-selected-item: rgb(71, 122, 176);
+    --scrollview-item-hover: rgba(255, 255, 255, 0.04);
+    --toolbar-background: rgb(25, 25, 25);
+    --toolbar-border-radius: 8px;
+    --toolbar_button-background: rgb(56, 56, 56);
+    --toolbar_button-background-cheked: rgb(106, 106, 106);
+    --toolbar_button-background-hover: rgb(66, 66, 66);
+    --toolbar_button-background-pressed: rgb(106, 106, 106);
+    --toolbar-text: rgb(196, 196, 196);
+    --panel-field-background: rgb(32, 32, 32);
+    --binary-status_checked: rgb(0, 255, 0);
+}

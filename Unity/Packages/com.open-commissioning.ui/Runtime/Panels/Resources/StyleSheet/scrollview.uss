@@ -1,0 +1,91 @@
+.scrollview Scroller #unity-low-button {
+    display: none;
+}
+
+.scrollview Scroller #unity-high-button {
+    display: none;
+}
+
+.scrollview Scroller #unity-slider {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    width: 10px;
+    min-width: 10px;
+    height: 10px;
+    min-height: 10px;
+}
+
+.scrollview Scroller #unity-slider #unity-tracker {
+    display: none;
+}
+
+.scrollview Scroller #unity-slider #unity-dragger {
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    display: flex;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    width: 6px;
+    align-items: stretch;
+    height: 6px;
+    background-color: var(--main-color);
+    min-width: 6px;
+    min-height: 6px;
+}
+
+.scrollview Scroller #unity-slider #unity-dragger-border {
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.scrollview #scroller-vertical {
+    width: 10px;
+}
+
+.scrollview #scroller-horizontal {
+    height: 10px;
+}
+
+.scrollview #scroller-vertical #unity-tracker {
+}
+
+.scrollview #scroller-horizontal #unity-tracker {
+}
+
+.scrollview #scroller-vertical #unity-dragger {
+    left: 2px;
+}
+
+.scrollview #scroller-horizontal #unity-dragger {
+    top: 2px;
+}
+
+.scrollview #scroller-vertical #unity-drag-container {
+    margin-top: 4px;
+    width: 10px;
+}
+
+.scrollview #scroller-horizontal #unity-drag-container {
+    margin-left: 4px;
+    height: 10px;
+}

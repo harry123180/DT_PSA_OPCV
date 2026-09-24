@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="container" class="panel-container">
+        <ui:VisualElement name="header" class="panel-header">
+            <ui:Label text="Title" display-tooltip-when-elided="true" name="title" class="panel-label" />
+            <ui:Button display-tooltip-when-elided="false" enable-rich-text="false" name="close" class="panel-header-button_absolute panel-header-button" style="background-image: resource(&apos;Icons/d_winbtn_win_close_a@2x&apos;);" />
+        </ui:VisualElement>
+        <ui:VisualElement name="content" class="panel-content" />
+    </ui:VisualElement>
+</ui:UXML>

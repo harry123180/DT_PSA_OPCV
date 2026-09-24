@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/com.open-commissioning.ui/Runtime/System/Resources/StyleSheet/toolbar.uss?fileID=7433441132597879392&amp;guid=ca07e23440c35b9468bf94deee9332e7&amp;type=3#toolbar" />
+    <Style src="project://database/Assets/com.open-commissioning.ui/Runtime/Panels/Resources/StyleSheet/panel-field.uss?fileID=7433441132597879392&amp;guid=77668d43da3ff1448a84e36ac30006f8&amp;type=3#panel-field" />
+    <ui:VisualElement style="flex-grow: 0; background-color: rgba(0, 0, 0, 0.59); align-items: center; justify-content: center; visibility: visible; flex-shrink: 0; left: 0; top: 0; right: 0; bottom: 0; position: absolute;">
+        <ui:VisualElement class="toolbar-container" style="transform-origin: center; min-width: 300px; align-items: stretch; justify-content: space-between; min-height: 150px;">
+            <ui:Label text="Save layout changes?" display-tooltip-when-elided="true" class="panel-content panel-label" style="align-items: center; -unity-text-align: middle-center; font-size: 16px; -unity-font-style: bold; color: rgb(255, 255, 255); flex-shrink: 1;" />
+            <ui:Label display-tooltip-when-elided="true" text="Component positions were modified. Save before closing?" class="panel-content" style="color: rgb(192, 192, 192); flex-shrink: 1; min-height: 50px; -unity-text-align: middle-center;" />
+            <ui:VisualElement style="flex-direction: row; justify-content: flex-end; align-items: stretch; flex-grow: 0; flex-shrink: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; margin-left: 4px; margin-right: 4px; margin-top: 4px; margin-bottom: 4px;">
+                <ui:Button text="SAVE" display-tooltip-when-elided="true" name="save" class="panel-field-button" style="flex-shrink: 1; flex-grow: 1;" />
+                <ui:Button text="DON&apos;T SAVE" display-tooltip-when-elided="true" name="discard" class="panel-field-button" style="flex-shrink: 1; flex-grow: 1; background-color: rgb(171, 38, 42); border-left-color: rgb(171, 38, 42); border-right-color: rgb(171, 38, 42); border-top-color: rgb(171, 38, 42); border-bottom-color: rgb(171, 38, 42);" />
+                <ui:Button text="CANCEL" display-tooltip-when-elided="true" name="cancel" class="panel-field-button" style="flex-shrink: 1; flex-grow: 1;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
