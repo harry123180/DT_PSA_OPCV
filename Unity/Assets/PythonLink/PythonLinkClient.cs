@@ -45,6 +45,10 @@ namespace PythonLink
 
         private void Awake()
         {
+#if UNITY_WEBGL && !UNITY_EDITOR
+            // 同一頁有 Python 編輯器：只在畫布有焦點時才收鍵盤，否則在編輯器打字會被場景吃掉
+            WebGLInput.captureAllKeyboardInput = false;
+#endif
             var fromQuery = WsTransportFactory.QueryParam("ws");
             if (!string.IsNullOrEmpty(fromQuery)) _url = fromQuery;
             _ws = WsTransportFactory.Create();

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>產線數位孿生 · Python 控制</title>
+  <link rel="stylesheet" href="vendor/codemirror/codemirror.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="bar">
+    <div class="title">產線數位孿生 <span class="sub">雷射焊接與組裝線 · 用 Python 當 PLC</span></div>
+    <div class="right">
+      <span id="mode" class="badge"></span>
+      <a id="mode-switch" href="#"></a>
+      <a href="python/README.md" target="_blank" rel="noopener">說明</a>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="twin">
+      <canvas id="unity-canvas" tabindex="-1"></canvas>
+      <div id="loading" class="loading">
+        <div>載入產線模型…</div>
+        <div class="progress"><div id="progress-bar"></div></div>
+      </div>
+      <div class="hint">視角：先點一下畫面。觸控板 <b>Ctrl＋拖曳</b> 旋轉、<b>Shift＋拖曳</b> 平移、兩指上下滑縮放；滑鼠右鍵拖曳旋轉、中鍵平移、滾輪縮放</div>
+    </section>
+
+    <section class="code">
+      <div class="toolbar">
+        <button id="run" class="primary" title="Ctrl+Enter">執行</button>
+        <button id="stop" title="中斷程式並把所有輸出歸零">停止</button>
+        <select id="examples" title="載入範例">
+          <option value="">載入範例…</option>
+          <option value="basic">基本：擋料器伸縮</option>
+          <option value="list">列出所有裝置</option>
+          <option value="sensor">讀感測器（監看托盤）</option>
+          <option value="demo">整條線循環（步進程序）</option>
+        </select>
+        <button id="download" title="下載成 .py，可在自己電腦用 dtlink.py 執行">下載</button>
+        <button id="clear" title="清除輸出">清除輸出</button>
+        <span id="status" class="status"></span>
+      </div>
+      <div id="editor-wrap"><textarea id="editor"></textarea></div>
+      <pre id="console" class="console" aria-live="polite"></pre>
+      <footer class="credit">
+        改作自 <a href="https://github.com/Preliy/DT_PSA_OPCV" target="_blank" rel="noopener">Preliy/DT_PSA_OPCV</a>（GPL-3.0）·
+        原始碼 <a href="https://github.com/harry123180/DT_PSA_OPCV/tree/webgl-python" target="_blank" rel="noopener">webgl-python</a> ·
+        Python：<a href="https://pyodide.org" target="_blank" rel="noopener">Pyodide</a> · 編輯器：CodeMirror
+      </footer>
+    </section>
+  </main>
+
+  <script src="vendor/codemirror/codemirror.min.js"></script>
+  <script src="vendor/codemirror/mode/python/python.min.js"></script>
+  <script src="vendor/codemirror/addon/edit/matchbrackets.min.js"></script>
+  <script src="vendor/codemirror/addon/comment/comment.min.js"></script>
+  <script src="bridge.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -29,8 +29,8 @@ from typing import Callable, Iterable
 
 try:
     import websockets
-except ImportError as exc:  # pragma: no cover
-    raise SystemExit("缺少套件：請先執行  pip install websockets") from exc
+except ImportError:  # 網頁版（Pyodide）用不到 websockets
+    websockets = None
 
 FRAME_STATUS = 0x01
 FRAME_CONTROL = 0x02
@@ -56,6 +56,8 @@ class Twin:
     """一個網頁孿生的連線。同時只接受一個瀏覽器分頁，新的連線會取代舊的。"""
 
     def __init__(self, host: str = "127.0.0.1", port: int = 8765, name: str = "python", verbose: bool = True):
+        if websockets is None:
+            raise SystemExit("缺少套件：請先執行  pip install websockets")
         self.host, self.port, self.name, self.verbose = host, port, name, verbose
         self.variables: dict[str, Variable] = {}
         self.device_info: list[dict] = []
@@ -167,7 +169,7 @@ class Twin:
     def read(self, name: str):
         v = self._var(name)
         with self._lock:
-            buf = self._status if v.dir == "status" else self._control
+            buf = self._status_bytes() if v.dir == "status" else self._control
             values = struct.unpack_from(v.fmt, buf, v.offset)
         return values[0] if v.count == 1 else list(values)
 
@@ -178,6 +180,13 @@ class Twin:
         values = value if isinstance(value, (list, tuple)) else [value]
         with self._lock:
             struct.pack_into(v.fmt, self._control, v.offset, *values)
+        self._control_changed()
+
+    # ── 傳輸相關的兩個掛勾：網頁版（dtlink_web）覆寫這兩個 ──
+    def _status_bytes(self) -> bytes:
+        return self._status
+
+    def _control_changed(self):
         self._dirty.set()
 
     def read_bit(self, name: str, bit: int) -> bool:
@@ -189,7 +198,7 @@ class Twin:
             (cur,) = struct.unpack_from(v.fmt, self._control, v.offset)
             cur = (cur | (1 << bit)) if value else (cur & ~(1 << bit))
             struct.pack_into(v.fmt, self._control, v.offset, cur)
-        self._dirty.set()
+        self._control_changed()
 
     def find(self, pattern: str) -> list[str]:
         """用萬用字元找變數名稱，例如 twin.find('*Stopper*')。"""
@@ -232,7 +241,7 @@ class Twin:
         """把所有控制輸出歸零（所有氣缸、馬達停止輸出）。"""
         with self._lock:
             self._control[:] = bytes(len(self._control))
-        self._dirty.set()
+        self._control_changed()
 
 
 # ── 各類裝置的包裝：位元意義取自 Open Commissioning 的元件原始碼 ──────────

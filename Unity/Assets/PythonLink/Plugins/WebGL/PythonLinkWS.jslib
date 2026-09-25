@@ -13,7 +13,9 @@ var PythonLinkWS = {
     plws.state = 1;
     var s;
     try {
-      s = new WebSocket(url);
+      // page: ＝連到同一頁的瀏覽器 Python（Pyodide）橋接器，介面跟 WebSocket 一樣
+      if (url.indexOf("page:") === 0 && window.DTPageBridge) s = window.DTPageBridge.createSocket();
+      else s = new WebSocket(url);
     } catch (e) {
       console.warn("[PythonLink] 無法建立 WebSocket：" + e);
       plws.state = 0;
@@ -76,7 +78,10 @@ var PythonLinkWS = {
 
   PLWS_QueryParam: function (namePtr) {
     var v = "";
-    try { v = new URLSearchParams(window.location.search).get(UTF8ToString(namePtr)) || ""; } catch (e) {}
+    var name = UTF8ToString(namePtr);
+    try { v = new URLSearchParams(window.location.search).get(name) || ""; } catch (e) {}
+    // 頁面有瀏覽器 Python 編輯器、又沒指定 ?ws= 時，預設連編輯器
+    if (!v && name === "ws" && window.DTPageBridge) v = "page:";
     var n = lengthBytesUTF8(v) + 1;
     var b = _malloc(n);
     stringToUTF8(v, b, n);
