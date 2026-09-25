@@ -281,6 +281,39 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "Touchpad Orbit (Ctrl)",
+                    "id": "1266667a-ed7c-49d7-b933-ad7f062ae6e1",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Orbit",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "c942fb71-0c4f-49a4-95cd-f1e86822ccd9",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Orbit",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "ef76aa5a-2c7b-455e-8d93-8956f05b6746",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Orbit",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "",
                     "id": "437da95c-eaae-43e8-a1bd-0eef185afd2b",
                     "path": "<Keyboard>/f",
@@ -345,6 +378,39 @@
                     "action": "Pan",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "Touchpad Pan (Shift)",
+                    "id": "9b3df931-4ef2-4d81-93aa-16b88d0493c6",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pan",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "f4380f16-d343-4ccf-b8ae-59127ff48f2e",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pan",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "244fa142-c991-481e-9765-777a41d63e02",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pan",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
