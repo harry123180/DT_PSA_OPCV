@@ -13,7 +13,12 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 HERE = Path(__file__).parent
+import os
 target = sys.argv[1]
+# 情境：NOTAP=1 模擬瀏覽器快取了沒有 DTTap 監聽點的舊版 Unity；ORDER=reg-first 先開暫存器表再開產線
+NOTAP = os.environ.get("NOTAP") == "1"
+REG_FIRST = os.environ.get("ORDER") == "reg-first"
+print(f"情境：{'舊版 Unity（無監聽點）' if NOTAP else '新版'}、{'先開暫存器表' if REG_FIRST else '先開產線'}")
 results = []
 
 
@@ -51,15 +56,24 @@ with sync_playwright() as p:
                                 args=["--enable-unsafe-swiftshader", "--ignore-gpu-blocklist",
                                       "--host-resolver-rules=MAP dt.qianpro.shop 104.21.28.23"])
     ctx = browser.new_context(viewport={"width": 1600, "height": 900})
-    main = ctx.new_page()
     errors = []
+    if REG_FIRST:
+        reg = ctx.new_page()
+        reg.on("pageerror", lambda e: errors.append("reg: " + str(e)))
+        reg.goto(base + "registers.html", wait_until="load")
+        check("未開啟" in reg.inner_text("#conn") or "等待" in reg.inner_text("#conn"), "產線未開時暫存器表顯示未連線")
+    main = ctx.new_page()
+    if NOTAP:
+        # 讓 bridge.js 的 window.DTTap 設不上去：等同 Unity 建置裡沒有監聽點
+        main.add_init_script("Object.defineProperty(window, 'DTTap', { get(){ return undefined; }, set(v){}, configurable: false });")
     main.on("pageerror", lambda e: errors.append("main: " + str(e)))
     main.goto(base, wait_until="load", timeout=120000)
     main.wait_for_function("document.getElementById('status').textContent.includes('就緒')", timeout=180000)
 
-    reg = ctx.new_page()
-    reg.on("pageerror", lambda e: errors.append("reg: " + str(e)))
-    reg.goto(base + "registers.html", wait_until="load")
+    if not REG_FIRST:
+        reg = ctx.new_page()
+        reg.on("pageerror", lambda e: errors.append("reg: " + str(e)))
+        reg.goto(base + "registers.html", wait_until="load")
     reg.wait_for_function("document.getElementById('conn').textContent.includes('可手動切換')", timeout=30000)
     n_rows = reg.evaluate("document.querySelectorAll('tr').length")
     check(n_rows > 100, f"暫存器表建好：{n_rows} 列，連線狀態「{reg.inner_text('#conn')}」")

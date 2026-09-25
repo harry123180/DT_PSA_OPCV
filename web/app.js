@@ -6,6 +6,9 @@
   const localMode = !!params.get("ws");
   const $ = (id) => document.getElementById(id);
   const STORE_KEY = "dt.editor.code";
+  // 組網站時換成版本號：Cloudflare 會把快取時間改寫成數小時，檔名不變就會拿到舊版，所以每個網址都帶版本
+  const BUILD = "__BUILD__";
+  const V = "?v=" + BUILD;
 
   // ── 範例 ────────────────────────────────────────────────
   const EXAMPLES = {
@@ -130,7 +133,7 @@ print("結束")
 
   function startWorker() {
     workerReady = false;
-    worker = new Worker("py-worker.mjs", { type: "module" });
+    worker = new Worker("py-worker.mjs" + V, { type: "module" });
     worker.onmessage = onWorkerMessage;
     worker.onerror = (e) => log("[Python worker 錯誤] " + (e.message || e), "err");
     if (B.manifest) sendInit();
@@ -194,6 +197,15 @@ print("結束")
     setTimeout(() => B.stopAll(), 300);
   }
 
+  // 暫存器表開成獨立視窗（不是分頁）：兩個視窗並排都看得見，瀏覽器才不會暫停背景分頁裡的 3D 模擬
+  $("open-registers").onclick = (e) => {
+    e.preventDefault();
+    const w = Math.min(1100, Math.max(760, Math.round(screen.availWidth * 0.45)));
+    const win = window.open("registers.html" + V, "dt-registers",
+      `popup=yes,width=${w},height=${Math.round(screen.availHeight * 0.85)},left=${screen.availWidth - w},top=0`);
+    if (win) win.focus();
+  };
+
   $("run").onclick = run;
   $("stop").onclick = stop;
   $("clear").onclick = () => { out.textContent = ""; };
@@ -210,7 +222,7 @@ print("結束")
     e.target.value = "";
     if (!key) return;
     let code = EXAMPLES[key];
-    if (key === "demo") code = await (await fetch("python/dtlink_demo.py", { cache: "no-cache" })).text();
+    if (key === "demo") code = await (await fetch("python/dtlink_demo.py" + V)).text();
     editor.setValue(code);
     log("已載入範例，按「執行」或 Ctrl+Enter。", "sys");
   };
@@ -233,13 +245,13 @@ print("結束")
   // ── Unity 孿生 ──────────────────────────────────────────
   const canvas = $("unity-canvas");
   const script = document.createElement("script");
-  script.src = "Build/WebGL.loader.js";
+  script.src = "Build/WebGL.loader.js" + V;
   script.onload = () => {
     createUnityInstance(canvas, {
       arguments: [],
-      dataUrl: "Build/WebGL.data.unityweb",
-      frameworkUrl: "Build/WebGL.framework.js.unityweb",
-      codeUrl: "Build/WebGL.wasm.unityweb",
+      dataUrl: "Build/WebGL.data.unityweb" + V,
+      frameworkUrl: "Build/WebGL.framework.js.unityweb" + V,
+      codeUrl: "Build/WebGL.wasm.unityweb" + V,
       streamingAssetsUrl: "StreamingAssets",
       companyName: "Preliy",
       productName: "DT PSA OPCV (Python Link)",

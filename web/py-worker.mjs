@@ -46,7 +46,8 @@ async function init(msg) {
     interruptBuffer = new Int32Array(new SharedArrayBuffer(4));
     pyodide.setInterruptBuffer(interruptBuffer);
     for (const f of ["dtlink.py", "dtlink_web.py", "dtlink_demo.py"]) {
-      const r = await fetch(new URL(`./python/${f}`, import.meta.url), { cache: "no-cache" });
+      // 沿用 worker 自己網址上的 ?v=版本，Python 檔跟著網站版本走
+      const r = await fetch(new URL(`./python/${f}${new URL(import.meta.url).search}`, import.meta.url));
       pyodide.FS.writeFile(`/home/pyodide/${f}`, await r.text());
     }
     pyodide.runPython(BOOT);

@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex, nofollow">
   <title>產線數位孿生 · Python 控制</title>
   <link rel="stylesheet" href="vendor/codemirror/codemirror.min.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=__BUILD__">
 </head>
 <body>
   <header class="bar">
@@ -14,7 +14,7 @@
     <div class="right">
       <span id="mode" class="badge"></span>
       <a id="mode-switch" href="#"></a>
-      <a href="registers.html" target="_blank" rel="noopener" title="獨立頁面：看／手動切換 %Q 輸出、%I 輸入">暫存器表</a>
+      <a id="open-registers" href="registers.html" target="dt-registers" title="獨立視窗：看／手動切換 %Q 輸出、%I 輸入（請和產線並排）">暫存器表</a>
       <a href="python/README.md" target="_blank" rel="noopener">說明</a>
     </div>
   </header>
@@ -59,7 +59,7 @@
   <script src="vendor/codemirror/mode/python/python.min.js"></script>
   <script src="vendor/codemirror/addon/edit/matchbrackets.min.js"></script>
   <script src="vendor/codemirror/addon/comment/comment.min.js"></script>
-  <script src="bridge.js"></script>
-  <script src="app.js"></script>
+  <script src="bridge.js?v=__BUILD__"></script>
+  <script src="app.js?v=__BUILD__"></script>
 </body>
 </html>

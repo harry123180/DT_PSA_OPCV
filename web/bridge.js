@@ -68,6 +68,7 @@
       if (a[0] === 0x01 && B.stat && a.length - 1 === B.stat.length) {
         B.stat.set(a.subarray(1));
         Atomics.add(B.hdr, HDR_SEQ, 1);
+        if (window.DTTapChanged) window.DTTapChanged();
       }
     },
 
@@ -148,26 +149,32 @@
   };
 
   hub.writable = () => !localMode && !!B.ctrl;
+  hub.manifest = () => hub.manifestText || B.manifestText;
   hub.sendManifest = () => {
-    if (!hub.channel || !hub.manifestText) return;
-    hub.channel.postMessage({ t: "manifest", text: hub.manifestText, mode: localMode ? "local" : "page", writable: hub.writable() });
+    const text = hub.manifest();
+    if (!hub.channel || !text) return;
+    hub.channel.postMessage({ t: "manifest", text, mode: localMode ? "local" : "page", writable: hub.writable() });
   };
   hub.sendImage = (force) => {
-    if (!hub.channel || !hub.manifestText) return;
+    if (!hub.channel || !hub.manifest()) return;
     const now = performance.now();
     if (!force && !hub.changed && now - hub.lastBroadcast < 1000) return;
     // 網頁模式直接讀 SharedArrayBuffer（包含手動切換、還沒送進孿生的最新值）
     const ctrl = (!localMode && B.ctrl) ? B.ctrl.slice() : (hub.ctrl || new Uint8Array(0));
-    const stat = hub.stat || new Uint8Array(0);
-    hub.channel.postMessage({ t: "image", ctrl, stat, writable: hub.writable(), ts: Date.now() });
+    const stat = (!localMode && B.stat) ? B.stat.slice() : (hub.stat || new Uint8Array(0));
+    hub.channel.postMessage({ t: "image", ctrl, stat, writable: hub.writable(), hidden: document.hidden, ts: Date.now() });
     hub.changed = false;
     hub.lastBroadcast = now;
   };
+
+  window.DTTapChanged = () => { hub.changed = true; };
+  B.onReady(() => hub.sendManifest());
 
   if (hub.channel) {
     hub.channel.onmessage = (e) => {
       const m = e.data || {};
       if (m.t === "hello") { hub.sendManifest(); hub.sendImage(true); return; }
+      if (m.t === "poll") { hub.sendImage(true); return; }
       if (!hub.writable()) {
         if (m.t === "write" || m.t === "zero") hub.channel.postMessage({ t: "readonly" });
         return;
@@ -186,6 +193,7 @@
       }
     };
     setInterval(() => hub.sendImage(false), 100);
+    document.addEventListener("visibilitychange", () => hub.sendImage(true));
     window.addEventListener("pagehide", () => hub.channel.postMessage({ t: "bye" }));
   }
 })();

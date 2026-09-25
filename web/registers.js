@@ -27,6 +27,7 @@
   let manifest = null, writable = false, mode = "page";
   let ctrl = new Uint8Array(0), stat = new Uint8Array(0);
   let lastImage = 0;
+  let mainHidden = false;
   const rows = [];          // { v, area, el: {val, bits[]}, dev }
   const devEls = [];        // { el, dev, rows }
 
@@ -175,6 +176,7 @@
     const c = $("conn");
     const alive = manifest && performance.now() - lastImage < 2500;
     if (!alive) { c.textContent = "產線分頁未開啟"; c.className = "conn"; }
+    else if (mainHidden) { c.textContent = "產線分頁在背景：瀏覽器暫停了 3D 模擬，請把兩個視窗並排"; c.className = "conn ro"; }
     else if (!writable) { c.textContent = mode === "local" ? "已連線（本機 Python 模式，只能看）" : "已連線（唯讀）"; c.className = "conn ro"; }
     else { c.textContent = "已連線，可手動切換"; c.className = "conn ok"; }
     document.body.classList.toggle("ro", !writable);
@@ -187,7 +189,7 @@
       mode = m.mode; writable = !!m.writable;
       if (!same) { manifest = JSON.parse(m.text); build(); }
     } else if (m.t === "image") {
-      ctrl = m.ctrl; stat = m.stat; writable = !!m.writable; lastImage = performance.now();
+      ctrl = m.ctrl; stat = m.stat; writable = !!m.writable; lastImage = performance.now(); mainHidden = !!m.hidden;
       if (manifest) refresh(false);
     } else if (m.t === "readonly") {
       writable = false;
@@ -200,5 +202,7 @@
   ["q", "type", "area", "changed"].forEach((id) => $(id).addEventListener("input", applyFilter));
   $("zero").onclick = () => { if (writable) ch.postMessage({ t: "zero" }); else write(0, []); };
   ch.postMessage({ t: "hello" });
-  setInterval(() => { if (!manifest || performance.now() - lastImage > 2500) ch.postMessage({ t: "hello" }); setConn(); }, 1500);
+  // 主動輪詢：產線分頁的計時器在背景會被瀏覽器放慢，但訊息處理不會，所以由這邊問、那邊馬上回
+  setInterval(() => ch.postMessage({ t: manifest ? "poll" : "hello" }), 300);
+  setInterval(setConn, 500);
 })();

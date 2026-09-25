@@ -37,5 +37,13 @@ for f in pyodide.iterdir():
 for f in ("dtlink.py", "dtlink_web.py", "dtlink_demo.py", "dtlink_devices.py", "README.md"):
     shutil.copy2(ROOT / "python" / f, out / "python" / f)
 
+# 版本號：Cloudflare 會把 js 的快取時間改寫成數小時，檔名不變就會拿到舊版；每個網址都帶 ?v=版本
+import time as _t
+build = _t.strftime("%Y%m%d%H%M%S")
+for name in ("index.html", "registers.html", "app.js"):
+    f = out / name
+    f.write_text(f.read_text(encoding="utf-8").replace("__BUILD__", build), encoding="utf-8")
+(out / "version.txt").write_text(build + chr(10), encoding="utf-8")
+
 total = sum(p.stat().st_size for p in out.rglob("*") if p.is_file())
-print(f"組好 {out}（{total / 1e6:.1f} MB）")
+print(f"組好 {out}（{total / 1e6:.1f} MB，版本 {build}）")
