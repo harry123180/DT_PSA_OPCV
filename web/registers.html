@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>暫存器表 · 產線數位孿生</title>
+  <style>
+    :root { --ink:#1e2a44; --muted:#667085; --line:#d8dde6; --bg:#f3f5f9; --accent:#2f6fed; --on:#16a34a; --out:#2f6fed; }
+    * { box-sizing: border-box; }
+    body { margin:0; font:14px/1.45 system-ui,-apple-system,"Microsoft JhengHei","PingFang TC",sans-serif; color:var(--ink); background:var(--bg); }
+    header { position:sticky; top:0; z-index:5; background:#fff; border-bottom:1px solid var(--line); padding:10px 16px; display:flex; flex-wrap:wrap; gap:10px 16px; align-items:center; }
+    header h1 { font-size:17px; margin:0; }
+    header .sub { color:var(--muted); font-size:12.5px; }
+    .conn { padding:2px 9px; border-radius:999px; font-size:12.5px; font-weight:600; background:#fee2e2; color:#991b1b; }
+    .conn.ok { background:#dcfce7; color:#166534; }
+    .conn.ro { background:#fef3c7; color:#92400e; }
+    .controls { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-left:auto; }
+    .controls input[type=search] { width:220px; }
+    input, select, button { font:inherit; padding:4px 8px; border:1px solid var(--line); border-radius:6px; background:#fff; color:var(--ink); }
+    button { cursor:pointer; }
+    button.warn { border-color:#dc2626; color:#dc2626; }
+    main { padding:12px 16px 40px; }
+    .legend { color:var(--muted); font-size:12.5px; margin:0 0 10px; }
+    .legend code { background:#fff; border:1px solid var(--line); border-radius:4px; padding:0 4px; }
+    .dev { background:#fff; border:1px solid var(--line); border-radius:8px; margin:0 0 8px; overflow:hidden; }
+    .dev > .head { display:flex; gap:10px; align-items:baseline; padding:6px 10px; background:#f8fafc; border-bottom:1px solid var(--line); }
+    .dev > .head .path { font-weight:600; font-family:Consolas,Menlo,monospace; font-size:13px; }
+    .dev > .head .type { color:var(--muted); font-size:12px; }
+    table { width:100%; border-collapse:collapse; }
+    td { padding:4px 10px; border-top:1px solid #eef1f5; vertical-align:middle; }
+    tr:first-child td { border-top:0; }
+    td.addr { width:84px; font-family:Consolas,Menlo,monospace; font-weight:600; }
+    td.addr.q { color:var(--out); }
+    td.addr.i { color:var(--on); }
+    td.off { width:66px; font-family:Consolas,Menlo,monospace; color:var(--muted); font-size:12px; }
+    td.var { width:110px; font-size:12.5px; }
+    td.typ { width:48px; color:var(--muted); font-size:12px; font-family:Consolas,Menlo,monospace; }
+    td.val { width:120px; font-family:Consolas,Menlo,monospace; text-align:right; }
+    .bits { display:flex; flex-wrap:wrap; gap:4px; }
+    .bit { display:inline-flex; align-items:center; gap:4px; padding:1px 7px 1px 5px; border:1px solid var(--line); border-radius:999px; font-size:12px; background:#fff; user-select:none; }
+    .bit .led { width:10px; height:10px; border-radius:50%; background:#cbd5e1; }
+    .bit.on .led { background:var(--on); box-shadow:0 0 6px #16a34a99; }
+    .bit.q { cursor:pointer; }
+    .bit.q.on .led { background:var(--out); box-shadow:0 0 6px #2f6fed99; }
+    .bit.q:hover { border-color:var(--out); }
+    .bit.dim { opacity:.45; }
+    .ro .bit.q { cursor:not-allowed; }
+    .num { width:100px; text-align:right; }
+    .flash { animation: flash .6s; }
+    @keyframes flash { from { background:#fff7cc; } to { background:transparent; } }
+    .empty { color:var(--muted); padding:30px; text-align:center; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>暫存器表（過程映像）</h1>
+      <div class="sub">%Q 輸出區＝控制（Python 或手動寫入）· %I 輸入區＝狀態（機台回報）· 位址依 IEC 61131-3，位移量為 EtherCAT PDO 映像中的位元組位置</div>
+    </div>
+    <span id="conn" class="conn">等待產線分頁…</span>
+    <div class="controls">
+      <input id="q" type="search" placeholder="搜尋裝置或位址，例如 Stopper01、%QB12">
+      <select id="type"><option value="">全部類型</option></select>
+      <select id="area">
+        <option value="">輸出＋輸入</option>
+        <option value="Q">只看輸出 %Q</option>
+        <option value="I">只看輸入 %I</option>
+      </select>
+      <label><input id="changed" type="checkbox"> 只看非零</label>
+      <button id="zero" class="warn" title="把所有輸出歸零">全部輸出歸零</button>
+    </div>
+  </header>
+  <main>
+    <p class="legend">點輸出區的位元（藍色）可以手動切換，等於在做 I/O 點檢；輸入區（綠色）是機台即時回報。
+      Python 裡對應的寫法：<code>twin.write_reg("%QX12.1", True)</code>、<code>twin.read_reg("%IX12.1")</code>。
+      產線分頁要開著（<a href="./" target="_blank" rel="noopener">開啟產線</a>）。</p>
+    <div id="list"><div class="empty">打開產線分頁後，暫存器會出現在這裡。</div></div>
+  </main>
+  <script src="registers.js"></script>
+</body>
+</html>

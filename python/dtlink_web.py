@@ -52,8 +52,19 @@ class WebTwin(dtlink.Twin):
     def _status_bytes(self) -> bytes:
         return bytes(js.dt.stat.slice().to_py())
 
-    def _control_changed(self):
-        js.dt.ctrl.set(to_js(memoryview(self._control)))
+    def _control_bytes(self) -> bytes:
+        return bytes(js.dt.ctrl.slice().to_py())
+
+    def _sync_control(self, offset: int, size: int):
+        # 暫存器表頁面可能手動改過控制映像：先讀回要改的那一段，免得用舊值蓋掉別人的修改
+        chunk = js.dt.ctrl.slice(offset, offset + size).to_py()
+        self._control[offset:offset + size] = bytes(chunk)
+
+    def _control_changed(self, offset: int | None = None, size: int | None = None):
+        # 只寫回改動的範圍（不整塊覆寫），手動切換的其他位元組保持不變
+        if offset is None:
+            offset, size = 0, len(self._control)
+        js.dt.ctrl.set(to_js(memoryview(self._control)[offset:offset + size]), offset)
         js.Atomics.store(js.dt.hdr, HDR_DIRTY, 1)
 
     # ── 連線狀態 ──

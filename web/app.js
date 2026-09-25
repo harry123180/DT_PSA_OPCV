@@ -33,6 +33,28 @@ twin = Twin()
 print(Counter(d.type for d in twin.devices()))
 print_devices(twin)
 `,
+    registers: `# 暫存器讀寫：用 %Q（輸出）／%I（輸入）位址操作，跟 PLC 的過程映像一樣
+# 位址對照可以開右上角「暫存器表」頁面查，那裡也能手動切換輸出
+from dtlink import Twin
+
+twin = Twin()
+twin.print_regs("Stopper01_Y_Stopper")          # 印出這支擋料器的暫存器位址與目前值
+
+row = [r for r in twin.reg_table("Stopper01_Y_Stopper") if r["name"].endswith(".Control")][0]
+q = row["address"].replace("QB", "QX")          # 例如 %QB76 → %QX76（位元存取）
+status = [r for r in twin.reg_table("Stopper01_Y_Stopper") if r["name"].endswith(".Status")][0]["address"].replace("IB", "IX")  # 狀態在輸入區，例如 %IX80
+
+twin.write_reg(q + ".0", False)
+twin.write_reg(q + ".1", True)                   # bit1 = 伸出
+twin.wait_until(lambda: twin.read_reg(status + ".1"), timeout=5)   # 輸入 bit1 = 伸出端
+print(q + ".1 → 伸出，", status + ".1 =", twin.read_reg(status + ".1"))
+
+twin.sleep(1)
+twin.write_reg(q + ".1", False)
+twin.write_reg(q + ".0", True)                   # bit0 = 縮回
+twin.wait_until(lambda: twin.read_reg(status + ".0"), timeout=5)
+print(q + ".0 → 縮回，", status + ".0 =", twin.read_reg(status + ".0"))
+`,
     sensor: `# 讀感測器：主輸送帶轉起來，監看托盤經過 Stopper01 的偵測感測器
 from dtlink import Twin
 import time

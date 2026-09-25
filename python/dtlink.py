@@ -32,6 +32,7 @@ try:
 except ImportError:  # 網頁版（Pyodide）用不到 websockets
     websockets = None
 
+_REG_RE = __import__("re").compile(r"^%([QI])([XBWD])?(\d+)(?:\.([0-7]))?$")
 FRAME_STATUS = 0x01
 FRAME_CONTROL = 0x02
 _FMT = {"u8": "B", "i8": "b", "u16": "H", "i16": "h", "u32": "I", "i32": "i",
@@ -169,7 +170,7 @@ class Twin:
     def read(self, name: str):
         v = self._var(name)
         with self._lock:
-            buf = self._status_bytes() if v.dir == "status" else self._control
+            buf = self._status_bytes() if v.dir == "status" else self._control_bytes()
             values = struct.unpack_from(v.fmt, buf, v.offset)
         return values[0] if v.count == 1 else list(values)
 
@@ -179,14 +180,21 @@ class Twin:
             raise ValueError(f"{name} 是狀態（孿生回報的），不能寫；控制變數名稱結尾是 .Control 或 .ControlData")
         values = value if isinstance(value, (list, tuple)) else [value]
         with self._lock:
+            self._sync_control(v.offset, v.size)
             struct.pack_into(v.fmt, self._control, v.offset, *values)
-        self._control_changed()
+        self._control_changed(v.offset, v.size)
 
-    # ── 傳輸相關的兩個掛勾：網頁版（dtlink_web）覆寫這兩個 ──
+    # ── 傳輸相關的掛勾：網頁版（dtlink_web）覆寫 ──
     def _status_bytes(self) -> bytes:
         return self._status
 
-    def _control_changed(self):
+    def _control_bytes(self):
+        return self._control
+
+    def _sync_control(self, offset: int, size: int):
+        """改控制映像之前先同步那一段（網頁版：暫存器表可能手動改過）。本機版控制映像只有 Python 在寫，不用同步。"""
+
+    def _control_changed(self, offset: int | None = None, size: int | None = None):
         self._dirty.set()
 
     def read_bit(self, name: str, bit: int) -> bool:
@@ -195,10 +203,79 @@ class Twin:
     def write_bit(self, name: str, bit: int, value: bool):
         v = self._var(name)
         with self._lock:
+            self._sync_control(v.offset, v.size)
             (cur,) = struct.unpack_from(v.fmt, self._control, v.offset)
             cur = (cur | (1 << bit)) if value else (cur & ~(1 << bit))
             struct.pack_into(v.fmt, self._control, v.offset, cur)
-        self._control_changed()
+        self._control_changed(v.offset, v.size)
+
+    # ── 暫存器（過程映像，IEC 61131-3 位址）──────────────
+    # %Q＝輸出區（控制映像，Python 寫）、%I＝輸入區（狀態映像，孿生回報）
+    # 寬度：X＝位元（%QX5.1）、B＝位元組、W＝字（2）、D＝雙字（4；該位置是浮點變數時當 REAL）
+    def _parse_reg(self, address: str):
+        m = _REG_RE.match(address.strip().upper())
+        if not m:
+            raise ValueError(f"暫存器位址格式不對：{address}（例：%QX5.1、%IB12、%QD20）")
+        area, width, byte, bit = m.group(1), m.group(2) or "X", int(m.group(3)), m.group(4)
+        if width == "X" and bit is None:
+            raise ValueError(f"位元位址要寫成 %{area}X位元組.位元，例如 %{area}X{byte}.0")
+        if width != "X" and bit is not None:
+            raise ValueError(f"{address}：只有 X（位元）可以帶 .位元")
+        size = {"X": 1, "B": 1, "W": 2, "D": 4}[width]
+        limit = len(self._control) if area == "Q" else len(self._status_bytes())
+        if byte + size > limit:
+            raise ValueError(f"{address} 超出範圍：%{area} 區只有 {limit} 個位元組")
+        return area, width, byte, (int(bit) if bit is not None else None), size
+
+    def _reg_is_real(self, area: str, byte: int) -> bool:
+        d = "control" if area == "Q" else "status"
+        return any(v.dir == d and v.dtype == "f32" and v.offset <= byte < v.offset + v.size and (byte - v.offset) % 4 == 0
+                   for v in self.variables.values())
+
+    def read_reg(self, address: str):
+        """讀暫存器：%IX12.1 → bool、%IB12 → int、%QD20 → float（REAL）或 int。"""
+        area, width, byte, bit, size = self._parse_reg(address)
+        with self._lock:
+            buf = self._control_bytes() if area == "Q" else self._status_bytes()
+            if width == "X":
+                return bool((buf[byte] >> bit) & 1)
+            if width == "D" and self._reg_is_real(area, byte):
+                return struct.unpack_from("<f", buf, byte)[0]
+            return int.from_bytes(bytes(buf[byte:byte + size]), "little")
+
+    def write_reg(self, address: str, value):
+        """寫暫存器（只能寫 %Q 輸出區）：write_reg("%QX5.1", True)、write_reg("%QB5", 2)、write_reg("%QD20", 1.5)。"""
+        area, width, byte, bit, size = self._parse_reg(address)
+        if area != "Q":
+            raise ValueError(f"{address} 是輸入區（%I，機台回報的），只能讀；輸出區是 %Q")
+        with self._lock:
+            self._sync_control(byte, size)
+            if width == "X":
+                cur = self._control[byte]
+                self._control[byte] = (cur | (1 << bit)) if value else (cur & ~(1 << bit))
+            elif width == "D" and self._reg_is_real(area, byte):
+                struct.pack_into("<f", self._control, byte, float(value))
+            else:
+                self._control[byte:byte + size] = int(value).to_bytes(size, "little", signed=int(value) < 0)
+        self._control_changed(byte, size)
+
+    def reg_table(self, keyword: str = "") -> list[dict]:
+        """暫存器對照表：位址、EtherCAT 風格位移量、變數名稱、型別、目前值。"""
+        rows = []
+        for v in self.variables.values():
+            if keyword and keyword.lower() not in v.name.lower():
+                continue
+            area = "Q" if v.dir == "control" else "I"
+            width = "D" if v.dtype in ("f32", "u32", "i32") else ("W" if v.size == 2 else "B")
+            rows.append({"address": f"%{area}{width}{v.offset}", "offset": f"0x{v.offset:04X}", "name": v.name,
+                         "dtype": v.dtype, "size": v.size, "value": self.read(v.name)})
+        return sorted(rows, key=lambda r: (r["address"][1], int(r["offset"], 16)))
+
+    def print_regs(self, keyword: str = ""):
+        for r in self.reg_table(keyword):
+            val = f"{r['value']:.3f}" if isinstance(r["value"], float) else (
+                f"{r['value']:3d}  0b{r['value']:08b}" if isinstance(r["value"], int) and r["size"] == 1 else r["value"])
+            print(f"  {r['address']:8s} {r['offset']}  {r['dtype']:4s} {val!s:>16s}  {r['name']}")
 
     def find(self, pattern: str) -> list[str]:
         """用萬用字元找變數名稱，例如 twin.find('*Stopper*')。"""
@@ -241,7 +318,7 @@ class Twin:
         """把所有控制輸出歸零（所有氣缸、馬達停止輸出）。"""
         with self._lock:
             self._control[:] = bytes(len(self._control))
-        self._control_changed()
+        self._control_changed(0, len(self._control))
 
 
 # ── 各類裝置的包裝：位元意義取自 Open Commissioning 的元件原始碼 ──────────

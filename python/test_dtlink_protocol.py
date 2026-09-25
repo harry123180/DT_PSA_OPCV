@@ -95,9 +95,30 @@ def main():
     except ValueError:
         pass
 
+    # 暫存器：%QX0.1＝氣缸伸出、%IX0.1＝伸出端；%QD2 是浮點（REAL）
+    twin.write("MAIN.Cyl.Control", 0)
+    twin.write_reg("%QX0.1", True)
+    twin.wait_until(lambda: twin.read_reg("%IX0.1"), timeout=3)
+    assert twin.read_reg("%QB0") == 0b10 and cyl.extended
+    twin.write_reg("%QX0.1", False)
+    twin.write_reg("%QX0.0", True)
+    twin.wait_until(lambda: twin.read_reg("%IX0.0"), timeout=3)
+    assert twin.read_reg("%QB0") == 0b01
+    twin.write_reg("%QD2", 42.25)
+    twin.wait_until(lambda: abs(twin.read_reg("%ID2") - 42.25) < 1e-6, timeout=3)
+    assert isinstance(twin.read_reg("%QD2"), float)
+    for bad in ("%IX0.1", "%QX0", "%QB0.1", "Q5", "%QB999"):
+        try:
+            twin.write_reg(bad, 1)
+            raise AssertionError(f"{bad} 應該被擋下")
+        except ValueError:
+            pass
+    rows = twin.reg_table("Drv")
+    assert [r["address"] for r in rows] == ["%ID2", "%IB1", "%QD2", "%QB1"] or {r["address"] for r in rows} == {"%QB1", "%QD2", "%IB1", "%ID2"}, rows
+
     twin.stop_all()
     twin.wait_until(lambda: received and received[-1] == bytes(6), timeout=3)
-    print("ALL PASS：manifest、氣缸位元、浮點目標值、感測器、按鈕、唯讀保護、stop_all")
+    print("ALL PASS：manifest、氣缸位元、浮點目標值、感測器、按鈕、唯讀保護、暫存器 %Q/%I 讀寫、stop_all")
 
 
 if __name__ == "__main__":

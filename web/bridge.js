@@ -115,4 +115,77 @@
   };
 
   window.DTPageBridge = B;
+
+  // ── 暫存器表中心：把過程映像廣播給 registers.html（另一個分頁），並接收手動寫入 ──
+  // jslib 在 manifest／狀態／控制經過時呼叫 DTTap，網頁 Python 與本機 Python 兩種模式都看得到。
+  // 手動寫入只在網頁 Python 模式生效（控制映像在 SharedArrayBuffer）；本機模式由 Python 每 0.2 秒整塊重送，只能看。
+  const localMode = !!new URLSearchParams(location.search).get("ws");
+  const hub = {
+    manifestText: null,
+    ctrl: null,
+    stat: null,
+    lastBroadcast: 0,
+    changed: false,
+    channel: ("BroadcastChannel" in window) ? new BroadcastChannel("dt-registers") : null,
+  };
+
+  window.DTTap = {
+    text(t) {
+      if (t.indexOf('"manifest"') < 0) return;
+      hub.manifestText = t;
+      hub.sendManifest();
+    },
+    status(frame) {
+      if (frame[0] !== 0x01) return;
+      hub.stat = frame.slice(1);
+      hub.changed = true;
+    },
+    control(frame) {
+      if (frame[0] !== 0x02) return;
+      hub.ctrl = frame.slice(1);
+      hub.changed = true;
+    },
+  };
+
+  hub.writable = () => !localMode && !!B.ctrl;
+  hub.sendManifest = () => {
+    if (!hub.channel || !hub.manifestText) return;
+    hub.channel.postMessage({ t: "manifest", text: hub.manifestText, mode: localMode ? "local" : "page", writable: hub.writable() });
+  };
+  hub.sendImage = (force) => {
+    if (!hub.channel || !hub.manifestText) return;
+    const now = performance.now();
+    if (!force && !hub.changed && now - hub.lastBroadcast < 1000) return;
+    // 網頁模式直接讀 SharedArrayBuffer（包含手動切換、還沒送進孿生的最新值）
+    const ctrl = (!localMode && B.ctrl) ? B.ctrl.slice() : (hub.ctrl || new Uint8Array(0));
+    const stat = hub.stat || new Uint8Array(0);
+    hub.channel.postMessage({ t: "image", ctrl, stat, writable: hub.writable(), ts: Date.now() });
+    hub.changed = false;
+    hub.lastBroadcast = now;
+  };
+
+  if (hub.channel) {
+    hub.channel.onmessage = (e) => {
+      const m = e.data || {};
+      if (m.t === "hello") { hub.sendManifest(); hub.sendImage(true); return; }
+      if (!hub.writable()) {
+        if (m.t === "write" || m.t === "zero") hub.channel.postMessage({ t: "readonly" });
+        return;
+      }
+      if (m.t === "write" && Array.isArray(m.bytes)) {
+        const off = m.offset | 0;
+        if (off < 0 || off + m.bytes.length > B.ctrl.length) return;
+        B.ctrl.set(m.bytes, off);
+        Atomics.store(B.hdr, 1, 1);          // HDR_DIRTY：下一個 20 ms 送進孿生
+        hub.changed = true;
+        hub.sendImage(true);
+      } else if (m.t === "zero") {
+        B.stopAll();
+        hub.changed = true;
+        hub.sendImage(true);
+      }
+    };
+    setInterval(() => hub.sendImage(false), 100);
+    window.addEventListener("pagehide", () => hub.channel.postMessage({ t: "bye" }));
+  }
 })();

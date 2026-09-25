@@ -31,6 +31,8 @@ var PythonLinkWS = {
         if (plws.txt.length > 64) plws.txt.shift();
       } else {
         plws.bin = new Uint8Array(ev.data);
+        // 暫存器表監聽點：Python 送來的控制映像
+        if (window.DTTap) { try { window.DTTap.control(plws.bin); } catch (e) {} }
       }
     };
     plws.socket = s;
@@ -50,12 +52,18 @@ var PythonLinkWS = {
 
   PLWS_SendBinary: function (ptr, length) {
     if (plws.state !== 2 || !plws.socket) return;
-    plws.socket.send(HEAPU8.slice(ptr, ptr + length));
+    var frame = HEAPU8.slice(ptr, ptr + length);
+    // 暫存器表監聽點：孿生回報的狀態映像
+    if (window.DTTap) { try { window.DTTap.status(frame); } catch (e) {} }
+    plws.socket.send(frame);
   },
 
   PLWS_SendText: function (strPtr) {
     if (plws.state !== 2 || !plws.socket) return;
-    plws.socket.send(UTF8ToString(strPtr));
+    var text = UTF8ToString(strPtr);
+    // 暫存器表監聽點：manifest（變數版面）
+    if (window.DTTap) { try { window.DTTap.text(text); } catch (e) {} }
+    plws.socket.send(text);
   },
 
   // 回傳訊息長度；-1＝沒有新訊息。長度大於 maxLength 時只回長度、不複製（C# 端會放大緩衝）
