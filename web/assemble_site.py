@@ -22,7 +22,7 @@ for name in ("Build", "StreamingAssets", "TemplateData"):
         shutil.copytree(build / name, out / name)
 
 for f in (ROOT / "web").iterdir():
-    if f.name in ("assemble_site.py",) or f.name.startswith("_"):
+    if f.name in ("assemble_site.py", "build_device_info.py") or f.name.startswith("_"):
         continue
     (shutil.copytree if f.is_dir() else shutil.copy2)(f, out / f.name)
 
@@ -36,6 +36,7 @@ for f in pyodide.iterdir():
 (out / "python").mkdir()
 for f in ("dtlink.py", "dtlink_web.py", "dtlink_demo.py", "dtlink_devices.py", "README.md"):
     shutil.copy2(ROOT / "python" / f, out / "python" / f)
+shutil.copy2(ROOT / "web" / "devices_zh.json", out / "python" / "devices_zh.json")  # 本機 dtlink.py 讀中文名稱用
 
 # 版本號：Cloudflare 會把 js 的快取時間改寫成數小時，檔名不變就會拿到舊版；每個網址都帶 ?v=版本
 import time as _t

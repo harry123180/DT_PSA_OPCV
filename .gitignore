@@ -42,4 +42,5 @@ Build/
 build_webgl.log
 python/devices.json
 python/e2e_*.png
+python/insp_*.png
 python/__pycache__/

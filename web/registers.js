@@ -27,6 +27,9 @@
   let manifest = null, writable = false, mode = "page";
   let ctrl = new Uint8Array(0), stat = new Uint8Array(0);
   let lastImage = 0;
+  let info = {};            // PLC 路徑 → 中文名稱與說明（devices_zh.json，來自原專案的官方裝置說明）
+  const VER = (document.currentScript && new URL(document.currentScript.src).search) || "";
+  const infoReady = fetch("devices_zh.json" + VER).then((r) => r.json()).then((d) => { info = d.devices || {}; }).catch(() => {});
   let mainHidden = false;
   const rows = [];          // { v, area, el: {val, bits[]}, dev }
   const devEls = [];        // { el, dev, rows }
@@ -81,9 +84,30 @@
       types.add(dev.type);
       const el = document.createElement("section");
       el.className = "dev";
-      el.innerHTML = `<div class="head"><span class="path"></span><span class="type"></span></div><table><tbody></tbody></table>`;
+      const di = info[dev.path] || {};
+      el.dataset.path = dev.path;
+      el.innerHTML = `<div class="head"><span class="label"></span><span class="grp"></span><span class="path"></span>
+        <span class="type"></span><span class="acts"><button class="more">說明</button><button class="focus" title="3D 畫面飛到這個部件">定位</button></span></div>
+        <div class="about" hidden></div><table><tbody></tbody></table>`;
+      el.querySelector(".label").textContent = di.label || dev.name || dev.path;
+      el.querySelector(".grp").textContent = di.groupLabel || "";
       el.querySelector(".path").textContent = dev.path;
       el.querySelector(".type").textContent = `${dev.type}${dev.component ? " · " + dev.component : ""}`;
+      if (di.function) el.querySelector(".head").title = di.function;
+      const about = el.querySelector(".about");
+      for (const [k, t] of [["function", "功能"], ["signal", "訊號"], ["role", "角色"], ["caution", "注意"]]) {
+        if (!di[k]) continue;
+        const p = document.createElement("p");
+        p.innerHTML = "<b></b>";
+        p.firstChild.textContent = t + "：";
+        p.appendChild(document.createTextNode(di[k]));
+        about.appendChild(p);
+      }
+      if (!about.childNodes.length) el.querySelector(".more").remove();
+      else el.querySelector(".more").onclick = () => { about.hidden = !about.hidden; };
+      el.querySelector(".focus").onclick = () => ch.postMessage({ t: "focus", paths: dev.path });
+      // 滑鼠移到裝置上 → 3D 畫面高亮對應部件
+      el.addEventListener("mouseenter", () => ch.postMessage({ t: "highlight", paths: dev.path }));
       const tbody = el.querySelector("tbody");
       const devRows = [];
       // 輸出在前、輸入在後
@@ -164,7 +188,9 @@
       for (const r of d.rows) {
         const tr = r.val.parentElement;
         let show = (!area || r.area === area) && (!nz || (r.last !== 0 && r.last !== undefined && r.last !== "0"));
-        if (q) show = show && (d.dev.path.toLowerCase().includes(q) || address(r.v).toLowerCase().includes(q) || r.v.name.toLowerCase().includes(q));
+        const di = info[d.dev.path] || {};
+        if (q) show = show && (d.dev.path.toLowerCase().includes(q) || address(r.v).toLowerCase().includes(q) || r.v.name.toLowerCase().includes(q)
+          || (di.label || "").toLowerCase().includes(q) || (di.function || "").toLowerCase().includes(q) || (di.groupLabel || "").includes(q));
         tr.style.display = show ? "" : "none";
         any = any || show;
       }
@@ -187,10 +213,12 @@
     if (m.t === "manifest") {
       const same = manifest && manifest.controlSize === JSON.parse(m.text).controlSize;
       mode = m.mode; writable = !!m.writable;
-      if (!same) { manifest = JSON.parse(m.text); build(); }
+      if (!same) { manifest = JSON.parse(m.text); infoReady.then(build); }
     } else if (m.t === "image") {
       ctrl = m.ctrl; stat = m.stat; writable = !!m.writable; lastImage = performance.now(); mainHidden = !!m.hidden;
       if (manifest) refresh(false);
+    } else if (m.t === "selected") {
+      pick(m);
     } else if (m.t === "readonly") {
       writable = false;
     } else if (m.t === "bye") {
@@ -198,6 +226,26 @@
     }
     setConn();
   };
+
+  // 3D 畫面點到部件：裝置 → 捲過去並閃一下；只點到模組（例如分度站的機架）→ 篩出那個模組的所有裝置
+  function pick(sel) {
+    let path = sel.device;
+    if (!path && sel.scene) {
+      const hit = Object.entries(info).find(([, v]) => v.scenePath === sel.scene);
+      path = hit ? hit[0] : "";
+    }
+    const d = devEls.find((x) => x.dev.path === path);
+    if (d) {
+      $("q").value = ""; applyFilter();
+      d.el.scrollIntoView({ behavior: "smooth", block: "center" });
+      d.el.classList.remove("picked"); void d.el.offsetWidth; d.el.classList.add("picked");
+      const about = d.el.querySelector(".about"); if (about) about.hidden = false;
+    } else if (path) {
+      $("q").value = path.split(".").pop(); applyFilter();
+    }
+    $("picked-note").textContent = path ? `3D 點選：${(info[path] || {}).label || path}` : "";
+  }
+  $("list").addEventListener("mouseleave", () => ch.postMessage({ t: "clear" }));
 
   ["q", "type", "area", "changed"].forEach((id) => $(id).addEventListener("input", applyFilter));
   $("zero").onclick = () => { if (writable) ch.postMessage({ t: "zero" }); else write(0, []); };

@@ -79,7 +79,18 @@ class WebTwin(dtlink.Twin):
         _sleep(seconds)
 
 
+def _load_labels_web() -> dict:
+    """網頁版：用同步請求讀網站根目錄的 devices_zh.json（worker 裡可以用同步 XHR）。"""
+    try:
+        from pyodide.http import open_url
+        url = str(js.URL.new("devices_zh.json", js.location.href))
+        return json.loads(open_url(url).read()).get("devices", {})
+    except Exception:
+        return {}
+
+
 def install():
     """讓學生程式的 Twin() 與 time.sleep 都用網頁版。"""
     dtlink.Twin = WebTwin
+    dtlink._load_labels = _load_labels_web
     time.sleep = _sleep

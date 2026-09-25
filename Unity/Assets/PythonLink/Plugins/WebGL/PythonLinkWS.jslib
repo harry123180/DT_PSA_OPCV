@@ -84,6 +84,12 @@ var PythonLinkWS = {
     return b;
   },
 
+  // 3D 畫面點到部件：交給頁面（產線頁會轉給暫存器表）
+  PLWS_Selected: function (jsonPtr) {
+    var text = UTF8ToString(jsonPtr);
+    if (window.DTOnSelected) { try { window.DTOnSelected(JSON.parse(text)); } catch (e) { console.warn(e); } }
+  },
+
   PLWS_QueryParam: function (namePtr) {
     var v = "";
     var name = UTF8ToString(namePtr);

@@ -257,10 +257,36 @@ print("結束")
       productName: "DT PSA OPCV (Python Link)",
       productVersion: "0.1.0",
     }, (p) => { $("progress-bar").style.width = Math.round(p * 100) + "%"; })
-      .then(() => { $("loading").style.display = "none"; })
+      .then((inst) => { window.dtUnity = inst; $("loading").style.display = "none"; })
       .catch((err) => { $("loading").textContent = "產線載入失敗：" + err; });
   };
   document.body.appendChild(script);
+  // ── 部件高亮與說明卡 ─────────────────────────────────────
+  let deviceInfo = { devices: {} };
+  fetch("devices_zh.json" + V).then((r) => r.json()).then((d) => { deviceInfo = d; window.dtDeviceInfo = d; }).catch(() => {});
+  const byScene = () => {
+    const m = {};
+    for (const [path, v] of Object.entries(deviceInfo.devices || {})) if (v.scenePath) m[v.scenePath] = path;
+    return m;
+  };
+  window.DTHighlight = (kind, paths) => {
+    if (!window.dtUnity) return;
+    const method = kind === "focus" ? "Focus" : kind === "clear" ? "ClearHighlight" : "Highlight";
+    window.dtUnity.SendMessage("PythonLinkHud", method, paths || "");
+  };
+  window.DTShowSelection = (sel) => {
+    const path = sel.device || byScene()[sel.scene] || "";
+    const info = (deviceInfo.devices || {})[path];
+    const card = $("pick-card");
+    if (!info) { card.hidden = true; return; }
+    card.querySelector(".label").textContent = info.label || path;
+    card.querySelector(".group").textContent = info.groupLabel || "";
+    card.querySelector(".path").textContent = path;
+    card.querySelector(".desc").textContent = info.function || "";
+    card.hidden = false;
+  };
+  $("pick-card").querySelector("button").onclick = () => { $("pick-card").hidden = true; window.DTHighlight("clear"); };
+
   // 在編輯器打字時不要讓 Unity 吃掉按鍵（WASD 等）
   canvas.addEventListener("mousedown", () => canvas.focus());
 })();

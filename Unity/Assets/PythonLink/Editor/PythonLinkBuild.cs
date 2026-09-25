@@ -46,11 +46,14 @@ namespace PythonLink.Editor
                 Debug.Log($"[PythonLink] {go.name}: 換成 PythonLinkClient（root={rootName}）");
             }
 
-            if (Object.FindAnyObjectByType<PythonLinkHud>() == null)
+            var hudComp = Object.FindAnyObjectByType<PythonLinkHud>();
+            if (hudComp == null)
             {
                 var hud = new GameObject("PythonLinkHud");
-                hud.AddComponent<PythonLinkHud>();
+                hudComp = hud.AddComponent<PythonLinkHud>();
             }
+            // 網頁用 SendMessage("PythonLinkHud", "Highlight"/"Focus"/"ClearHighlight", 路徑) 找它
+            if (hudComp.GetComponent<PythonLinkInspector>() == null) hudComp.gameObject.AddComponent<PythonLinkInspector>();
 
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
@@ -66,7 +69,9 @@ namespace PythonLink.Editor
             PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Brotli;
             PlayerSettings.WebGL.decompressionFallback = true;   // 任何靜態主機都能開，不必設 Content-Encoding
             PlayerSettings.WebGL.dataCaching = true;
-            PlayerSettings.runInBackground = true;               // 切到 Python 視窗時孿生繼續跑
+            PlayerSettings.runInBackground = true;
+            // 部件點選與高亮要讀個別零件的網格；static batching 會把它們合併成不可讀的大網格（URP 另有 SRP Batcher）
+            PlayerSettings.SetStaticBatchingForPlatform(BuildTarget.WebGL, false);               // 切到 Python 視窗時孿生繼續跑
             PlayerSettings.productName = "DT PSA OPCV (Python Link)";
 
             var options = new BuildPlayerOptions

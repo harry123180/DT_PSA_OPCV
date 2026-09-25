@@ -2,7 +2,9 @@
     "name": "PythonLink",
     "rootNamespace": "PythonLink",
     "references": [
-        "OC"
+        "OC",
+        "OC.UI",
+        "Unity.InputSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

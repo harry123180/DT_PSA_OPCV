@@ -1,0 +1,1962 @@
+{
+ "source": "VC_Demo_1_Beckhoff_1_Context.json",
+ "groups": {
+  "FG_System": "系統（安全與面板）",
+  "FG_Transport": "輸送系統",
+  "FG_01": "第 1 站：讀碼與雷射打標",
+  "FG_02": "第 2 站：光學檢測",
+  "FG_03": "第 3 站：翻轉移載",
+  "FG_04": "第 4 站：壓入與到位檢查",
+  "FG_05": "第 5 站：上蓋"
+ },
+ "devices": {
+  "Project": {
+   "name": "Project",
+   "type": "",
+   "group": "",
+   "module": "",
+   "scenePath": "Project",
+   "groupLabel": "",
+   "en": {
+    "Function": "Demo assembly line on a Bosch TS style two level pallet conveyor. Pallets carrying a two slot workpiece circulate through five processing groups on the upper level."
+   },
+   "label": "專案",
+   "function": "基於 Bosch TS 風格雙層托盤輸送帶的演示組裝線。承載兩個槽位工件的托盤在頂層的五個功能群組中循環。"
+  },
+  "MAIN.FG_System": {
+   "name": "FG_System",
+   "type": "",
+   "group": "FG_System",
+   "module": "",
+   "scenePath": "Project/FG_System",
+   "groupLabel": "系統（安全與面板）",
+   "en": {
+    "Function": "Cell infrastructure - safety enclosure, interlocked doors, operator panel, signal tower and monitors. Carries no part processing of its own."
+   },
+   "label": "系統",
+   "function": "單元基礎設施 - 安全圍欄、互鎖門、操作面板、三色燈和螢幕。本身不執行任何工件處理。"
+  },
+  "MAIN.FG_System.Doors": {
+   "name": "Doors",
+   "type": "",
+   "group": "FG_System",
+   "module": "",
+   "scenePath": "Project/FG_System/Doors",
+   "groupLabel": "系統（安全與面板）",
+   "en": {
+    "Function": "Enclosure doors and their safety locks. Three doors on each of the two accessible sides."
+   },
+   "label": "系統 · 安全門",
+   "function": "圍欄門及其安全鎖。兩個可進入側的每一側各有三扇門。"
+  },
+  "MAIN.FG_System.B_SafetyDoor11": {
+   "name": "B_SafetyDoor11",
+   "type": "Lock",
+   "group": "FG_System",
+   "module": "",
+   "scenePath": "Project/FG_System/Doors/B_SafetyDoor11",
+   "groupLabel": "系統（安全與面板）",
+   "en": {
+    "Function": "Safety interlock on an enclosure door, side 1. Reports door position and holds the door locked while the cell may move.",
+    "Signal": "Two inputs back - closed and locked - and one lock coil out. Secure means BOTH: closed alone is not enough."
+   },
+   "label": "系統 · 安全門 11",
+   "function": "側 1 圍欄門上的安全互鎖。回報門位置，並在單元可能移動時保持門鎖定狀態。",
+   "signal": "兩個輸入回傳 - 關閉與鎖定 - 以及一個鎖定線圈輸出。安全意味著兩者皆滿足：僅關閉是不夠的。"
+  },
+  "MAIN.FG_System.B_SafetyDoor12": {
+   "name": "B_SafetyDoor12",
+   "type": "Lock",
+   "group": "FG_System",
+   "module": "",
+   "scenePath": "Project/FG_System/Doors/B_SafetyDoor12",
+   "groupLabel": "系統（安全與面板）",
+   "en": {
+    "Function": "Safety interlock on an enclosure door, side 1. Reports door position and holds the door locked while the cell may move.",
+    "Signal": "Two inputs back - closed and locked - and one lock coil out. Secure means BOTH: closed alone is not enough."
+   },
+   "label": "系統 · 安全門 12",
+   "function": "側 1 圍欄門上的安全互鎖。回報門位置，並在單元可能移動時保持門鎖定狀態。",
+   "signal": "兩個輸入回傳 - 關閉與鎖定 - 以及一個鎖定線圈輸出。安全意味著兩者皆滿足：僅關閉是不夠的。"
+  },
+  "MAIN.FG_System.B_SafetyDoor13": {
+   "name": "B_SafetyDoor13",
+   "type": "Lock",
+   "group": "FG_System",
+   "module": "",
+   "scenePath": "Project/FG_System/Doors/B_SafetyDoor13",
+   "groupLabel": "系統（安全與面板）",
+   "en": {
+    "Function": "Safety interlock on an enclosure door, side 1. Reports door position and holds the door locked while the cell may move.",
+    "Signal": "Two inputs back - closed and locked - and one lock coil out. Secure means BOTH: closed alone is not enough."
+   },
+   "label": "系統 · 安全門 13",
+   "function": "側 1 圍欄門上的安全互鎖。回報門位置，並在單元可能移動時保持門鎖定狀態。",
+   "signal": "兩個輸入回傳 - 關閉與鎖定 - 以及一個鎖定線圈輸出。安全意味著兩者皆滿足：僅關閉是不夠的。"
+  },
+  "MAIN.FG_System.B_SafetyDoor21": {
+   "name": "B_SafetyDoor21",
+   "type": "Lock",
+   "group": "FG_System",
+   "module": "",
+   "scenePath": "Project/FG_System/Doors/B_SafetyDoor21",
+   "groupLabel": "系統（安全與面板）",
+   "en": {
+    "Function": "Safety interlock on an enclosure door, side 2. Reports door position and holds the door locked while the cell may move.",
+    "Signal": "Two inputs back - closed and locked - and one lock coil out. Secure means BOTH: closed alone is not enough."
+   },
+   "label": "系統 · 安全門 21",
+   "function": "側 2 圍欄門上的安全互鎖。回報門位置，並在單元可能移動時保持門鎖定狀態。",
+   "signal": "兩個輸入回傳 - 關閉與鎖定 - 以及一個鎖定線圈輸出。安全意味著兩者皆滿足：僅關閉是不夠的。"
+  },
+  "MAIN.FG_System.B_SafetyDoor22": {
+   "name": "B_SafetyDoor22",
+   "type": "Lock",
+   "group": "FG_System",
+   "module": "",
+   "scenePath": "Project/FG_System/Doors/B_SafetyDoor22",
+   "groupLabel": "系統（安全與面板）",
+   "en": {
+    "Function": "Safety interlock on an enclosure door, side 2. Reports door position and holds the door locked while the cell may move.",
+    "Signal": "Two inputs back - closed and locked - and one lock coil out. Secure means BOTH: closed alone is not enough."
+   },
+   "label": "系統 · 安全門 22",
+   "function": "側 2 圍欄門上的安全互鎖。回報門位置，並在單元可能移動時保持門鎖定狀態。",
+   "signal": "兩個輸入回傳 - 關閉與鎖定 - 以及一個鎖定線圈輸出。安全意味著兩者皆滿足：僅關閉是不夠的。"
+  },
+  "MAIN.FG_System.B_SafetyDoor23": {
+   "name": "B_SafetyDoor23",
+   "type": "Lock",
+   "group": "FG_System",
+   "module": "",
+   "scenePath": "Project/FG_System/Doors/B_SafetyDoor23",
+   "groupLabel": "系統（安全與面板）",
+   "en": {
+    "Function": "Safety interlock on an enclosure door, side 2. Reports door position and holds the door locked while the cell may move.",
+    "Signal": "Two inputs back - closed and locked - and one lock coil out. Secure means BOTH: closed alone is not enough."
+   },
+   "label": "安全門 23 · 互鎖",
+   "function": "外罩門（側邊 2）的安全互鎖。回報門的位置，並在設備可能移動時將門保持鎖定狀態。",
+   "signal": "兩個輸入回饋（關閉與鎖定）以及一個鎖定線圈輸出。安全定義為兩者皆滿足：僅關閉是不夠的。"
+  },
+  "MAIN.FG_System.H_SignalTower": {
+   "name": "H_SignalTower",
+   "type": "PanelSampler",
+   "group": "FG_System",
+   "module": "",
+   "scenePath": "Project/FG_System/H_SignalTower",
+   "groupLabel": "系統（安全與面板）",
+   "en": {
+    "Function": "Four colour signal tower. Samples its red, yellow, blue and green lamps into one PLC symbol.",
+    "Signal": "PanelSampler. Aggregates the four tower lamps into one FB_Panel DWORD, with the lamps own links disabled. Same packing mechanism as the control panel."
+   },
+   "label": "三色燈 · 總成",
+   "function": "四色三色燈。將其紅色、黃色、藍色和綠色燈號採樣至一個 PLC 符號中。",
+   "signal": "PanelSampler。將四個三色燈燈號聚合至一個 FB_Panel DWORD，並禁用燈號自身的連結。封裝機制與操作面板相同。"
+  },
+  "MAIN.FG_System.RED": {
+   "name": "RED",
+   "type": "Lamp",
+   "group": "FG_System",
+   "module": "",
+   "scenePath": "Project/FG_System/H_SignalTower/RED",
+   "groupLabel": "系統（安全與面板）",
+   "en": {
+    "Function": "Signal tower lamp segment. Its meaning is given by the Role entry on each instance.",
+    "Signal": "Not a PLC symbol in its own right - its own Link is disabled by the PanelSampler. Reached as bit 0 of the H_SignalTower FB_Panel DWORD.",
+    "Role": "Assumed from the colour, not confirmed by code: fault or stopped."
+   },
+   "label": "三色燈 · 紅燈",
+   "function": "三色燈燈段。其含義由每個實例的 Role 條目定義。",
+   "signal": "本身並非 PLC 符號 - 其自身的連結被 PanelSampler 禁用。透過 H_SignalTower FB_Panel DWORD 的第 0 位元存取。",
+   "role": "根據顏色推斷，未經程式碼確認：故障或停止。"
+  },
+  "MAIN.FG_System.YELLOW": {
+   "name": "YELLOW",
+   "type": "Lamp",
+   "group": "FG_System",
+   "module": "",
+   "scenePath": "Project/FG_System/H_SignalTower/YELLOW",
+   "groupLabel": "系統（安全與面板）",
+   "en": {
+    "Function": "Signal tower lamp segment. Its meaning is given by the Role entry.",
+    "Signal": "Not a PLC symbol in its own right - its own Link is disabled by the PanelSampler. Reached as bit 1 of the H_SignalTower FB_Panel DWORD.",
+    "Role": "Assumed from the colour, not confirmed by code: warning, or ready and waiting."
+   },
+   "label": "三色燈 · 黃燈",
+   "function": "三色燈燈段。其含義由 Role 條目定義。",
+   "signal": "本身並非 PLC 符號 - 其自身的連結被 PanelSampler 禁用。透過 H_SignalTower FB_Panel DWORD 的第 1 位元存取。",
+   "role": "根據顏色推斷，未經程式碼確認：警告，或準備就緒等待中。"
+  },
+  "MAIN.FG_System.BLUE": {
+   "name": "BLUE",
+   "type": "Lamp",
+   "group": "FG_System",
+   "module": "",
+   "scenePath": "Project/FG_System/H_SignalTower/BLUE",
+   "groupLabel": "系統（安全與面板）",
+   "en": {
+    "Function": "Signal tower lamp segment. Its meaning is given by the Role entry.",
+    "Signal": "Not a PLC symbol in its own right - its own Link is disabled by the PanelSampler. Reached as bit 2 of the H_SignalTower FB_Panel DWORD."
+   },
+   "label": "三色燈 · 藍燈",
+   "function": "三色燈燈段。其含義由 Role 條目定義。",
+   "signal": "本身並非 PLC 符號 - 其自身的連結被 PanelSampler 禁用。透過 H_SignalTower FB_Panel DWORD 的第 2 位元存取。"
+  },
+  "MAIN.FG_System.GREEN": {
+   "name": "GREEN",
+   "type": "Lamp",
+   "group": "FG_System",
+   "module": "",
+   "scenePath": "Project/FG_System/H_SignalTower/GREEN",
+   "groupLabel": "系統（安全與面板）",
+   "en": {
+    "Function": "Signal tower lamp segment. Its meaning is given by the Role entry.",
+    "Signal": "Not a PLC symbol in its own right - its own Link is disabled by the PanelSampler. Reached as bit 3 of the H_SignalTower FB_Panel DWORD.",
+    "Role": "Assumed from the colour, not confirmed by code: running normally."
+   },
+   "label": "三色燈 · 綠燈",
+   "function": "三色燈燈段。其含義由 Role 條目定義。",
+   "signal": "本身並非 PLC 符號 - 其自身的連結被 PanelSampler 禁用。透過 H_SignalTower FB_Panel DWORD 的第 3 位元存取。",
+   "role": "根據顏色推斷，未經程式碼確認：正常運行。"
+  },
+  "MAIN.FG_System.H_ControlPanel": {
+   "name": "H_ControlPanel",
+   "type": "PanelSampler",
+   "group": "FG_System",
+   "module": "",
+   "scenePath": "Project/FG_System/H_ControlPanel",
+   "groupLabel": "系統（安全與面板）",
+   "en": {
+    "Function": "Main operator panel, TwinCAT/Beckhoff variant. Samples eight push buttons - five PackML machine commands and three mode selections - into one PLC symbol, and lights each button back from it.",
+    "Signal": "PanelSampler. Disables its children's individual communication and exposes one aggregated FB_Panel DWORD, packing their status bits in and unpacking control bits back."
+   },
+   "label": "操作面板 · 總成",
+   "function": "主操作面板，TwinCAT/Beckhoff 版本。將八個按鈕（五個 PackML 機器指令和三個模式選擇）採樣至一個 PLC 符號中，並從中回饋每個按鈕的燈號。",
+   "signal": "PanelSampler。禁用其子元件的個別通訊，並提供一個聚合的 FB_Panel DWORD，將狀態位元封裝進去並將控制位元解封回傳。"
+  },
+  "MAIN.FG_System.START": {
+   "name": "START",
+   "type": "Button",
+   "group": "FG_System",
+   "module": "",
+   "scenePath": "Project/FG_System/H_ControlPanel/START",
+   "groupLabel": "系統（安全與面板）",
+   "en": {
+    "Signal": "Not a PLC symbol in its own right - its own Link is disabled by the PanelSampler. Pressed state is bit 0 of the H_ControlPanel FB_Panel StatusData; its feedback lamp is bit 0 of ControlData."
+   },
+   "label": "操作面板 · 啟動鈕",
+   "signal": "本身並非 PLC 符號 - 其自身的連結被 PanelSampler 禁用。按下狀態為 H_ControlPanel FB_Panel StatusData 的第 0 位元；其回饋燈為 ControlData 的第 0 位元。"
+  },
+  "MAIN.FG_System.RESET": {
+   "name": "RESET",
+   "type": "Button",
+   "group": "FG_System",
+   "module": "",
+   "scenePath": "Project/FG_System/H_ControlPanel/RESET",
+   "groupLabel": "系統（安全與面板）",
+   "en": {
+    "Signal": "Not a PLC symbol in its own right - its own Link is disabled by the PanelSampler. Pressed state is bit 1 of the H_ControlPanel FB_Panel StatusData; its feedback lamp is bit 1 of ControlData."
+   },
+   "label": "操作面板 · 重設按鈕",
+   "signal": "本身並非 PLC 符號 - 其連結由 PanelSampler 禁用。按下狀態為 H_ControlPanel FB_Panel StatusData 的第 1 位元；其回饋燈為 ControlData 的第 1 位元。"
+  },
+  "MAIN.FG_System.STOP": {
+   "name": "STOP",
+   "type": "Button",
+   "group": "FG_System",
+   "module": "",
+   "scenePath": "Project/FG_System/H_ControlPanel/STOP",
+   "groupLabel": "系統（安全與面板）",
+   "en": {
+    "Signal": "Not a PLC symbol in its own right - its own Link is disabled by the PanelSampler. Pressed state is bit 2 of the H_ControlPanel FB_Panel StatusData; its feedback lamp is bit 2 of ControlData."
+   },
+   "label": "操作面板 · 停止按鈕",
+   "signal": "本身並非 PLC 符號 - 其連結由 PanelSampler 禁用。按下狀態為 H_ControlPanel FB_Panel StatusData 的第 2 位元；其回饋燈為 ControlData 的第 2 位元。"
+  },
+  "MAIN.FG_System.CLEAR": {
+   "name": "CLEAR",
+   "type": "Button",
+   "group": "FG_System",
+   "module": "",
+   "scenePath": "Project/FG_System/H_ControlPanel/CLEAR",
+   "groupLabel": "系統（安全與面板）",
+   "en": {
+    "Signal": "Not a PLC symbol in its own right - its own Link is disabled by the PanelSampler. Pressed state is bit 3 of the H_ControlPanel FB_Panel StatusData; its feedback lamp is bit 3 of ControlData."
+   },
+   "label": "操作面板 · 清除按鈕",
+   "signal": "本身並非 PLC 符號 - 其連結由 PanelSampler 禁用。按下狀態為 H_ControlPanel FB_Panel StatusData 的第 3 位元；其回饋燈為 ControlData 的第 3 位元。"
+  },
+  "MAIN.FG_System.ABORT": {
+   "name": "ABORT",
+   "type": "Button",
+   "group": "FG_System",
+   "module": "",
+   "scenePath": "Project/FG_System/H_ControlPanel/ABORT",
+   "groupLabel": "系統（安全與面板）",
+   "en": {
+    "Signal": "Not a PLC symbol in its own right - its own Link is disabled by the PanelSampler. Pressed state is bit 4 of the H_ControlPanel FB_Panel StatusData; its feedback lamp is bit 4 of ControlData."
+   },
+   "label": "操作面板 · 中止按鈕",
+   "signal": "本身並非 PLC 符號 - 其連結由 PanelSampler 禁用。按下狀態為 H_ControlPanel FB_Panel StatusData 的第 4 位元；其回饋燈為 ControlData 的第 4 位元。"
+  },
+  "MAIN.FG_System.PRODUCTION": {
+   "name": "PRODUCTION",
+   "type": "Button",
+   "group": "FG_System",
+   "module": "",
+   "scenePath": "Project/FG_System/H_ControlPanel/PRODUCTION",
+   "groupLabel": "系統（安全與面板）",
+   "en": {
+    "Signal": "Not a PLC symbol in its own right - its own Link is disabled by the PanelSampler. Pressed state is bit 5 of the H_ControlPanel FB_Panel StatusData; its feedback lamp is bit 5 of ControlData."
+   },
+   "label": "操作面板 · 生產按鈕",
+   "signal": "本身並非 PLC 符號 - 其連結由 PanelSampler 禁用。按下狀態為 H_ControlPanel FB_Panel StatusData 的第 5 位元；其回饋燈為 ControlData 的第 5 位元。"
+  },
+  "MAIN.FG_System.MAINTANANCE": {
+   "name": "MAINTANANCE",
+   "type": "Button",
+   "group": "FG_System",
+   "module": "",
+   "scenePath": "Project/FG_System/H_ControlPanel/MAINTANANCE",
+   "groupLabel": "系統（安全與面板）",
+   "en": {
+    "Signal": "Not a PLC symbol in its own right - its own Link is disabled by the PanelSampler. Pressed state is bit 6 of the H_ControlPanel FB_Panel StatusData; its feedback lamp is bit 6 of ControlData."
+   },
+   "label": "操作面板 · 維護按鈕",
+   "signal": "本身並非 PLC 符號 - 其連結由 PanelSampler 禁用。按下狀態為 H_ControlPanel FB_Panel StatusData 的第 6 位元；其回饋燈為 ControlData 的第 6 位元。"
+  },
+  "MAIN.FG_System.MANUAL": {
+   "name": "MANUAL",
+   "type": "Button",
+   "group": "FG_System",
+   "module": "",
+   "scenePath": "Project/FG_System/H_ControlPanel/MANUAL",
+   "groupLabel": "系統（安全與面板）",
+   "en": {
+    "Signal": "Not a PLC symbol in its own right - its own Link is disabled by the PanelSampler. Pressed state is bit 7 of the H_ControlPanel FB_Panel StatusData; its feedback lamp is bit 7 of ControlData."
+   },
+   "label": "操作面板 · 手動按鈕",
+   "signal": "本身並非 PLC 符號 - 其連結由 PanelSampler 禁用。按下狀態為 H_ControlPanel FB_Panel StatusData 的第 7 位元；其回饋燈為 ControlData 的第 7 位元。"
+  },
+  "MAIN.FG_System.SS_EStop1": {
+   "name": "SS_EStop1",
+   "type": "Button",
+   "group": "FG_System",
+   "module": "",
+   "scenePath": "Project/FG_System/SS_EStop1",
+   "groupLabel": "系統（安全與面板）",
+   "en": {
+    "Function": "Emergency stop, position 1. Latching mushroom actuator that drops the cell to a safe state.",
+    "Signal": "One input and one lamp coil, as a single device. Active while the mushroom is latched."
+   },
+   "label": "系統 · 緊急停止 1",
+   "function": "緊急停止，位置 1。自鎖式蘑菇頭致動器，將工作單元切換至安全狀態。",
+   "signal": "作為單一裝置，包含一個輸入端和一個燈號線圈。當蘑菇頭處於自鎖狀態時為啟動。"
+  },
+  "MAIN.FG_System.SS_EStop2": {
+   "name": "SS_EStop2",
+   "type": "Button",
+   "group": "FG_System",
+   "module": "",
+   "scenePath": "Project/FG_System/SS_EStop2",
+   "groupLabel": "系統（安全與面板）",
+   "en": {
+    "Function": "Emergency stop, position 2. Latching mushroom actuator that drops the cell to a safe state.",
+    "Signal": "One input and one lamp coil, as a single device. Active while the mushroom is latched."
+   },
+   "label": "緊急停止 2",
+   "function": "緊急停止，位置 2。鎖定式蘑菇頭致動器，將單元切換至安全狀態。",
+   "signal": "單一裝置包含一個輸入與一個燈圈。當蘑菇頭鎖定時處於啟動狀態。"
+  },
+  "MAIN.FG_Transport": {
+   "name": "FG_Transport",
+   "type": "",
+   "group": "FG_Transport",
+   "module": "",
+   "scenePath": "Project/FG_Transport",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Two level pallet conveyor in the Bosch TS style. Circulates pallets past the five processing stations and returns them."
+   },
+   "label": "輸送系統",
+   "function": "Bosch TS 風格的雙層托盤輸送帶。使托盤在五個加工站之間循環並返回。"
+  },
+  "MAIN.FG_Transport.Transport01": {
+   "name": "Transport01",
+   "type": "",
+   "group": "FG_Transport",
+   "module": "",
+   "scenePath": "Project/FG_Transport/Transport01",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Straight conveyor section carrying pallets between transfer points.",
+    "Role": "Upper level conveyor section."
+   },
+   "label": "主輸送帶 1",
+   "function": "承載托盤在轉移點之間移動的直線輸送帶段。",
+   "role": "上層輸送帶段。"
+  },
+  "MAIN.FG_Transport.Transport01_M_Conveyor": {
+   "name": "M_Conveyor",
+   "type": "DriveSimple",
+   "group": "FG_Transport",
+   "module": "Transport01",
+   "scenePath": "Project/FG_Transport/Transport01/M_Conveyor",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Conveyor drive for a straight transport section. Runs continuously while MIL is enabled.",
+    "Signal": "Simple drive: forward and backward run bits out, one drive-active bit back. No speed reference and no encoder."
+   },
+   "label": "主輸送帶 1 · 馬達",
+   "function": "直線輸送帶段的輸送帶驅動裝置。在 MIL 啟用時持續運行。",
+   "signal": "簡單驅動：輸出正轉與反轉運行位元，回傳一個驅動啟動位元。無速度參考且無編碼器。"
+  },
+  "MAIN.FG_Transport.Transport02": {
+   "name": "Transport02",
+   "type": "",
+   "group": "FG_Transport",
+   "module": "",
+   "scenePath": "Project/FG_Transport/Transport02",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Straight conveyor section carrying pallets between transfer points.",
+    "Role": "Lower level return conveyor section."
+   },
+   "label": "主輸送帶 2",
+   "function": "承載托盤在轉移點之間移動的直線輸送帶段。",
+   "role": "下層返回輸送帶段。"
+  },
+  "MAIN.FG_Transport.Transport02_M_Conveyor": {
+   "name": "M_Conveyor",
+   "type": "DriveSimple",
+   "group": "FG_Transport",
+   "module": "Transport02",
+   "scenePath": "Project/FG_Transport/Transport02/M_Conveyor",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Conveyor drive for a straight transport section. Runs continuously while MIL is enabled.",
+    "Signal": "Simple drive: forward and backward run bits out, one drive-active bit back. No speed reference and no encoder."
+   },
+   "label": "主輸送帶 2 · 馬達",
+   "function": "直線輸送帶段的輸送帶驅動裝置。在 MIL 啟用時持續運行。",
+   "signal": "簡單驅動：輸出正轉與反轉運行位元，回傳一個驅動啟動位元。無速度參考且無編碼器。"
+  },
+  "MAIN.FG_Transport.Lift01": {
+   "name": "Lift01",
+   "type": "",
+   "group": "FG_Transport",
+   "module": "",
+   "scenePath": "Project/FG_Transport/Lift01",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Vertical transfer between the two conveyor levels. Takes a pallet on its own short conveyor, moves it to the other level and hands it on.",
+    "Role": "Lift 1. Raises pallets from the lower accumulation level to the upper processing level, feeding Index01."
+   },
+   "label": "升降機 1",
+   "function": "兩個輸送帶層級之間的垂直轉移。透過其自身的短輸送帶接收托盤，將其移動到另一層級並進行交接。",
+   "role": "升降機 1。將托盤從下層堆積層提升至上層加工層，供給分度站 1。"
+  },
+  "MAIN.FG_Transport.Lift01_Y_Lift": {
+   "name": "Y_Lift",
+   "type": "Cylinder",
+   "group": "FG_Transport",
+   "module": "Lift01",
+   "scenePath": "Project/FG_Transport/Lift01/Y_Lift",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Lift cylinder. Drives the carriage between the lower and upper conveyor levels.",
+    "Signal": "Double solenoid with both limits read. Moves the carriage between the lower and upper conveyor levels."
+   },
+   "label": "升降機 1 · 氣缸",
+   "function": "升降氣缸。驅動載台在下層與上層輸送帶層級之間移動。",
+   "signal": "雙電磁閥並讀取兩個到位感測器。將載台在下層與上層輸送帶層級之間移動。"
+  },
+  "MAIN.FG_Transport.Lift01_Axis_Lift": {
+   "name": "Axis_Lift",
+   "type": "",
+   "group": "FG_Transport",
+   "module": "Lift01",
+   "scenePath": "Project/FG_Transport/Lift01/Axis_Lift",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Kinematic axis of the lift carriage, driven by Y_Lift."
+   },
+   "label": "升降機 1 · 升降軸",
+   "function": "升降機台車的運動軸，由 Y_Lift 驅動。"
+  },
+  "MAIN.FG_Transport.Lift01_TU_Linear": {
+   "name": "TU_Linear",
+   "type": "",
+   "group": "FG_Transport",
+   "module": "Lift01",
+   "scenePath": "Project/FG_Transport/Lift01/Axis_Lift/TU_Linear",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Short conveyor section mounted on the lift carriage, used to draw a pallet on and push it off."
+   },
+   "label": "升降機 1 · 線性輸送帶",
+   "function": "安裝在升降機台車上的短輸送帶段，用於將托盤拉入並推離。"
+  },
+  "MAIN.FG_Transport.Lift01_M_Conveyor": {
+   "name": "M_Conveyor",
+   "type": "DriveSimple",
+   "group": "FG_Transport",
+   "module": "Lift01",
+   "scenePath": "Project/FG_Transport/Lift01/Axis_Lift/TU_Linear/M_Conveyor",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Drive for the conveyor section on the lift carriage.",
+    "Signal": "Simple drive: forward and backward run bits out, one drive-active bit back. No speed reference and no encoder."
+   },
+   "label": "升降機 1 · 輸送帶馬達",
+   "function": "升降機台車上輸送帶段的驅動裝置。",
+   "signal": "簡易驅動：輸出正轉與反轉位元，回傳一個驅動啟動位元。無速度參考值且無編碼器。"
+  },
+  "MAIN.FG_Transport.Lift01_B_Detect": {
+   "name": "B_Detect",
+   "type": "SensorBinary",
+   "group": "FG_Transport",
+   "module": "Lift01",
+   "scenePath": "Project/FG_Transport/Lift01/Axis_Lift/B_Detect",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Presence sensor on the lift carriage. Confirms a pallet is aboard before the carriage moves.",
+    "Signal": "Binary presence sensor. Active while a pallet is at this station. Occupied and CanAccept are computed from it."
+   },
+   "label": "升降機 1 · 偵測感測器",
+   "function": "升降機台車上的存在感測器。在台車移動前確認托盤已在車上。",
+   "signal": "二進位存在感測器。當托盤位於此站時為啟動狀態。Occupied 與 CanAccept 是由其計算而得。"
+  },
+  "MAIN.FG_Transport.Lift01_B_Exit": {
+   "name": "B_Exit",
+   "type": "SensorBinary",
+   "group": "FG_Transport",
+   "module": "Lift01",
+   "scenePath": "Project/FG_Transport/Lift01/B_Exit",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Exit sensor on the lift. Confirms the pallet has transferred off the carriage.",
+    "Signal": "Binary presence sensor. Its RISING EDGE clears the transfer latch, in every PackML state. Read the edge, never the level."
+   },
+   "label": "升降機 1 · 出口感測器",
+   "function": "升降機上的出口感測器。確認托盤已從台車交接離去。",
+   "signal": "二進位存在感測器。其上升沿在任何 PackML 狀態下都會清除交接鎖存。請讀取上升沿而非電位。"
+  },
+  "MAIN.FG_Transport.Lift02": {
+   "name": "Lift02",
+   "type": "",
+   "group": "FG_Transport",
+   "module": "",
+   "scenePath": "Project/FG_Transport/Lift02",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Vertical transfer between the two conveyor levels. Takes a pallet on its own short conveyor, moves it to the other level and hands it on.",
+    "Role": "Lift 2. Lowers pallets from the upper level after FG_05 onto the return conveyor."
+   },
+   "label": "升降機 2",
+   "function": "兩個輸送帶層級之間的垂直傳輸。透過其自身的短輸送帶接收托盤，將其移動到另一層級並進行交接。",
+   "role": "升降機 2。將托盤從 FG_05 之後的上層降低至回送輸送帶。"
+  },
+  "MAIN.FG_Transport.Lift02_Y_Lift": {
+   "name": "Y_Lift",
+   "type": "Cylinder",
+   "group": "FG_Transport",
+   "module": "Lift02",
+   "scenePath": "Project/FG_Transport/Lift02/Y_Lift",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Lift cylinder. Drives the carriage between the lower and upper conveyor levels.",
+    "Signal": "Double solenoid with both limits read. Moves the carriage between the lower and upper conveyor levels."
+   },
+   "label": "升降機 2 · 升降氣缸",
+   "function": "升降氣缸。驅動台車在下層與上層輸送帶之間移動。",
+   "signal": "雙電磁閥並讀取兩個到位感測器。驅動台車在下層與上層輸送帶之間移動。"
+  },
+  "MAIN.FG_Transport.Lift02_Axis_Lift": {
+   "name": "Axis_Lift",
+   "type": "",
+   "group": "FG_Transport",
+   "module": "Lift02",
+   "scenePath": "Project/FG_Transport/Lift02/Axis_Lift",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Kinematic axis of the lift carriage, driven by Y_Lift."
+   },
+   "label": "升降機 2 · 升降軸",
+   "function": "升降機台車的運動軸，由 Y_Lift 驅動。"
+  },
+  "MAIN.FG_Transport.Lift02_TU_Linear": {
+   "name": "TU_Linear",
+   "type": "",
+   "group": "FG_Transport",
+   "module": "Lift02",
+   "scenePath": "Project/FG_Transport/Lift02/Axis_Lift/TU_Linear",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Short conveyor section mounted on the lift carriage, used to draw a pallet on and push it off."
+   },
+   "label": "升降機 2 · 輸送帶",
+   "function": "安裝在升降機台車上的短輸送帶區段，用於將托盤拉入並推離。"
+  },
+  "MAIN.FG_Transport.Lift02_M_Conveyor": {
+   "name": "M_Conveyor",
+   "type": "DriveSimple",
+   "group": "FG_Transport",
+   "module": "Lift02",
+   "scenePath": "Project/FG_Transport/Lift02/Axis_Lift/TU_Linear/M_Conveyor",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Drive for the conveyor section on the lift carriage.",
+    "Signal": "Simple drive: forward and backward run bits out, one drive-active bit back. No speed reference and no encoder."
+   },
+   "label": "升降機 2 · 輸送帶馬達",
+   "function": "升降機台車上輸送帶區段的驅動裝置。",
+   "signal": "簡易驅動：輸出正轉與反轉位元，回傳一個驅動啟動位元。無速度參考值且無編碼器。"
+  },
+  "MAIN.FG_Transport.Lift02_B_Detect": {
+   "name": "B_Detect",
+   "type": "SensorBinary",
+   "group": "FG_Transport",
+   "module": "Lift02",
+   "scenePath": "Project/FG_Transport/Lift02/Axis_Lift/B_Detect",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Presence sensor on the lift carriage. Confirms a pallet is aboard before the carriage moves.",
+    "Signal": "Binary presence sensor. Active while a pallet is at this station. Occupied and CanAccept are computed from it."
+   },
+   "label": "升降機 2 · 感測器",
+   "function": "升降機台車上的存在感測器。在台車移動前確認托盤已在車上。",
+   "signal": "二進位存在感測器。當托盤位於此站時為啟動狀態。Occupied 與 CanAccept 由此計算得出。"
+  },
+  "MAIN.FG_Transport.Lift02_B_Exit": {
+   "name": "B_Exit",
+   "type": "SensorBinary",
+   "group": "FG_Transport",
+   "module": "Lift02",
+   "scenePath": "Project/FG_Transport/Lift02/B_Exit",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Exit sensor on the lift. Confirms the pallet has transferred off the carriage.",
+    "Signal": "Binary presence sensor. Its RISING EDGE clears the transfer latch, in every PackML state. Read the edge, never the level."
+   },
+   "label": "升降機 2 · 出口感測器",
+   "function": "升降機上的出口感測器。確認托盤已從台車移出。",
+   "signal": "二進位存在感測器。其上升沿會在任何 PackML 狀態下清除交接鎖存。請讀取邊緣而非電位。"
+  },
+  "MAIN.FG_Transport.Index01": {
+   "name": "Index01",
+   "type": "",
+   "group": "FG_Transport",
+   "module": "",
+   "scenePath": "Project/FG_Transport/Index01",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Pallet index station. Stops an incoming pallet, lifts it to a stable position to fix the payload, triggers the functional group it serves, then releases the pallet to the next station.",
+    "Role": "Serves FG_01, the barcode read and laser marking station. Releases to Index02."
+   },
+   "label": "分度站 1",
+   "function": "托盤分度站。停止進入的托盤，將其升至穩定位置以固定工件，觸發其服務的功能群組，然後將托盤釋放至下一站。",
+   "role": "服務於 FG_01（條碼讀碼與雷射打標站）。釋放至 Index02。"
+  },
+  "MAIN.FG_Transport.Index01_Y_Stopper": {
+   "name": "Y_Stopper",
+   "type": "Cylinder",
+   "group": "FG_Transport",
+   "module": "Index01",
+   "scenePath": "Project/FG_Transport/Index01/Y_Stopper",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Stopper cylinder. Retracted holds an incoming pallet at the station; extending releases it once the next station is free.",
+    "Signal": "Double solenoid with both limits read. RETRACTED (min) holds the pallet; EXTENDING (max) releases it - the blade drops out of the way."
+   },
+   "label": "分度站 1 · 擋料氣缸",
+   "function": "擋料氣缸。縮回時將進入的托盤保持在站內；一旦下一站空閒，伸出則將其釋放。",
+   "signal": "雙電磁閥且讀取兩個到位感測器。縮回 (min) 保持托盤；伸出 (max) 釋放托盤 —— 擋料片落下以避開路徑。"
+  },
+  "MAIN.FG_Transport.Index01_Y_Lift": {
+   "name": "Y_Lift",
+   "type": "Cylinder",
+   "group": "FG_Transport",
+   "module": "Index01",
+   "scenePath": "Project/FG_Transport/Index01/Y_Lift",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Index lift cylinder. Raises the pallet off the conveyor to a repeatable position and fixes the payload while the station works on it.",
+    "Signal": "Double solenoid with both limits read. EXTENDED raises the carriage and fixes the pallet clear of the belt; retracted is home."
+   },
+   "label": "分度站 1 · 升降氣缸",
+   "function": "分度升降氣缸。將托盤從輸送帶升至可重複定位的位置，並在站點作業時固定工件。",
+   "signal": "雙電磁閥且讀取兩個到位感測器。伸出時抬起台車並將托盤固定在輸送帶上方；縮回為原點。"
+  },
+  "MAIN.FG_Transport.Index01_B_Detect": {
+   "name": "B_Detect",
+   "type": "SensorBinary",
+   "group": "FG_Transport",
+   "module": "Index01",
+   "scenePath": "Project/FG_Transport/Index01/B_Detect",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Presence sensor at the stop position. Tells the unit a pallet has arrived and is ready to be indexed.",
+    "Signal": "Binary presence sensor. Active while a pallet is at this station. Occupied and CanAccept are computed from it."
+   },
+   "label": "分度站 1 · 感測器",
+   "function": "停止位置的存在感測器。告知單元托盤已到達並準備進行分度。",
+   "signal": "二進位存在感測器。當托盤位於此站時為啟動狀態。Occupied 與 CanAccept 由此計算得出。"
+  },
+  "MAIN.FG_Transport.Index01_B_Exit": {
+   "name": "B_Exit",
+   "type": "SensorBinary",
+   "group": "FG_Transport",
+   "module": "Index01",
+   "scenePath": "Project/FG_Transport/Index01/B_Exit",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Exit sensor just past the stopper. Confirms the released pallet has actually left before the unit returns to idle.",
+    "Signal": "Binary presence sensor. Its RISING EDGE clears the transfer latch, in every PackML state. Read the edge, never the level."
+   },
+   "label": "分度站 1 · 出口感測器",
+   "function": "位於擋料器之後的出口感測器。確認釋放的托盤在單元返回閒置狀態前已實際離開。",
+   "signal": "二進位存在感測器。其上升沿在所有 PackML 狀態下都會清除傳輸鎖存。請讀取邊緣而非電位。"
+  },
+  "MAIN.FG_Transport.Index02": {
+   "name": "Index02",
+   "type": "",
+   "group": "FG_Transport",
+   "module": "",
+   "scenePath": "Project/FG_Transport/Index02",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Pallet index station. Stops an incoming pallet, lifts it to a stable position to fix the payload, triggers the functional group it serves, then releases the pallet to the next station.",
+    "Role": "Serves FG_02, the optical inspection station. Releases to Index03."
+   },
+   "label": "分度站 2",
+   "function": "托盤分度站。停止進入的托盤，將其升至穩定位置以固定工件，觸發其服務的功能群組，然後將托盤釋放到下一站。",
+   "role": "服務於 FG_02 光學檢測站。釋放至 Index03。"
+  },
+  "MAIN.FG_Transport.Index02_Y_Stopper": {
+   "name": "Y_Stopper",
+   "type": "Cylinder",
+   "group": "FG_Transport",
+   "module": "Index02",
+   "scenePath": "Project/FG_Transport/Index02/Y_Stopper",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Stopper cylinder. Retracted holds an incoming pallet at the station; extending releases it once the next station is free.",
+    "Signal": "Double solenoid with both limits read. RETRACTED (min) holds the pallet; EXTENDING (max) releases it - the blade drops out of the way."
+   },
+   "label": "分度站 2 · 擋料氣缸",
+   "function": "擋料氣缸。縮回時將進入的托盤保持在該站；當下一站空閒時，伸出則釋放托盤。",
+   "signal": "雙電磁閥且讀取兩個到位訊號。縮回 (min) 保持托盤；伸出 (max) 釋放托盤 —— 擋板落下避開。"
+  },
+  "MAIN.FG_Transport.Index02_Y_Lift": {
+   "name": "Y_Lift",
+   "type": "Cylinder",
+   "group": "FG_Transport",
+   "module": "Index02",
+   "scenePath": "Project/FG_Transport/Index02/Y_Lift",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Index lift cylinder. Raises the pallet off the conveyor to a repeatable position and fixes the payload while the station works on it.",
+    "Signal": "Double solenoid with both limits read. EXTENDED raises the carriage and fixes the pallet clear of the belt; retracted is home."
+   },
+   "label": "分度站 2 · 升降氣缸",
+   "function": "分度升降氣缸。將托盤從輸送帶升至可重複定位的位置，並在該站作業時固定工件。",
+   "signal": "雙電磁閥且讀取兩個到位訊號。伸出時升起托架並將托盤固定在輸送帶上方；縮回為原點。"
+  },
+  "MAIN.FG_Transport.Index02_B_Detect": {
+   "name": "B_Detect",
+   "type": "SensorBinary",
+   "group": "FG_Transport",
+   "module": "Index02",
+   "scenePath": "Project/FG_Transport/Index02/B_Detect",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Presence sensor at the stop position. Tells the unit a pallet has arrived and is ready to be indexed.",
+    "Signal": "Binary presence sensor. Active while a pallet is at this station. Occupied and CanAccept are computed from it."
+   },
+   "label": "分度站 2 · 偵測感測器",
+   "function": "停止位置的存在感測器。告知單元托盤已到達並準備好進行分度。",
+   "signal": "二進位存在感測器。當托盤位於此站時為啟動狀態。Occupied 與 CanAccept 由此計算而來。"
+  },
+  "MAIN.FG_Transport.Index02_B_Exit": {
+   "name": "B_Exit",
+   "type": "SensorBinary",
+   "group": "FG_Transport",
+   "module": "Index02",
+   "scenePath": "Project/FG_Transport/Index02/B_Exit",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Exit sensor just past the stopper. Confirms the released pallet has actually left before the unit returns to idle.",
+    "Signal": "Binary presence sensor. Its RISING EDGE clears the transfer latch, in every PackML state. Read the edge, never the level."
+   },
+   "label": "分度站 2 · 出口感測器",
+   "function": "位於擋料器之後的出口感測器。確認釋放的托盤在單元返回閒置狀態前已實際離開。",
+   "signal": "二進位存在感測器。其上升沿在所有 PackML 狀態下都會清除傳輸鎖存。請讀取邊緣而非電位。"
+  },
+  "MAIN.FG_Transport.Index03": {
+   "name": "Index03",
+   "type": "",
+   "group": "FG_Transport",
+   "module": "",
+   "scenePath": "Project/FG_Transport/Index03",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Pallet index station. Stops an incoming pallet, lifts it to a stable position to fix the payload, triggers the functional group it serves, then releases the pallet to the next station.",
+    "Role": "Serves FG_03, the slot 1 to slot 2 transfer station. Releases to Index04."
+   },
+   "label": "分度站 3",
+   "function": "托盤分度站。停止進入的托盤，將其升至穩定位置以固定工件，觸發其服務的功能群組，然後將托盤釋放到下一站。",
+   "role": "服務於 FG_03 槽位 1 至槽位 2 傳輸站。釋放至 Index04。"
+  },
+  "MAIN.FG_Transport.Index03_Y_Stopper": {
+   "name": "Y_Stopper",
+   "type": "Cylinder",
+   "group": "FG_Transport",
+   "module": "Index03",
+   "scenePath": "Project/FG_Transport/Index03/Y_Stopper",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Stopper cylinder. Retracted holds an incoming pallet at the station; extending releases it once the next station is free.",
+    "Signal": "Double solenoid with both limits read. RETRACTED (min) holds the pallet; EXTENDING (max) releases it - the blade drops out of the way."
+   },
+   "label": "分度站 3 · 擋料氣缸",
+   "function": "擋料氣缸。縮回時將進入的托盤保持在該站；當下一站空閒時，伸出則釋放托盤。",
+   "signal": "雙電磁閥且讀取兩個到位訊號。縮回 (min) 保持托盤；伸出 (max) 釋放托盤 —— 擋板落下避開。"
+  },
+  "MAIN.FG_Transport.Index03_Y_Lift": {
+   "name": "Y_Lift",
+   "type": "Cylinder",
+   "group": "FG_Transport",
+   "module": "Index03",
+   "scenePath": "Project/FG_Transport/Index03/Y_Lift",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Index lift cylinder. Raises the pallet off the conveyor to a repeatable position and fixes the payload while the station works on it.",
+    "Signal": "Double solenoid with both limits read. EXTENDED raises the carriage and fixes the pallet clear of the belt; retracted is home."
+   },
+   "label": "分度站 3 · 升降氣缸",
+   "function": "分度升降氣缸。將托盤從輸送帶抬升至可重複定位的位置，並在工作站作業時固定工件。",
+   "signal": "雙電磁閥且讀取兩個到位訊號。伸出時抬升載台並使托盤脫離輸送帶；縮回為原點。"
+  },
+  "MAIN.FG_Transport.Index03_B_Detect": {
+   "name": "B_Detect",
+   "type": "SensorBinary",
+   "group": "FG_Transport",
+   "module": "Index03",
+   "scenePath": "Project/FG_Transport/Index03/B_Detect",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Presence sensor at the stop position. Tells the unit a pallet has arrived and is ready to be indexed.",
+    "Signal": "Binary presence sensor. Active while a pallet is at this station. Occupied and CanAccept are computed from it."
+   },
+   "label": "分度站 3 · 到位感測器",
+   "function": "停止位置的感測器。告知單元托盤已到達且準備好進行分度。",
+   "signal": "二進位感測器。當托盤位於此站時為啟動狀態。Occupied 與 CanAccept 由此計算而得。"
+  },
+  "MAIN.FG_Transport.Index03_B_Exit": {
+   "name": "B_Exit",
+   "type": "SensorBinary",
+   "group": "FG_Transport",
+   "module": "Index03",
+   "scenePath": "Project/FG_Transport/Index03/B_Exit",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Exit sensor just past the stopper. Confirms the released pallet has actually left before the unit returns to idle.",
+    "Signal": "Binary presence sensor. Its RISING EDGE clears the transfer latch, in every PackML state. Read the edge, never the level."
+   },
+   "label": "分度站 3 · 出口感測器",
+   "function": "位於擋料器後方的出口感測器。在單元返回閒置狀態前，確認釋放的托盤已實際離開。",
+   "signal": "二進位感測器。其上升沿在所有 PackML 狀態下都會清除傳輸鎖存。請讀取邊緣而非電位。"
+  },
+  "MAIN.FG_Transport.Index04": {
+   "name": "Index04",
+   "type": "",
+   "group": "FG_Transport",
+   "module": "",
+   "scenePath": "Project/FG_Transport/Index04",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Pallet index station. Stops an incoming pallet, lifts it to a stable position to fix the payload, triggers the functional group it serves, then releases the pallet to the next station.",
+    "Role": "Serves FG_04, the press station. Releases to Index05."
+   },
+   "label": "分度站 4",
+   "function": "托盤分度站。停止進入的托盤，將其抬升至穩定位置以固定工件，觸發其服務的功能群組，然後將托盤釋放至下一站。",
+   "role": "服務於 FG_04（壓接站）。釋放至 Index05。"
+  },
+  "MAIN.FG_Transport.Index04_Y_Stopper": {
+   "name": "Y_Stopper",
+   "type": "Cylinder",
+   "group": "FG_Transport",
+   "module": "Index04",
+   "scenePath": "Project/FG_Transport/Index04/Y_Stopper",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Stopper cylinder. Retracted holds an incoming pallet at the station; extending releases it once the next station is free.",
+    "Signal": "Double solenoid with both limits read. RETRACTED (min) holds the pallet; EXTENDING (max) releases it - the blade drops out of the way."
+   },
+   "label": "分度站 4 · 擋料氣缸",
+   "function": "擋料氣缸。縮回時將進入的托盤保持在工作站；當下一站空閒時，伸出以釋放托盤。",
+   "signal": "雙電磁閥且讀取兩個到位訊號。縮回（最小值）保持托盤；伸出（最大值）釋放托盤——擋料片將下降避開。"
+  },
+  "MAIN.FG_Transport.Index04_Y_Lift": {
+   "name": "Y_Lift",
+   "type": "Cylinder",
+   "group": "FG_Transport",
+   "module": "Index04",
+   "scenePath": "Project/FG_Transport/Index04/Y_Lift",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Index lift cylinder. Raises the pallet off the conveyor to a repeatable position and fixes the payload while the station works on it.",
+    "Signal": "Double solenoid with both limits read. EXTENDED raises the carriage and fixes the pallet clear of the belt; retracted is home."
+   },
+   "label": "分度站 4 · 升降氣缸",
+   "function": "分度升降氣缸。將托盤從輸送帶抬升至可重複定位的位置，並在工作站作業時固定工件。",
+   "signal": "雙電磁閥且讀取兩個到位訊號。伸出時抬升載台並使托盤脫離輸送帶；縮回為原點。"
+  },
+  "MAIN.FG_Transport.Index04_B_Detect": {
+   "name": "B_Detect",
+   "type": "SensorBinary",
+   "group": "FG_Transport",
+   "module": "Index04",
+   "scenePath": "Project/FG_Transport/Index04/B_Detect",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Presence sensor at the stop position. Tells the unit a pallet has arrived and is ready to be indexed.",
+    "Signal": "Binary presence sensor. Active while a pallet is at this station. Occupied and CanAccept are computed from it."
+   },
+   "label": "分度站 4 · 到位感測器",
+   "function": "停止位置的感測器。告知單元托盤已到達且準備好進行分度。",
+   "signal": "二進位感測器。當托盤位於此站時為啟動狀態。Occupied 與 CanAccept 由此計算而得。"
+  },
+  "MAIN.FG_Transport.Index04_B_Exit": {
+   "name": "B_Exit",
+   "type": "SensorBinary",
+   "group": "FG_Transport",
+   "module": "Index04",
+   "scenePath": "Project/FG_Transport/Index04/B_Exit",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Exit sensor just past the stopper. Confirms the released pallet has actually left before the unit returns to idle.",
+    "Signal": "Binary presence sensor. Its RISING EDGE clears the transfer latch, in every PackML state. Read the edge, never the level."
+   },
+   "label": "分度站 4 · 出口感測器",
+   "function": "位於擋料器後方的出口感測器。在單元返回閒置狀態前，確認釋放的托盤已實際離開。",
+   "signal": "二進位感測器。其上升沿在所有 PackML 狀態下都會清除傳輸鎖存。請讀取邊緣而非電位。"
+  },
+  "MAIN.FG_Transport.Index05": {
+   "name": "Index05",
+   "type": "",
+   "group": "FG_Transport",
+   "module": "",
+   "scenePath": "Project/FG_Transport/Index05",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Pallet index station. Stops an incoming pallet, lifts it to a stable position to fix the payload, triggers the functional group it serves, then releases the pallet to the next station.",
+    "Role": "Serves FG_05, the capping station. Last station on the upper level - releases towards Lift 2."
+   },
+   "label": "分度站 5 · 托盤索引",
+   "function": "托盤分度站。停止進入的托盤，將其升至穩定位置以固定工件，觸發其服務的功能群組，然後將托盤釋放至下一站。",
+   "role": "服務於 FG_05 瓶蓋站。上層最後一站 - 向升降機 2 釋放。"
+  },
+  "MAIN.FG_Transport.Index05_Y_Stopper": {
+   "name": "Y_Stopper",
+   "type": "Cylinder",
+   "group": "FG_Transport",
+   "module": "Index05",
+   "scenePath": "Project/FG_Transport/Index05/Y_Stopper",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Stopper cylinder. Retracted holds an incoming pallet at the station; extending releases it once the next station is free.",
+    "Signal": "Double solenoid with both limits read. RETRACTED (min) holds the pallet; EXTENDING (max) releases it - the blade drops out of the way."
+   },
+   "label": "分度站 5 · 擋料氣缸",
+   "function": "擋料氣缸。縮回時將進入的托盤保持在該站；當下一站空閒時伸出以釋放托盤。",
+   "signal": "雙電磁閥且讀取兩個到位訊號。縮回 (min) 保持托盤；伸出 (max) 釋放托盤 - 擋料片落下避開。"
+  },
+  "MAIN.FG_Transport.Index05_Y_Lift": {
+   "name": "Y_Lift",
+   "type": "Cylinder",
+   "group": "FG_Transport",
+   "module": "Index05",
+   "scenePath": "Project/FG_Transport/Index05/Y_Lift",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Index lift cylinder. Raises the pallet off the conveyor to a repeatable position and fixes the payload while the station works on it.",
+    "Signal": "Double solenoid with both limits read. EXTENDED raises the carriage and fixes the pallet clear of the belt; retracted is home."
+   },
+   "label": "分度站 5 · 升降氣缸",
+   "function": "分度升降氣缸。將托盤從輸送帶抬升至可重複定位的位置，並在該站作業時固定工件。",
+   "signal": "雙電磁閥且讀取兩個到位訊號。伸出時抬升托架並將托盤固定在輸送帶上方；縮回為原點。"
+  },
+  "MAIN.FG_Transport.Index05_B_Detect": {
+   "name": "B_Detect",
+   "type": "SensorBinary",
+   "group": "FG_Transport",
+   "module": "Index05",
+   "scenePath": "Project/FG_Transport/Index05/B_Detect",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Presence sensor at the stop position. Tells the unit a pallet has arrived and is ready to be indexed.",
+    "Signal": "Binary presence sensor. Active while a pallet is at this station. Occupied and CanAccept are computed from it."
+   },
+   "label": "分度站 5 · 到位感測器",
+   "function": "停止位置的感測器。告知單元托盤已到達並準備好進行分度。",
+   "signal": "二進位感測器。當托盤位於此站時觸發。Occupied 與 CanAccept 由此計算得出。"
+  },
+  "MAIN.FG_Transport.Index05_B_Exit": {
+   "name": "B_Exit",
+   "type": "SensorBinary",
+   "group": "FG_Transport",
+   "module": "Index05",
+   "scenePath": "Project/FG_Transport/Index05/B_Exit",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Exit sensor just past the stopper. Confirms the released pallet has actually left before the unit returns to idle.",
+    "Signal": "Binary presence sensor. Its RISING EDGE clears the transfer latch, in every PackML state. Read the edge, never the level."
+   },
+   "label": "分度站 5 · 出口感測器",
+   "function": "位於擋料器後方的出口感測器。在單元返回閒置狀態前，確認釋放的托盤確實已離開。",
+   "signal": "二進位感測器。其上升沿在所有 PackML 狀態下都會清除傳輸鎖定。讀取上升沿，而非電位。"
+  },
+  "MAIN.FG_Transport.Stopper01": {
+   "name": "Stopper01",
+   "type": "",
+   "group": "FG_Transport",
+   "module": "",
+   "scenePath": "Project/FG_Transport/Stopper01",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Accumulation stopper between stations. Holds one pallet and releases it only when the next station is free, so a single pallet travels from stopper to stopper."
+   },
+   "label": "擋料站 1 · 堆積擋料",
+   "function": "站點之間的堆積擋料器。保持一個托盤，僅在下一站空閒時才釋放，使單個托盤在擋料器之間移動。"
+  },
+  "MAIN.FG_Transport.Stopper01_Y_Stopper": {
+   "name": "Y_Stopper",
+   "type": "Cylinder",
+   "group": "FG_Transport",
+   "module": "Stopper01",
+   "scenePath": "Project/FG_Transport/Stopper01/Y_Stopper",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Stopper cylinder. Retracted holds the pallet at this accumulation point; extending releases it when the next position is free.",
+    "Signal": "Double solenoid with both limits read. RETRACTED (min) holds the pallet; EXTENDING (max) releases it - the blade drops out of the way."
+   },
+   "label": "擋料站 1 · 擋料氣缸",
+   "function": "擋料氣缸。縮回時將托盤保持在此堆積點；當下一位置空閒時伸出以釋放托盤。",
+   "signal": "雙電磁閥且讀取兩個到位訊號。縮回 (min) 保持托盤；伸出 (max) 釋放托盤 - 擋料片落下避開。"
+  },
+  "MAIN.FG_Transport.Stopper01_B_Detect": {
+   "name": "B_Detect",
+   "type": "SensorBinary",
+   "group": "FG_Transport",
+   "module": "Stopper01",
+   "scenePath": "Project/FG_Transport/Stopper01/B_Detect",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Presence sensor at the stop position. Tells the unit a pallet is waiting.",
+    "Signal": "Binary presence sensor. Active while a pallet is at this station. Occupied and CanAccept are computed from it."
+   },
+   "label": "擋料站 1 · 到位感測器",
+   "function": "停止位置的感測器。告知單元有托盤在等待。",
+   "signal": "二進位感測器。當托盤位於此站時觸發。Occupied 與 CanAccept 由此計算得出。"
+  },
+  "MAIN.FG_Transport.Stopper01_B_Exit": {
+   "name": "B_Exit",
+   "type": "SensorBinary",
+   "group": "FG_Transport",
+   "module": "Stopper01",
+   "scenePath": "Project/FG_Transport/Stopper01/B_Exit",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Exit sensor past the stopper. Confirms the released pallet has left before the unit accepts the next one.",
+    "Signal": "Binary presence sensor. Its RISING EDGE clears the transfer latch, in every PackML state. Read the edge, never the level."
+   },
+   "label": "擋料站 1 · 出口感測器",
+   "function": "擋料器後方的出口感測器。在裝置接收下一個托盤前，確認已釋放的托盤已離開。",
+   "signal": "二進位存在感測器。其上升沿會在所有 PackML 狀態下清除傳輸鎖存。請讀取邊緣而非電位。"
+  },
+  "MAIN.FG_Transport.Stopper02": {
+   "name": "Stopper02",
+   "type": "",
+   "group": "FG_Transport",
+   "module": "",
+   "scenePath": "Project/FG_Transport/Stopper02",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Accumulation stopper between stations. Holds one pallet and releases it only when the next station is free, so a single pallet travels from stopper to stopper."
+   },
+   "label": "擋料站 2",
+   "function": "站點之間的堆積擋料器。持有一個托盤，僅在下一站空閒時才釋放，使單個托盤在擋料器之間移動。"
+  },
+  "MAIN.FG_Transport.Stopper02_Y_Stopper": {
+   "name": "Y_Stopper",
+   "type": "Cylinder",
+   "group": "FG_Transport",
+   "module": "Stopper02",
+   "scenePath": "Project/FG_Transport/Stopper02/Y_Stopper",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Stopper cylinder. Retracted holds the pallet at this accumulation point; extending releases it when the next position is free.",
+    "Signal": "Double solenoid with both limits read. RETRACTED (min) holds the pallet; EXTENDING (max) releases it - the blade drops out of the way."
+   },
+   "label": "擋料站 2 · 擋料氣缸",
+   "function": "擋料氣缸。縮回時將托盤保持在此堆積點；當下一位置空閒時，伸出以釋放托盤。",
+   "signal": "雙電磁閥且讀取兩個到位訊號。縮回 (min) 保持托盤；伸出 (max) 釋放托盤 —— 擋料片將移開。"
+  },
+  "MAIN.FG_Transport.Stopper02_B_Detect": {
+   "name": "B_Detect",
+   "type": "SensorBinary",
+   "group": "FG_Transport",
+   "module": "Stopper02",
+   "scenePath": "Project/FG_Transport/Stopper02/B_Detect",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Presence sensor at the stop position. Tells the unit a pallet is waiting.",
+    "Signal": "Binary presence sensor. Active while a pallet is at this station. Occupied and CanAccept are computed from it."
+   },
+   "label": "擋料站 2 · 偵測感測器",
+   "function": "停止位置的存在感測器。告知裝置有托盤在等待。",
+   "signal": "二進位存在感測器。當托盤在此站時為啟動狀態。Occupied 與 CanAccept 由此計算而得。"
+  },
+  "MAIN.FG_Transport.Stopper02_B_Exit": {
+   "name": "B_Exit",
+   "type": "SensorBinary",
+   "group": "FG_Transport",
+   "module": "Stopper02",
+   "scenePath": "Project/FG_Transport/Stopper02/B_Exit",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Exit sensor past the stopper. Confirms the released pallet has left before the unit accepts the next one.",
+    "Signal": "Binary presence sensor. Its RISING EDGE clears the transfer latch, in every PackML state. Read the edge, never the level."
+   },
+   "label": "擋料站 2 · 出口感測器",
+   "function": "擋料器後方的出口感測器。在裝置接收下一個托盤前，確認已釋放的托盤已離開。",
+   "signal": "二進位存在感測器。其上升沿會在所有 PackML 狀態下清除傳輸鎖存。請讀取邊緣而非電位。"
+  },
+  "MAIN.FG_Transport.Stopper03": {
+   "name": "Stopper03",
+   "type": "",
+   "group": "FG_Transport",
+   "module": "",
+   "scenePath": "Project/FG_Transport/Stopper03",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Accumulation stopper between stations. Holds one pallet and releases it only when the next station is free, so a single pallet travels from stopper to stopper."
+   },
+   "label": "擋料站 3",
+   "function": "站點之間的堆積擋料器。持有一個托盤，僅在下一站空閒時才釋放，使單個托盤在擋料器之間移動。"
+  },
+  "MAIN.FG_Transport.Stopper03_Y_Stopper": {
+   "name": "Y_Stopper",
+   "type": "Cylinder",
+   "group": "FG_Transport",
+   "module": "Stopper03",
+   "scenePath": "Project/FG_Transport/Stopper03/Y_Stopper",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Stopper cylinder. Retracted holds the pallet at this accumulation point; extending releases it when the next position is free.",
+    "Signal": "Double solenoid with both limits read. RETRACTED (min) holds the pallet; EXTENDING (max) releases it - the blade drops out of the way."
+   },
+   "label": "擋料站 3 · 擋料氣缸",
+   "function": "擋料氣缸。縮回時將托盤保持在此堆積點；當下一位置空閒時，伸出以釋放托盤。",
+   "signal": "雙電磁閥且讀取兩個到位訊號。縮回 (min) 保持托盤；伸出 (max) 釋放托盤 —— 擋料片將移開。"
+  },
+  "MAIN.FG_Transport.Stopper03_B_Detect": {
+   "name": "B_Detect",
+   "type": "SensorBinary",
+   "group": "FG_Transport",
+   "module": "Stopper03",
+   "scenePath": "Project/FG_Transport/Stopper03/B_Detect",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Presence sensor at the stop position. Tells the unit a pallet is waiting.",
+    "Signal": "Binary presence sensor. Active while a pallet is at this station. Occupied and CanAccept are computed from it."
+   },
+   "label": "擋料站 3 · 偵測感測器",
+   "function": "停止位置的存在感測器。告知裝置有托盤在等待。",
+   "signal": "二進位存在感測器。當托盤在此站時為啟動狀態。Occupied 與 CanAccept 由此計算而得。"
+  },
+  "MAIN.FG_Transport.Stopper03_B_Exit": {
+   "name": "B_Exit",
+   "type": "SensorBinary",
+   "group": "FG_Transport",
+   "module": "Stopper03",
+   "scenePath": "Project/FG_Transport/Stopper03/B_Exit",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Exit sensor past the stopper. Confirms the released pallet has left before the unit accepts the next one.",
+    "Signal": "Binary presence sensor. Its RISING EDGE clears the transfer latch, in every PackML state. Read the edge, never the level."
+   },
+   "label": "擋料站 3 · 到位感測器",
+   "function": "擋料器後方的離開感測器。在單元接收下一個托盤前，確認釋放的托盤已離開。",
+   "signal": "二進位存在感測器。其上升沿在所有 PackML 狀態下都會清除傳輸鎖存。請讀取邊緣而非電平。"
+  },
+  "MAIN.FG_Transport.Stopper04": {
+   "name": "Stopper04",
+   "type": "",
+   "group": "FG_Transport",
+   "module": "",
+   "scenePath": "Project/FG_Transport/Stopper04",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Accumulation stopper between stations. Holds one pallet and releases it only when the next station is free, so a single pallet travels from stopper to stopper."
+   },
+   "label": "擋料站 4",
+   "function": "站點之間的堆積擋料器。持有一個托盤，僅在下一站空閒時才釋放，使單個托盤在擋料器之間移動。"
+  },
+  "MAIN.FG_Transport.Stopper04_Y_Stopper": {
+   "name": "Y_Stopper",
+   "type": "Cylinder",
+   "group": "FG_Transport",
+   "module": "Stopper04",
+   "scenePath": "Project/FG_Transport/Stopper04/Y_Stopper",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Stopper cylinder. Retracted holds the pallet at this accumulation point; extending releases it when the next position is free.",
+    "Signal": "Double solenoid with both limits read. RETRACTED (min) holds the pallet; EXTENDING (max) releases it - the blade drops out of the way."
+   },
+   "label": "擋料站 4 · 擋料氣缸",
+   "function": "擋料氣缸。縮回時將托盤保持在此堆積點；當下一位置空閒時，伸出以釋放托盤。",
+   "signal": "雙電磁閥且讀取兩個到位訊號。縮回 (min) 保持托盤；伸出 (max) 釋放托盤 —— 擋板落下以避開。"
+  },
+  "MAIN.FG_Transport.Stopper04_B_Detect": {
+   "name": "B_Detect",
+   "type": "SensorBinary",
+   "group": "FG_Transport",
+   "module": "Stopper04",
+   "scenePath": "Project/FG_Transport/Stopper04/B_Detect",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Presence sensor at the stop position. Tells the unit a pallet is waiting.",
+    "Signal": "Binary presence sensor. Active while a pallet is at this station. Occupied and CanAccept are computed from it."
+   },
+   "label": "擋料站 4 · 到位感測器",
+   "function": "停止位置的存在感測器。告知單元有托盤正在等待。",
+   "signal": "二進位存在感測器。當托盤在此站時為啟動狀態。Occupied 與 CanAccept 是由此計算而得。"
+  },
+  "MAIN.FG_Transport.Stopper04_B_Exit": {
+   "name": "B_Exit",
+   "type": "SensorBinary",
+   "group": "FG_Transport",
+   "module": "Stopper04",
+   "scenePath": "Project/FG_Transport/Stopper04/B_Exit",
+   "groupLabel": "輸送系統",
+   "en": {
+    "Function": "Exit sensor past the stopper. Confirms the released pallet has left before the unit accepts the next one.",
+    "Signal": "Binary presence sensor. Its RISING EDGE clears the transfer latch, in every PackML state. Read the edge, never the level."
+   },
+   "label": "擋料站 4 · 到位感測器",
+   "function": "擋料器後方的離開感測器。在單元接收下一個托盤前，確認釋放的托盤已離開。",
+   "signal": "二進位存在感測器。其上升沿在所有 PackML 狀態下都會清除傳輸鎖存。請讀取邊緣而非電平。"
+  },
+  "MAIN.FG_01": {
+   "name": "FG_01",
+   "type": "",
+   "group": "FG_01",
+   "module": "",
+   "scenePath": "Project/FG_01",
+   "groupLabel": "第 1 站：讀碼與雷射打標",
+   "en": {
+    "Function": "Identifies the payload and applies a laser mark. The camera reads the serial number the part carries; the mark content is abstract, and FG_02 reads it back."
+   },
+   "label": "第 1 站",
+   "function": "識別工件並進行雷射打標。攝影機讀取工件攜帶的序號；標記內容為抽象的，由 FG_02 讀回。"
+  },
+  "MAIN.FG_01.Barcode Reader": {
+   "name": "Barcode Reader",
+   "type": "",
+   "group": "FG_01",
+   "module": "",
+   "scenePath": "Project/FG_01/Barcode Reader",
+   "groupLabel": "第 1 站：讀碼與雷射打標",
+   "en": {
+    "Function": "Verification sub assembly - the optical reader behind a pneumatic window that shields it while the laser fires."
+   },
+   "label": "第 1 站 · 讀碼器",
+   "function": "驗證子組件 —— 位於氣動窗後方的光學讀碼器，在雷射發射時對其進行屏蔽。"
+  },
+  "MAIN.FG_01.P_Camera": {
+   "name": "P_Camera",
+   "type": "DataReader",
+   "group": "FG_01",
+   "module": "",
+   "scenePath": "Project/FG_01/Barcode Reader/P_Camera",
+   "groupLabel": "第 1 站：讀碼與雷射打標",
+   "en": {
+    "Function": "Reads the serial number the payload carries. It runs after the laser fires but does not verify the mark - FG_02 does that.",
+    "Signal": "Enable, then trigger; reads back Ready, Busy, ResultValid and ResultOK. The twin echoes the two control bits and hands over the datum; the verdict is synthesised in OC_SIM FB_Camera."
+   },
+   "label": "第 1 站 · 攝影機",
+   "function": "讀取工件攜帶的序號。它在雷射發射後運行，但不驗證標記 —— 該工作由 FG_02 完成。",
+   "signal": "啟用，然後觸發；讀回 Ready, Busy, ResultValid 和 ResultOK。孿生會回顯兩個控制位並交接數據；判定結果在 OC_SIM FB_Camera 中綜合得出。"
+  },
+  "MAIN.FG_01.Y_ReaderWindow": {
+   "name": "Y_ReaderWindow",
+   "type": "Cylinder",
+   "group": "FG_01",
+   "module": "",
+   "scenePath": "Project/FG_01/Barcode Reader/Y_ReaderWindow",
+   "groupLabel": "第 1 站：讀碼與雷射打標",
+   "en": {
+    "Function": "Pneumatic window in front of P_Reader, doubling as the camera shield. Closed while the laser fires, opened for the read.",
+    "Signal": "Double solenoid with both limits read. EXTENDED opens the window for the read; retracted shields the optics and is home."
+   },
+   "label": "第 1 站 · 讀碼窗氣缸",
+   "function": "位於讀碼器前的氣動窗，同時作為相機遮蔽罩。雷射發射時關閉，讀碼時開啟。",
+   "signal": "雙電磁閥且讀取兩個到位感測器。伸出開啟視窗以進行讀碼；縮回則遮蔽光學元件且為原點。"
+  },
+  "MAIN.FG_01.Laser Unit": {
+   "name": "Laser Unit",
+   "type": "",
+   "group": "FG_01",
+   "module": "",
+   "scenePath": "Project/FG_01/Laser Unit",
+   "groupLabel": "第 1 站：讀碼與雷射打標",
+   "en": {
+    "Function": "Marking sub assembly - the laser head, its service mode platform cylinder and the kinematic axis they ride on."
+   },
+   "label": "第 1 站 · 雷射單元",
+   "function": "打標子組件 — 包括雷射頭、其維修模式平台氣缸以及承載它們的運動軸。"
+  },
+  "MAIN.FG_01.Y_Platform": {
+   "name": "Y_Platform",
+   "type": "Cylinder",
+   "group": "FG_01",
+   "module": "",
+   "scenePath": "Project/FG_01/Laser Unit/Y_Platform",
+   "groupLabel": "第 1 站：讀碼與雷射打標",
+   "en": {
+    "Function": "Moves the laser head. Service mode only - SequenceUnit1 takes override control of it on enable and releases on disable, but never actuates it during the normal cycle.",
+    "Signal": "Double solenoid with both limits read. Service positioning of the laser head. Never actuated during the production cycle."
+   },
+   "label": "第 1 站 · 平台氣缸",
+   "function": "移動雷射頭。僅限維修模式 — SequenceUnit1 在啟用時接管其控制權，在停用時釋放，但在正常週期中絕不會驅動它。",
+   "signal": "雙電磁閥且讀取兩個到位感測器。用於雷射頭的維修定位。在生產週期中絕不會被驅動。"
+  },
+  "MAIN.FG_01.Axis": {
+   "name": "Axis",
+   "type": "",
+   "group": "FG_01",
+   "module": "",
+   "scenePath": "Project/FG_01/Laser Unit/Axis",
+   "groupLabel": "第 1 站：讀碼與雷射打標",
+   "en": {
+    "Function": "Kinematic axis carrying the laser head, driven by the Y_Platform service cylinder."
+   },
+   "label": "第 1 站 · 軸",
+   "function": "承載雷射頭的運動軸，由 Y_Platform 維修氣缸驅動。"
+  },
+  "MAIN.FG_01.Y_LaserMark": {
+   "name": "Y_LaserMark",
+   "type": "LinkByte",
+   "group": "FG_01",
+   "module": "",
+   "scenePath": "Project/FG_01/Laser Unit/Axis/Y_LaserMark",
+   "groupLabel": "第 1 站：讀碼與雷射打標",
+   "en": {
+    "Signal": "One control bit out enables the laser module; held high for 1 s it applies the mark. NO status bits - the PLC gets no confirmation that it fired."
+   },
+   "label": "第 1 站 · 雷射打標",
+   "signal": "一個控制輸出位元啟用雷射模組；保持高電位 1 秒即執行打標。無狀態位元 — PLC 無法收到發射確認。"
+  },
+  "MAIN.FG_01.Y_Gripper": {
+   "name": "Y_Gripper",
+   "type": "Cylinder",
+   "group": "FG_01",
+   "module": "",
+   "scenePath": "Project/FG_01/Y_Gripper",
+   "groupLabel": "第 1 站：讀碼與雷射打標",
+   "en": {
+    "Function": "Two finger clamp that holds the payload steady for the duration of marking and reading.",
+    "Signal": "Double solenoid with both limits read. EXTENDED clamps the payload for marking and reading; retracted releases."
+   },
+   "label": "第 1 站 · 夾爪氣缸",
+   "function": "兩指夾具，在打標和讀碼期間將工件固定。",
+   "signal": "雙電磁閥且讀取兩個到位感測器。伸出夾緊工件以進行打標和讀碼；縮回則釋放。"
+  },
+  "MAIN.FG_01.Y_Gate1": {
+   "name": "Y_Gate1",
+   "type": "Cylinder",
+   "group": "FG_01",
+   "module": "",
+   "scenePath": "Project/FG_01/Y_Gate1",
+   "groupLabel": "第 1 站：讀碼與雷射打標",
+   "en": {
+    "Function": "Guard gate cylinder. Closes to shield the cell during laser marking and opens to let pallets pass. Normal state gate opened (Home Position) (Top Position)",
+    "Signal": "Extending CLOSES the gate, retracting OPENS it, and retracted is home - the opposite sense to a transport stopper. Both limits are read; the two gates are commanded together.",
+    "Role": "Guard gate 1. Must be closed before the FG_01 laser may fire."
+   },
+   "label": "第 1 站 · 閘門 1 氣缸",
+   "function": "防護閘門氣缸。在雷射打標期間關閉以遮蔽單元，並開啟以讓托盤通過。正常狀態為閘門開啟（原點位置）（頂部位置）。",
+   "signal": "伸出關閉閘門，縮回開啟閘門，且縮回為原點 — 與輸送擋料器的方向相反。讀取兩個到位感測器；兩個閘門同步指令。",
+   "role": "防護閘門 1。在功能群組 1 雷射發射前必須關閉。"
+  },
+  "MAIN.FG_01.Y_Gate2": {
+   "name": "Y_Gate2",
+   "type": "Cylinder",
+   "group": "FG_01",
+   "module": "",
+   "scenePath": "Project/FG_01/Y_Gate2",
+   "groupLabel": "第 1 站：讀碼與雷射打標",
+   "en": {
+    "Function": "Guard gate cylinder. Closes to shield the cell during laser marking and opens to let pallets pass. Normal state gate opened (Home Position) (Top Position)",
+    "Signal": "Extending CLOSES the gate, retracting OPENS it, and retracted is home - the opposite sense to a transport stopper. Both limits are read; the two gates are commanded together.",
+    "Role": "Guard gate 2. Must be closed before the FG_01 laser may fire."
+   },
+   "label": "第 1 站 · 閘門 2 氣缸",
+   "function": "防護閘門氣缸。在雷射打標期間關閉以遮蔽單元，並開啟以讓托盤通過。正常狀態為閘門開啟（原點位置）（頂部位置）。",
+   "signal": "伸出關閉閘門，縮回開啟閘門，且縮回為原點 — 與輸送擋料器的方向相反。讀取兩個到位感測器；兩個閘門同步指令。",
+   "role": "防護閘門 2。在功能群組 1 雷射發射前必須關閉。"
+  },
+  "MAIN.FG_01.B_SafetyGate1": {
+   "name": "B_SafetyGate1",
+   "type": "SensorBinary",
+   "group": "FG_01",
+   "module": "",
+   "scenePath": "Project/FG_01/B_SafetyGate1",
+   "groupLabel": "第 1 站：讀碼與雷射打標",
+   "en": {
+    "Function": "Safety sensor monitoring a guard gate position.",
+    "Signal": "Binary presence sensor. Monitors a guard gate. Must be Active, with both gates at their extended limit, before the laser may fire.",
+    "Role": "Monitors guard gate 1 for the FG_01 laser interlock."
+   },
+   "label": "第 1 站 · 安全閘門感測器 1",
+   "function": "監控閘門位置的安全感測器。",
+   "signal": "二進位存在感測器。監控閘門。在雷射發射前，兩個閘門必須均處於伸出到位狀態且為啟動狀態。",
+   "role": "監控功能群組 1 雷射互鎖的安全閘門 1。"
+  },
+  "MAIN.FG_01.B_SafetyGate2": {
+   "name": "B_SafetyGate2",
+   "type": "SensorBinary",
+   "group": "FG_01",
+   "module": "",
+   "scenePath": "Project/FG_01/B_SafetyGate2",
+   "groupLabel": "第 1 站：讀碼與雷射打標",
+   "en": {
+    "Function": "Safety sensor monitoring a guard gate position.",
+    "Signal": "Binary presence sensor. Monitors a guard gate. Must be Active, with both gates at their extended limit, before the laser may fire.",
+    "Role": "Monitors guard gate 2 for the FG_01 laser interlock."
+   },
+   "label": "第 1 站 · 安全閘門感測器 2",
+   "function": "監控閘門位置的安全感測器。",
+   "signal": "二進位存在感測器。監控閘門。在雷射發射前，兩個閘門必須均處於伸出到位狀態且為啟動狀態。",
+   "role": "監控功能群組 1 雷射互鎖的安全閘門 2。"
+  },
+  "MAIN.FG_02": {
+   "name": "FG_02",
+   "type": "",
+   "group": "FG_02",
+   "module": "",
+   "scenePath": "Project/FG_02",
+   "groupLabel": "第 2 站：光學檢測",
+   "en": {
+    "Function": "Optical inspection. A camera above the pallet reads back the mark FG_01 applied and reports OK or not OK."
+   },
+   "label": "第 2 站 · 光學檢測",
+   "function": "光學檢測。托盤上方的攝影機讀取功能群組 1 標記的內容並回報是否合格。"
+  },
+  "MAIN.FG_02.P_Camera": {
+   "name": "P_Camera",
+   "type": "DataReader",
+   "group": "FG_02",
+   "module": "",
+   "scenePath": "Project/FG_02/P_Camera",
+   "groupLabel": "第 2 站：光學檢測",
+   "en": {
+    "Function": "Reads back the LaserMark datum FG_01 wrote onto the payload. This is the station that verifies the mark - FG_01 applies it and reads only the serial number.",
+    "Signal": "Enable, then trigger; reads back Ready, Busy, ResultValid and ResultOK. The twin echoes the two control bits and hands over the datum; the verdict is synthesised in OC_SIM FB_Camera."
+   },
+   "label": "第 2 站 · 讀碼器",
+   "function": "讀取功能群組 1 寫入工件上的雷射打標數據。此站用於驗證標記——功能群組 1 負責打標並僅讀取序號。",
+   "signal": "啟用後觸發；讀回 Ready、Busy、ResultValid 和 ResultOK。孿生設備會回顯兩個控制位並交接數據；判定結果在 OC_SIM FB_Camera 中合成。"
+  },
+  "MAIN.FG_03": {
+   "name": "FG_03",
+   "type": "",
+   "group": "FG_03",
+   "module": "",
+   "scenePath": "Project/FG_03",
+   "groupLabel": "第 3 站：翻轉移載",
+   "en": {
+    "Function": "Transfers the part from slot 1 to slot 2 of the pallet, flipping it 180 degrees on the way. A newly created payload carries its part in slot 1 on the right hand side."
+   },
+   "label": "第 3 站 · 工件轉移",
+   "function": "將工件從托盤的槽位 1 轉移到槽位 2，並在過程中翻轉 180 度。新建立的工件位於右側的槽位 1。"
+  },
+  "MAIN.FG_03.Y_AxisX1": {
+   "name": "Y_AxisX1",
+   "type": "Cylinder",
+   "group": "FG_03",
+   "module": "",
+   "scenePath": "Project/FG_03/Y_AxisX1",
+   "groupLabel": "第 3 站：翻轉移載",
+   "en": {
+    "Function": "VERTICAL axis for arm 1, despite the X in the name. Max is raised, and arm 1 stays there for the whole cycle; min is only the power-on rest position. Arm 2 names its axes the opposite way round.",
+    "Signal": "Double solenoid with both limits read. MAX is raised; arm 1 rises once and stays up for the whole cycle."
+   },
+   "label": "第 3 站 · 軸 X1 氣缸",
+   "function": "手臂 1 的垂直軸（儘管名稱中為 X）。最大值為升起，且手臂 1 在整個週期中保持該位置；最小值僅為上電後的靜止位置。手臂 2 的軸命名方式相反。",
+   "signal": "雙電磁閥並讀取兩個到位訊號。MAX 為升起；手臂 1 升起一次後在整個週期中保持上升狀態。"
+  },
+  "MAIN.FG_03.Y_AxisX2": {
+   "name": "Y_AxisX2",
+   "type": "Cylinder",
+   "group": "FG_03",
+   "module": "",
+   "scenePath": "Project/FG_03/Y_AxisX2",
+   "groupLabel": "第 3 站：翻轉移載",
+   "en": {
+    "Function": "Horizontal traverse for arm 2, the picking arm.",
+    "Signal": "Double solenoid with both limits read. MAX is the transfer position, min is home over slot 1."
+   },
+   "label": "第 3 站 · 軸 X2 氣缸",
+   "function": "手臂 2（取料臂）的水平橫移。",
+   "signal": "雙電磁閥並讀取兩個到位訊號。MAX 為轉移位置，min 為槽位 1 上方的原點。"
+  },
+  "MAIN.FG_03.Axis_X1": {
+   "name": "Axis_X1",
+   "type": "",
+   "group": "FG_03",
+   "module": "",
+   "scenePath": "Project/FG_03/Axis_X1",
+   "groupLabel": "第 3 站：翻轉移載",
+   "en": {
+    "Function": "Kinematic joint of the two arm transfer unit, driven by the matching Y_ cylinder. Carries motion only and is not a PLC device in its own right."
+   },
+   "label": "第 3 站 · 軸 X1",
+   "function": "雙臂轉移單元的運動學接頭，由對應的 Y_ 氣缸驅動。僅承載運動，本身並非 PLC 設備。"
+  },
+  "MAIN.FG_03.Y_AxisY1": {
+   "name": "Y_AxisY1",
+   "type": "Cylinder",
+   "group": "FG_03",
+   "module": "",
+   "scenePath": "Project/FG_03/Axis_X1/Y_AxisY1",
+   "groupLabel": "第 3 站：翻轉移載",
+   "en": {
+    "Function": "HORIZONTAL traverse for arm 1, despite the Y in the name. Min is home over slot 2, max is the transfer position. Arm 2 names its axes the opposite way round.",
+    "Signal": "Double solenoid with both limits read. MAX is the transfer position, min is home over slot 2."
+   },
+   "label": "第 3 站 · 氣缸 Y1",
+   "function": "手臂 1 的水平橫移，儘管名稱中帶有 Y。最小值為槽位 2 上方的原點，最大值為交接位置。手臂 2 的軸向命名方式相反。",
+   "signal": "雙電磁閥且兩個到位感測器皆被讀取。MAX 為交接位置，min 為槽位 2 上方的原點。"
+  },
+  "MAIN.FG_03.Axis_Y1": {
+   "name": "Axis_Y1",
+   "type": "",
+   "group": "FG_03",
+   "module": "",
+   "scenePath": "Project/FG_03/Axis_X1/Axis_Y1",
+   "groupLabel": "第 3 站：翻轉移載",
+   "en": {
+    "Function": "Kinematic joint of the two arm transfer unit, driven by the matching Y_ cylinder. Carries motion only and is not a PLC device in its own right."
+   },
+   "label": "第 3 站 · 軸 Y1",
+   "function": "雙臂交接單元的運動接頭，由對應的 Y_ 氣缸驅動。僅傳遞運動，本身並非 PLC 裝置。"
+  },
+  "MAIN.FG_03.Y_AxisR1": {
+   "name": "Y_AxisR1",
+   "type": "Cylinder",
+   "group": "FG_03",
+   "module": "",
+   "scenePath": "Project/FG_03/Axis_X1/Axis_Y1/Y_AxisR1",
+   "groupLabel": "第 3 站：翻轉移載",
+   "en": {
+    "Function": "Rotates arm 1 through 180 degrees. Retracted (0 deg) is home and the receiving orientation; extended (180 deg) is the placing one. The flip is also what lowers the part into slot 2.",
+    "Signal": "Double solenoid with both limits read. Rotary. Retracted is 0 deg and the receiving orientation; extended is 180 deg and the placing one."
+   },
+   "label": "第 3 站 · 氣缸 R1",
+   "function": "將手臂 1 旋轉 180 度。縮回 (0 度) 為原點且為接收方向；伸出 (180 度) 為放置方向。此翻轉動作同時將工件降低至槽位 2 中。",
+   "signal": "雙電磁閥且兩個到位感測器皆被讀取。旋轉式。縮回為 0 度且為接收方向；伸出為 180 度且為放置方向。"
+  },
+  "MAIN.FG_03.Axis_R1": {
+   "name": "Axis_R1",
+   "type": "",
+   "group": "FG_03",
+   "module": "",
+   "scenePath": "Project/FG_03/Axis_X1/Axis_Y1/Y_AxisR1/Axis_R1",
+   "groupLabel": "第 3 站：翻轉移載",
+   "en": {
+    "Function": "Kinematic joint of the two arm transfer unit, driven by the matching Y_ cylinder. Carries motion only and is not a PLC device in its own right."
+   },
+   "label": "第 3 站 · 軸 R1",
+   "function": "雙臂交接單元的運動接頭，由對應的 Y_ 氣缸驅動。僅傳遞運動，本身並非 PLC 裝置。"
+  },
+  "MAIN.FG_03.Y_Gripper1": {
+   "name": "Y_Gripper1",
+   "type": "Cylinder",
+   "group": "FG_03",
+   "module": "",
+   "scenePath": "Project/FG_03/Axis_X1/Axis_Y1/Y_AxisR1/Axis_R1/Y_Gripper1",
+   "groupLabel": "第 3 站：翻轉移載",
+   "en": {
+    "Function": "Gripper on arm 1, the placing arm. Receives the part from arm 2 at the handover and releases it into slot 2.",
+    "Signal": "Double solenoid with both limits read. EXTENDED grips. The limit proves the jaws moved, NOT that they caught anything - only B_Detect1 says that."
+   },
+   "label": "第 3 站 · 夾爪氣缸 1",
+   "function": "位於放置手臂（手臂 1）上的夾爪。在交接時從手臂 2 接收工件，並將其釋放到槽位 2 中。",
+   "signal": "雙電磁閥且兩個到位感測器皆被讀取。伸出為夾緊。到位感測器僅證明夾爪已移動，而非證明已夾取到物品——僅 B_Detect1 可確認此項。"
+  },
+  "MAIN.FG_03.B_Detect1": {
+   "name": "B_Detect1",
+   "type": "SignalBinary",
+   "group": "FG_03",
+   "module": "",
+   "scenePath": "Project/FG_03/Axis_X1/Axis_Y1/B_Detect1",
+   "groupLabel": "第 3 站：翻轉移載",
+   "en": {
+    "Function": "Grip sensor on arm 1, the placing arm. Reports whether Y_Gripper1 is actually holding the part, which the cylinder limit cannot.",
+    "Signal": "Grip witness for arm 1. Active while gripper 1 actually holds the part."
+   },
+   "label": "第 3 站 · 夾取感測器 1",
+   "function": "位於放置手臂（手臂 1）上的夾取感測器。回報 Y_Gripper1 是否實際持有工件，此為氣缸到位感測器無法達成的功能。",
+   "signal": "手臂 1 的夾取確認。當夾爪 1 實際持有工件時為啟動狀態。"
+  },
+  "MAIN.FG_03.Axis_X2": {
+   "name": "Axis_X2",
+   "type": "",
+   "group": "FG_03",
+   "module": "",
+   "scenePath": "Project/FG_03/Axis_X2",
+   "groupLabel": "第 3 站：翻轉移載",
+   "en": {
+    "Function": "Kinematic joint of the two arm transfer unit, driven by the matching Y_ cylinder. Carries motion only and is not a PLC device in its own right."
+   },
+   "label": "第 3 站 · 軸 X2",
+   "function": "雙臂交接單元的運動接頭，由對應的 Y_ 氣缸驅動。僅傳遞運動，本身並非 PLC 裝置。"
+  },
+  "MAIN.FG_03.Y_AxisY2": {
+   "name": "Y_AxisY2",
+   "type": "Cylinder",
+   "group": "FG_03",
+   "module": "",
+   "scenePath": "Project/FG_03/Axis_X2/Y_AxisY2",
+   "groupLabel": "第 3 站：翻轉移載",
+   "en": {
+    "Function": "Vertical stroke for arm 2, lowering it to pick the part out of slot 1.",
+    "Signal": "Double solenoid with both limits read. The axis factor is inverted, so MAX is LOWERED."
+   },
+   "label": "第 3 站 · 氣缸 Y2",
+   "function": "手臂 2 的垂直行程，將其降低以從槽位 1 中取出工件。",
+   "signal": "雙電磁閥且兩個到位感測器皆被讀取。軸向因子為反向，因此 MAX 為降低位置。"
+  },
+  "MAIN.FG_03.Axis_Y2": {
+   "name": "Axis_Y2",
+   "type": "",
+   "group": "FG_03",
+   "module": "",
+   "scenePath": "Project/FG_03/Axis_X2/Axis_Y2",
+   "groupLabel": "第 3 站：翻轉移載",
+   "en": {
+    "Function": "Kinematic joint of the two arm transfer unit, driven by the matching Y_ cylinder. Carries motion only and is not a PLC device in its own right."
+   },
+   "label": "第 3 站 · 軸 Y2",
+   "function": "雙臂交接單元的運動接頭，由對應的 Y_ 氣缸驅動。僅承載運動，本身並非 PLC 裝置。"
+  },
+  "MAIN.FG_03.Y_Gripper2": {
+   "name": "Y_Gripper2",
+   "type": "Cylinder",
+   "group": "FG_03",
+   "module": "",
+   "scenePath": "Project/FG_03/Axis_X2/Axis_Y2/Y_Gripper2",
+   "groupLabel": "第 3 站：翻轉移載",
+   "en": {
+    "Function": "Gripper on arm 2, the picking arm. Takes the part out of slot 1 and holds it until the handover to arm 1.",
+    "Signal": "Double solenoid with both limits read. EXTENDED grips. The limit proves the jaws moved, NOT that they caught anything - only B_Detect2 says that."
+   },
+   "label": "第 3 站 · 夾爪氣缸 2",
+   "function": "取料臂（手臂 2）上的夾爪。將工件從槽位 1 取出並持有，直到交接給手臂 1。",
+   "signal": "雙電磁閥且兩個到位感測器皆被讀取。伸出為夾緊。到位感測器僅證明夾爪已移動，而非證明已夾到東西——僅 B_Detect2 可確認此項。"
+  },
+  "MAIN.FG_03.B_Detect2": {
+   "name": "B_Detect2",
+   "type": "SignalBinary",
+   "group": "FG_03",
+   "module": "",
+   "scenePath": "Project/FG_03/Axis_X2/Axis_Y2/B_Detect2",
+   "groupLabel": "第 3 站：翻轉移載",
+   "en": {
+    "Function": "Grip sensor on arm 2, the picking arm. Reports whether Y_Gripper2 is actually holding the part, which the cylinder limit cannot.",
+    "Signal": "Grip witness for arm 2. Active while gripper 2 actually holds the part."
+   },
+   "label": "第 3 站 · 夾取感測器 2",
+   "function": "取料臂（手臂 2）上的夾取感測器。回報 Y_Gripper2 是否確實持有工件，此為氣缸到位感測器無法達成的功能。",
+   "signal": "手臂 2 的夾取確認。當夾爪 2 確實持有工件時為啟動狀態。"
+  },
+  "MAIN.FG_04": {
+   "name": "FG_04",
+   "type": "",
+   "group": "FG_04",
+   "module": "",
+   "scenePath": "Project/FG_04",
+   "groupLabel": "第 4 站：壓入與到位檢查",
+   "en": {
+    "Function": "Presses the part home into its slot and checks that it seated correctly."
+   },
+   "label": "第 4 站",
+   "function": "將工件壓入其槽位並檢查是否正確就位。"
+  },
+  "MAIN.FG_04.Y_AxisZ": {
+   "name": "Y_AxisZ",
+   "type": "Cylinder",
+   "group": "FG_04",
+   "module": "",
+   "scenePath": "Project/FG_04/Y_AxisZ",
+   "groupLabel": "第 4 站：壓入與到位檢查",
+   "en": {
+    "Function": "Press cylinder. Strokes down to seat the part in its slot, holds 1 s, then retracts.",
+    "Signal": "Double solenoid with both limits read. EXTENDED presses down onto the part; retracted is clear. A double solenoid so an abort leaves it where it is."
+   },
+   "label": "第 4 站 · 壓料氣缸 Z 軸",
+   "function": "壓料氣缸。向下行程將工件壓入槽位，保持 1 秒後縮回。",
+   "signal": "雙電磁閥且兩個到位感測器皆被讀取。伸出為向下壓向工件；縮回為脫離。使用雙電磁閥是為了在中止時使其保持原位。"
+  },
+  "MAIN.FG_04.B_NIO": {
+   "name": "B_NIO",
+   "type": "SignalBinary",
+   "group": "FG_04",
+   "module": "",
+   "scenePath": "Project/FG_04/B_NIO",
+   "groupLabel": "第 4 站：壓入與到位檢查",
+   "en": {
+    "Function": "Not in order signal for the press. PartPressDetector raises it when the press cylinder has reached its bottom limit but the seating sensor sees no part - press completed with nothing correctly seated.",
+    "Signal": "A VERDICT, not a sensor reading. Active means the press bottomed with nothing correctly seated. Only meaningful at the bottom limit with the hold expired."
+   },
+   "label": "第 4 站 · 不良品感測器",
+   "function": "壓料裝置的不良品訊號。當壓料氣缸到達底部到位位置，但就位感測器未偵測到工件時，由 PartPressDetector 觸發——表示壓料完成但無工件正確就位。",
+   "signal": "這是一個判定結果，而非感測器讀值。啟動表示壓料到底但無工件正確就位。僅在底部到位且保持時間結束後才有意義。"
+  },
+  "MAIN.FG_04.Sensor": {
+   "name": "Sensor",
+   "type": "SensorBinary",
+   "group": "FG_04",
+   "module": "",
+   "scenePath": "Project/FG_04/B_NIO/Sensor",
+   "groupLabel": "第 4 站：壓入與到位檢查",
+   "en": {
+    "Function": "Seating sensor under the press. Detects that a part is present and correctly seated.",
+    "Signal": "Not a PLC symbol - its Link is disabled. It feeds PartPressDetector locally, which publishes the result to the PLC as B_NIO."
+   },
+   "label": "第 4 站 · 就位感測器",
+   "function": "壓料裝置下方的就位感測器。偵測工件是否存在且正確就位。",
+   "signal": "非 PLC 符號——其連結已禁用。它在本地將訊號傳給 PartPressDetector，再由後者將結果作為 B_NIO 發布至 PLC。"
+  },
+  "MAIN.FG_05": {
+   "name": "FG_05",
+   "type": "",
+   "group": "FG_05",
+   "module": "",
+   "scenePath": "Project/FG_05",
+   "groupLabel": "第 5 站：上蓋",
+   "en": {
+    "Function": "Fits a cap from the bunker onto the part carried on the pallet."
+   },
+   "label": "第 5 站",
+   "function": "將瓶蓋從料倉安裝到托盤承載的工件上。"
+  },
+  "MAIN.FG_05.Y_AxisX": {
+   "name": "Y_AxisX",
+   "type": "Cylinder",
+   "group": "FG_05",
+   "module": "",
+   "scenePath": "Project/FG_05/Y_AxisX",
+   "groupLabel": "第 5 站：上蓋",
+   "en": {
+    "Function": "Horizontal traverse between the cap pick position and the pallet.",
+    "Signal": "Double solenoid with both limits read. MAX is over the pallet, min is over the cap feed."
+   },
+   "label": "第 5 站 · X 軸氣缸",
+   "function": "在瓶蓋取料位置與托盤之間進行水平移動。",
+   "signal": "雙電磁閥且兩個到位皆有讀取。MAX 為托盤上方，min 為瓶蓋供料上方。"
+  },
+  "MAIN.FG_05.Axis_X": {
+   "name": "Axis_X",
+   "type": "",
+   "group": "FG_05",
+   "module": "",
+   "scenePath": "Project/FG_05/Axis_X",
+   "groupLabel": "第 5 站：上蓋",
+   "en": {
+    "Function": "Kinematic joint of the cap handling unit, driven by the matching Y_ cylinder. Carries motion only and is not a PLC device in its own right."
+   },
+   "label": "第 5 站 · X 軸",
+   "function": "瓶蓋處理單元的運動接頭，由對應的 Y_ 氣缸驅動。僅傳遞運動，本身並非 PLC 裝置。"
+  },
+  "MAIN.FG_05.Y_AxisZ1": {
+   "name": "Y_AxisZ1",
+   "type": "Cylinder",
+   "group": "FG_05",
+   "module": "",
+   "scenePath": "Project/FG_05/Axis_X/Y_AxisZ1",
+   "groupLabel": "第 5 站：上蓋",
+   "en": {
+    "Function": "Vertical stroke on the pallet side, lowering the cap onto the part.",
+    "Signal": "Double solenoid with both limits read. EXTENDED lowers the cap onto the part on the pallet side."
+   },
+   "label": "第 5 站 · Z1 軸氣缸",
+   "function": "托盤側的垂直行程，將瓶蓋放置於工件上。",
+   "signal": "雙電磁閥且兩個到位皆有讀取。伸出時將瓶蓋放置於托盤側的工件上。"
+  },
+  "MAIN.FG_05.Axis_Z1": {
+   "name": "Axis_Z1",
+   "type": "",
+   "group": "FG_05",
+   "module": "",
+   "scenePath": "Project/FG_05/Axis_X/Axis_Z1",
+   "groupLabel": "第 5 站：上蓋",
+   "en": {
+    "Function": "Kinematic joint of the cap handling unit, driven by the matching Y_ cylinder. Carries motion only and is not a PLC device in its own right."
+   },
+   "label": "第 5 站 · Z1 軸",
+   "function": "瓶蓋處理單元的運動接頭，由對應的 Y_ 氣缸驅動。僅傳遞運動，本身並非 PLC 裝置。"
+  },
+  "MAIN.FG_05.Y_AxisZ2": {
+   "name": "Y_AxisZ2",
+   "type": "Cylinder",
+   "group": "FG_05",
+   "module": "",
+   "scenePath": "Project/FG_05/Axis_X/Axis_Z1/Y_AxisZ2",
+   "groupLabel": "第 5 站：上蓋",
+   "en": {
+    "Function": "Vertical stroke on the bunker side, lowering the gripper to pick a cap.",
+    "Signal": "Double solenoid with both limits read. EXTENDED lowers to the cap at the pick position on the feed side."
+   },
+   "label": "第 5 站 · Z2 軸氣缸",
+   "function": "料倉側的垂直行程，降低夾爪以取瓶蓋。",
+   "signal": "雙電磁閥且兩個到位皆有讀取。伸出時降低至供料側取料位置的瓶蓋。"
+  },
+  "MAIN.FG_05.Axis_Z2": {
+   "name": "Axis_Z2",
+   "type": "",
+   "group": "FG_05",
+   "module": "",
+   "scenePath": "Project/FG_05/Axis_X/Axis_Z1/Axis_Z2",
+   "groupLabel": "第 5 站：上蓋",
+   "en": {
+    "Function": "Kinematic joint of the cap handling unit, driven by the matching Y_ cylinder. Carries motion only and is not a PLC device in its own right."
+   },
+   "label": "第 5 站 · Z2 軸",
+   "function": "瓶蓋處理單元的運動接頭，由對應的 Y_ 氣缸驅動。僅傳遞運動，本身並非 PLC 裝置。"
+  },
+  "MAIN.FG_05.Y_AxisR": {
+   "name": "Y_AxisR",
+   "type": "Cylinder",
+   "group": "FG_05",
+   "module": "",
+   "scenePath": "Project/FG_05/Axis_X/Axis_Z1/Axis_Z2/Y_AxisR",
+   "groupLabel": "第 5 站：上蓋",
+   "en": {
+    "Function": "Rotates the cap into its fitting orientation before placement.",
+    "Signal": "Double solenoid with both limits read. Rotary. Extended is the fitting orientation, retracted is home."
+   },
+   "label": "第 5 站 · R 軸氣缸",
+   "function": "在放置前將瓶蓋旋轉至適配方向。",
+   "signal": "雙電磁閥且兩個到位皆有讀取。旋轉式。伸出為適配方向，縮回為原點。"
+  },
+  "MAIN.FG_05.Axis_R": {
+   "name": "Axis_R",
+   "type": "",
+   "group": "FG_05",
+   "module": "",
+   "scenePath": "Project/FG_05/Axis_X/Axis_Z1/Axis_Z2/Axis_R",
+   "groupLabel": "第 5 站：上蓋",
+   "en": {
+    "Function": "Kinematic joint of the cap handling unit, driven by the matching Y_ cylinder. Carries motion only and is not a PLC device in its own right."
+   },
+   "label": "第 5 站 · R 軸",
+   "function": "瓶蓋處理單元的運動接頭，由對應的 Y_ 氣缸驅動。僅傳遞運動，本身並非 PLC 裝置。"
+  },
+  "MAIN.FG_05.Y_Gripper": {
+   "name": "Y_Gripper",
+   "type": "Cylinder",
+   "group": "FG_05",
+   "module": "",
+   "scenePath": "Project/FG_05/Axis_X/Axis_Z1/Axis_Z2/Axis_R/Y_Gripper",
+   "groupLabel": "第 5 站：上蓋",
+   "en": {
+    "Function": "Gripper that holds the cap from pick through to placement on the part.",
+    "Signal": "Double solenoid with both limits read. EXTENDED grips the cap. The limit proves the jaws moved, NOT that they caught one - only B_Detect says that."
+   },
+   "label": "第 5 站 · 夾爪",
+   "function": "夾爪，用於將瓶蓋從拾取位置持有至放置在工件上。",
+   "signal": "雙電磁閥且讀取兩個到位感測器。伸出為夾住瓶蓋。到位感測器僅證明夾爪已移動，而非證明已夾到瓶蓋——僅 B_Detect 可確認此項。"
+  },
+  "MAIN.FG_05.B_Detect": {
+   "name": "B_Detect",
+   "type": "SignalBinary",
+   "group": "FG_05",
+   "module": "",
+   "scenePath": "Project/FG_05/Axis_X/Axis_Z1/Axis_Z2/Axis_R/B_Detect",
+   "groupLabel": "第 5 站：上蓋",
+   "en": {
+    "Function": "Grip sensor in the jaws of Y_Gripper. Reports whether this unit is carrying a cap - not whether one is available, which is B_Part on the feed.",
+    "Signal": "Grip witness in the jaws. Active while this unit carries a cap. NOT the same question as B_Part."
+   },
+   "label": "第 5 站 · 夾持感測器",
+   "function": "位於 Y_Gripper 夾爪中的夾持感測器。回報此單元是否攜帶瓶蓋，而非回報是否有瓶蓋可用（後者為進料端的 B_Part）。",
+   "signal": "夾爪中的夾持確認感測器。當此單元攜帶瓶蓋時為啟動狀態。與 B_Part 的目的不同。"
+  },
+  "MAIN.FG_05.Y_CapsSourceStopper": {
+   "name": "Y_CapsSourceStopper",
+   "type": "Cylinder",
+   "group": "FG_05",
+   "module": "",
+   "scenePath": "Project/FG_05/Y_CapsSourceStopper",
+   "groupLabel": "第 5 站：上蓋",
+   "en": {
+    "Function": "Stopper on the cap feed conveyor. Holds the next cap at the pick position.",
+    "Signal": "Double solenoid with both limits read. EXTENDED BLOCKS the feed path and the queue accumulates against it. The opposite sense to a transport stopper."
+   },
+   "label": "第 5 站 · 瓶蓋源擋料氣缸",
+   "function": "瓶蓋進料輸送帶上的擋料器。將下一個瓶蓋保持在拾取位置。",
+   "signal": "雙電磁閥且讀取兩個到位感測器。伸出時阻斷進料路徑，且隊列將在其後方堆積。其邏輯與輸送帶擋料器相反。"
+  },
+  "MAIN.FG_05.Y_CapsSource": {
+   "name": "Y_CapsSource",
+   "type": "ControlBunker",
+   "group": "FG_05",
+   "module": "",
+   "scenePath": "Project/FG_05/Y_CapsSource",
+   "groupLabel": "第 5 站：上蓋",
+   "en": {
+    "Function": "Cap bunker. Feeds small caps onto the short conveyor that presents them at the pick position.",
+    "Signal": "Two bool outputs from the PLC and no status bits - the bunker reports nothing back. MIL turns both on together for as long as it is enabled."
+   },
+   "label": "第 5 站 · 瓶蓋料倉",
+   "function": "瓶蓋料倉。將小瓶蓋輸送至短輸送帶，以便將其呈現在拾取位置。",
+   "signal": "來自 PLC 的兩個布林輸出且無狀態位——料倉不回報任何資訊。當啟用時，MIL 會同時開啟這兩個輸出。"
+  },
+  "MAIN.FG_05.P_Camera": {
+   "name": "P_Camera",
+   "type": "DataReader",
+   "group": "FG_05",
+   "module": "",
+   "scenePath": "Project/FG_05/P_Camera",
+   "groupLabel": "第 5 站：上蓋",
+   "en": {
+    "Function": "Identification read of the ASSEMBLY on the pallet, not of the cap. Mounted on the feed side, looking across at the pallet; returns the assembly CapsID.",
+    "Signal": "Enable, then trigger; reads back Ready, Busy, ResultValid and ResultOK. The twin echoes the two control bits and hands over the datum; the verdict is synthesised in OC_SIM FB_Camera."
+   },
+   "label": "第 5 站 · 讀碼器",
+   "function": "對托盤上的組件進行識別讀取，而非讀取瓶蓋。安裝在進料側並對向觀察托盤；回傳組件的 CapsID。",
+   "signal": "啟用後觸發；回傳 Ready, Busy, ResultValid 與 ResultOK。孿生設備會回顯這兩個控制位並交接數據；判定結果在 OC_SIM FB_Camera 中合成。"
+  },
+  "MAIN.FG_05.B_Part": {
+   "name": "B_Part",
+   "type": "SensorBinary",
+   "group": "FG_05",
+   "module": "",
+   "scenePath": "Project/FG_05/B_Part",
+   "groupLabel": "第 5 站：上蓋",
+   "en": {
+    "Function": "Presence sensor at the cap pick position. The station waits for this before starting a cycle.",
+    "Signal": "Binary presence sensor. On the FEED: a cap has arrived at the pick position. Once the gripper lifts one away it reports the NEXT one."
+   },
+   "label": "第 5 站 · 工件感測器",
+   "function": "瓶蓋拾取位置的到位感測器。該站會在開始循環前等待此訊號。",
+   "signal": "二進位到位感測器。在進料端：表示瓶蓋已到達拾取位置。一旦夾爪將其移走，它將回報下一個瓶蓋。"
+  }
+ }
+}

@@ -168,6 +168,11 @@
   };
 
   window.DTTapChanged = () => { hub.changed = true; };
+  // 3D 畫面點到部件（jslib PLWS_Selected 呼叫）→ 產線頁自己顯示說明卡，並廣播給暫存器表
+  window.DTOnSelected = (sel) => {
+    if (hub.channel) hub.channel.postMessage({ t: "selected", ...sel });
+    if (window.DTShowSelection) window.DTShowSelection(sel);
+  };
   B.onReady(() => hub.sendManifest());
 
   if (hub.channel) {
@@ -175,6 +180,7 @@
       const m = e.data || {};
       if (m.t === "hello") { hub.sendManifest(); hub.sendImage(true); return; }
       if (m.t === "poll") { hub.sendImage(true); return; }
+      if (m.t === "highlight" || m.t === "focus" || m.t === "clear") { window.DTHighlight && window.DTHighlight(m.t, m.paths || ""); return; }
       if (!hub.writable()) {
         if (m.t === "write" || m.t === "zero") hub.channel.postMessage({ t: "readonly" });
         return;

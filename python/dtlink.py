@@ -209,6 +209,24 @@ class Twin:
             struct.pack_into(v.fmt, self._control, v.offset, cur)
         self._control_changed(v.offset, v.size)
 
+    # ── 中文名稱與說明（devices_zh.json，來自原專案的官方裝置說明）──
+    @property
+    def labels(self) -> dict:
+        if not hasattr(self, "_labels"):
+            self._labels = _load_labels()
+        return self._labels
+
+    def describe(self, path: str) -> str:
+        """印出一個裝置的中文名稱與官方說明。"""
+        d = self.labels.get(path, {})
+        lines = [f"{d.get('label', path)}（{path}）", f"  群組：{d.get('groupLabel', '')}"]
+        for k, t in (("function", "功能"), ("signal", "訊號"), ("role", "角色"), ("caution", "注意")):
+            if d.get(k):
+                lines.append(f"  {t}：{d[k]}")
+        text = chr(10).join(lines)
+        print(text)
+        return text
+
     # ── 暫存器（過程映像，IEC 61131-3 位址）──────────────
     # %Q＝輸出區（控制映像，Python 寫）、%I＝輸入區（狀態映像，孿生回報）
     # 寬度：X＝位元（%QX5.1）、B＝位元組、W＝字（2）、D＝雙字（4；該位置是浮點變數時當 REAL）
@@ -338,9 +356,15 @@ class Device:
     def status(self) -> int:
         return self.twin.read(f"{self.path}.Status")
 
+    @property
+    def label(self) -> str:
+        """中文名稱，例如「分度站 3 · 擋料氣缸」。"""
+        return self.twin.labels.get(self.path, {}).get("label", "")
+
     def __repr__(self) -> str:
         comp = f" {self.component}" if self.component else ""
-        return f"<{self.type}{comp} {self.path}>"
+        lab = f" {self.label}" if self.label else ""
+        return f"<{self.type}{comp} {self.path}{lab}>"
 
 
 class Cylinder(Device):
@@ -472,4 +496,14 @@ def make_device(twin: Twin, info: dict) -> Device:
 
 def print_devices(twin: Twin, items: Iterable[Device] | None = None):
     for d in items if items is not None else twin.devices():
-        print(f"  {d.type:16s} {d.component:14s} {d.path}")
+        print(f"  {d.label or '':18s} {d.type:16s} {d.path}")
+
+
+def _load_labels() -> dict:
+    """本機版：讀 dtlink.py 旁邊的 devices_zh.json（網頁版由 dtlink_web 覆寫）。"""
+    try:
+        from pathlib import Path as _P
+        f = _P(__file__).with_name("devices_zh.json")
+        return json.loads(f.read_text(encoding="utf-8")).get("devices", {}) if f.exists() else {}
+    except Exception:
+        return {}

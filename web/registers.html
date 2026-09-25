@@ -26,7 +26,19 @@
     .dev { background:#fff; border:1px solid var(--line); border-radius:8px; margin:0 0 8px; overflow:hidden; }
     .dev > .head { display:flex; gap:10px; align-items:baseline; padding:6px 10px; background:#f8fafc; border-bottom:1px solid var(--line); }
     .dev > .head .path { font-weight:600; font-family:Consolas,Menlo,monospace; font-size:13px; }
+    .dev > .head { flex-wrap:wrap; }
+    .dev > .head .label { font-weight:700; font-size:14.5px; }
+    .dev > .head .grp { font-size:12px; color:var(--accent); background:#e8f0fe; border-radius:999px; padding:0 8px; }
+    .dev > .head .path { font-weight:400; color:var(--muted); font-size:12px; }
     .dev > .head .type { color:var(--muted); font-size:12px; }
+    .dev > .head .acts { margin-left:auto; display:flex; gap:6px; }
+    .dev > .head .acts button { font-size:12px; padding:1px 8px; }
+    .dev:hover { border-color:#f59e0b; box-shadow:0 0 0 2px #fde68a; }
+    .dev .about { padding:6px 12px; font-size:13px; background:#fffbeb; border-bottom:1px solid var(--line); }
+    .dev .about p { margin:2px 0; }
+    .dev.picked { animation: pick 1.6s; }
+    @keyframes pick { 0%,40% { box-shadow:0 0 0 4px #f59e0b; } 100% { box-shadow:none; } }
+    #picked-note { font-size:12.5px; color:#b45309; font-weight:600; }
     table { width:100%; border-collapse:collapse; }
     td { padding:4px 10px; border-top:1px solid #eef1f5; vertical-align:middle; }
     tr:first-child td { border-top:0; }
@@ -59,8 +71,9 @@
       <div class="sub">%Q 輸出區＝控制（Python 或手動寫入）· %I 輸入區＝狀態（機台回報）· 位址依 IEC 61131-3，位移量為 EtherCAT PDO 映像中的位元組位置</div>
     </div>
     <span id="conn" class="conn">等待產線分頁…</span>
+    <span id="picked-note"></span>
     <div class="controls">
-      <input id="q" type="search" placeholder="搜尋裝置或位址，例如 Stopper01、%QB12">
+      <input id="q" type="search" placeholder="搜尋：中文名稱、裝置、位址，例如 擋料、Index03、%QB12">
       <select id="type"><option value="">全部類型</option></select>
       <select id="area">
         <option value="">輸出＋輸入</option>
@@ -72,7 +85,8 @@
     </div>
   </header>
   <main>
-    <p class="legend">點輸出區的位元（藍色）可以手動切換，等於在做 I/O 點檢；輸入區（綠色）是機台即時回報。
+    <p class="legend"><b>滑鼠移到裝置上，產線畫面會用外框標出那個部件；按「定位」相機會飛過去；在 3D 畫面點部件，這裡會捲到它。</b><br>
+      點輸出區的位元（藍色）可以手動切換，等於在做 I/O 點檢；輸入區（綠色）是機台即時回報。
       Python 裡對應的寫法：<code>twin.write_reg("%QX12.1", True)</code>、<code>twin.read_reg("%IX12.1")</code>。
       產線分頁要開著（<a href="./" target="_blank" rel="noopener">開啟產線</a>）。</p>
     <div id="list"><div class="empty">打開產線分頁後，暫存器會出現在這裡。</div></div>
