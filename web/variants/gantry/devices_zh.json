@@ -1,0 +1,42 @@
+{
+ "source": "Configuration 1.STEP（linear-module-3）",
+ "groups": {
+  "FG_Gantry": "雙軸直線模組"
+ },
+ "devices": {
+  "MAIN.FG_Gantry.M_AxisX": {
+   "name": "M_AxisX",
+   "type": "FB_Drive",
+   "group": "FG_Gantry",
+   "module": "FG_Gantry",
+   "scenePath": "Project/FG_Gantry/M_AxisX",
+   "groupLabel": "雙軸直線模組",
+   "label": "X 軸 · 水平伺服",
+   "function": "驅動水平滾珠螺桿，帶動 X 滑座及上面整支 Z 軸左右移動。",
+   "signal": "ControlData（%QD）寫目標位置 mm；StatusData（%ID）回報目前位置；Status bit6＝移動中。0 mm＝惰輪端，往馬達端為正，行程 0～411.8 mm，速度 100 mm/s。",
+   "role": "位置控制伺服（DrivePosition）。",
+   "caution": "超出 0～411.8 mm 會撞到端座（模擬不會擋），請先確認目標值。",
+   "range": [
+    0,
+    411.8
+   ]
+  },
+  "MAIN.FG_Gantry.M_AxisZ": {
+   "name": "M_AxisZ",
+   "type": "FB_Drive",
+   "group": "FG_Gantry",
+   "module": "FG_Gantry",
+   "scenePath": "Project/FG_Gantry/AxisX_Carriage/Module_Z/M_AxisZ",
+   "groupLabel": "雙軸直線模組",
+   "label": "Z 軸 · 垂直伺服",
+   "function": "驅動垂直滾珠螺桿，帶動 Z 滑座上下移動；整支 Z 軸固定在 X 滑座上，跟著 X 軸一起走。",
+   "signal": "ControlData（%QD）寫目標位置 mm；StatusData（%ID）回報目前位置；Status bit6＝移動中。0 mm＝最下方（惰輪端），往上為正，行程 0～411.8 mm，速度 100 mm/s。",
+   "role": "位置控制伺服（DrivePosition）。",
+   "caution": "超出 0～411.8 mm 會撞到端座（模擬不會擋），請先確認目標值。",
+   "range": [
+    0,
+    411.8
+   ]
+  }
+ }
+}

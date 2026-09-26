@@ -3,7 +3,8 @@
     "rootNamespace": "PythonLink.Editor",
     "references": [
         "OC",
-        "PythonLink"
+        "PythonLink",
+        "OC.UI"
     ],
     "includePlatforms": [
         "Editor"

@@ -430,6 +430,21 @@ class Drive(Device):
     def active(self) -> bool:
         return self.twin.read_bit(f"{self.path}.Status", 6)
 
+    @property
+    def range(self):
+        """可動範圍 (最小, 最大)，來自裝置說明（CAD 算出的行程）；沒有資料時是 None。"""
+        r = self.twin.labels.get(self.path, {}).get("range")
+        return tuple(r) if r else None
+
+    def move_to(self, position: float, wait: bool = True, timeout: float = 30.0, tolerance: float = 0.5):
+        """位置伺服（DrivePosition）：移到 position，預設等到位才回來。超出行程會丟 ValueError。"""
+        r = self.range
+        if r and not (r[0] <= position <= r[1]):
+            raise ValueError(f"{self.label or self.path} 的行程是 {r[0]:g}～{r[1]:g}，{position:g} 超出範圍")
+        self.target = position
+        if wait:
+            self.twin.wait_until(lambda: abs(self.value - position) <= tolerance, timeout=timeout)
+
 
 class Button(Device):
     """按鈕：Status bit0＝按下；Control bit0＝按鈕燈（回授）。"""

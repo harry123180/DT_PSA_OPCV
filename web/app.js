@@ -5,7 +5,8 @@
   const params = new URLSearchParams(location.search);
   const localMode = !!params.get("ws");
   const $ = (id) => document.getElementById(id);
-  const STORE_KEY = "dt.editor.code";
+  const SITE = window.DT_SITE || {};
+  const STORE_KEY = "dt.editor.code" + (SITE.id ? "." + SITE.id : "");   // 不同站點各自記住編輯中的程式
   // 組網站時換成版本號：Cloudflare 會把快取時間改寫成數小時，檔名不變就會拿到舊版，所以每個網址都帶版本
   const BUILD = "__BUILD__";
   const V = "?v=" + BUILD;
@@ -98,7 +99,20 @@ print("結束")
   });
   let saved = null;
   try { saved = localStorage.getItem(STORE_KEY); } catch (e) {}
-  editor.setValue(saved || EXAMPLES.basic);
+  // 站點有自己的範例時換掉內建的（例如雙軸直線模組）
+  if (SITE.examples) {
+    for (const k of Object.keys(EXAMPLES)) delete EXAMPLES[k];
+    const sel = $("examples");
+    sel.length = 1;
+    for (const [key, ex] of Object.entries(SITE.examples)) {
+      EXAMPLES[key] = ex.code;
+      sel.add(new Option(ex.label, key));
+    }
+  }
+  if (SITE.title) { $("site-title").textContent = SITE.title; document.title = SITE.title + " · Python 控制"; }
+  if (SITE.sub) $("site-sub").textContent = SITE.sub;
+  if (SITE.other) { const o = $("other-site"); o.href = SITE.other.href; o.textContent = SITE.other.text; o.hidden = false; }
+  editor.setValue(saved || EXAMPLES[SITE.defaultExample || "basic"]);
   editor.on("change", () => { try { localStorage.setItem(STORE_KEY, editor.getValue()); } catch (e) {} });
 
   // ── 輸出 ────────────────────────────────────────────────

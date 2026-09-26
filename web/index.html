@@ -10,10 +10,11 @@
 </head>
 <body>
   <header class="bar">
-    <div class="title">產線數位孿生 <span class="sub">雷射焊接與組裝線 · 用 Python 當 PLC</span></div>
+    <div class="title"><span id="site-title">產線數位孿生</span> <span class="sub" id="site-sub">雷射焊接與組裝線 · 用 Python 當 PLC</span></div>
     <div class="right">
       <span id="mode" class="badge"></span>
       <a id="mode-switch" href="#"></a>
+      <a id="other-site" href="gantry/" hidden></a>
       <a id="open-registers" href="registers.html" target="dt-registers" title="獨立視窗：看／手動切換 %Q 輸出、%I 輸入（請和產線並排）">暫存器表</a>
       <a href="python/README.md" target="_blank" rel="noopener">說明</a>
     </div>
@@ -66,6 +67,7 @@
   <script src="vendor/codemirror/mode/python/python.min.js"></script>
   <script src="vendor/codemirror/addon/edit/matchbrackets.min.js"></script>
   <script src="vendor/codemirror/addon/comment/comment.min.js"></script>
+  <script src="site.js?v=__BUILD__"></script>
   <script src="bridge.js?v=__BUILD__"></script>
   <script src="app.js?v=__BUILD__"></script>
 </body>

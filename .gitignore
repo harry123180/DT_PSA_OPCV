@@ -44,3 +44,9 @@ python/devices.json
 python/e2e_*.png
 python/insp_*.png
 python/__pycache__/
+python/gantry_*.png
+build_gantry.log
+cad/*.STEP
+cad/*.step
+Unity/Assets/LinearGantry/Models/LinearGantry.fbx*
+Unity/Assets/LinearGantry/VC_LinearGantry.unity*

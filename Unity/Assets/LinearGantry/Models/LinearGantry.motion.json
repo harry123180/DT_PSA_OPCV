@@ -1,0 +1,40 @@
+{
+ "modules": [
+  {
+   "name": "A",
+   "axis": "X",
+   "sign": 1,
+   "parent": null,
+   "screw_center": [
+    312.5,
+    30.0,
+    64.0
+   ],
+   "carriage_center": [
+    320.0,
+    29.99999999999998,
+    63.99999999999993
+   ],
+   "travel_minus": -205.9,
+   "travel_plus": 205.9
+  },
+  {
+   "name": "B",
+   "axis": "Y",
+   "sign": 1,
+   "parent": "A",
+   "screw_center": [
+    320.0,
+    367.5,
+    64.0
+   ],
+   "carriage_center": [
+    320.0,
+    375.0,
+    63.99999999999994
+   ],
+   "travel_minus": -205.9,
+   "travel_plus": 205.9
+  }
+ ]
+}

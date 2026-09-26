@@ -61,19 +61,67 @@ namespace PythonLink
                 _byPath[l.Link.ClientPath] = link.gameObject;
                 _pathOf[link.gameObject] = l.Link.ClientPath;
             }
+            // 哪些物件底下有裝置：收集模型時碰到就停，免得點亮 X 軸時連掛在它滑座上的 Z 軸一起亮
+            _deviceBranches.Clear();
+            foreach (var go in _byPath.Values)
+            {
+                for (var t = go.transform; t != null; t = t.parent) _deviceBranches.Add(t);
+            }
+            // 以裝置為 _actor 的元件（Axis、Transport…）：伺服、馬達本身沒有模型，會動的是這些
+            var driven = new Dictionary<GameObject, List<GameObject>>();
+            foreach (var mb in FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+            {
+                if (mb == null) continue;
+                for (var type = mb.GetType(); type != null && type != typeof(MonoBehaviour); type = type.BaseType)
+                {
+                    var field = type.GetField("_actor", System.Reflection.BindingFlags.Instance |
+                        System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.DeclaredOnly);
+                    if (field == null) continue;
+                    if (field.GetValue(mb) is Component actor && actor != null && _pathOf.ContainsKey(actor.gameObject))
+                    {
+                        if (!driven.TryGetValue(actor.gameObject, out var list)) driven[actor.gameObject] = list = new List<GameObject>();
+                        if (!list.Contains(mb.gameObject)) list.Add(mb.gameObject);
+                    }
+                    break;
+                }
+            }
             foreach (var (path, go) in _byPath)
             {
                 var visuals = new List<GameObject>();
                 if (go.GetComponentInChildren<Renderer>(true) != null) visuals.Add(go);
                 foreach (var comp in go.GetComponents<MonoBehaviour>()) CollectEventTargets(comp, go, visuals);
-                _visualsOf[path] = visuals;
-                foreach (var v in visuals)
+                if (driven.TryGetValue(go, out var axes))
                 {
-                    if (v != go && !_pathOf.ContainsKey(v)) _pathOf[v] = path;   // 點到模型也能反查回裝置
+                    foreach (var v in axes) if (!visuals.Contains(v)) visuals.Add(v);
                 }
-                if (_log) Debug.Log($"[PythonLink] map {path}: {string.Join(", ", visuals.ConvertAll(v => v.name))}");
+                _visualsOf[path] = visuals;
+                var renderers = new List<Renderer>();
+                foreach (var v in visuals) CollectRenderers(v.transform, go, renderers);
+                _renderersOf[path] = renderers;
+                foreach (var r in renderers)
+                {
+                    if (!_pathOf.ContainsKey(r.gameObject)) _pathOf[r.gameObject] = path;   // 點到模型也能反查回裝置
+                }
+                if (_log) Debug.Log($"[PythonLink] map {path}: {string.Join(", ", visuals.ConvertAll(v => v.name))} ({renderers.Count} renderers)");
             }
             _mapped = _byPath.Count > 0;
+        }
+
+        private readonly HashSet<Transform> _deviceBranches = new();
+        private readonly Dictionary<string, List<Renderer>> _renderersOf = new();
+
+        /// <summary>收集 root 底下的模型；遇到別的裝置（或底下有別的裝置的分支）就不往下走。</summary>
+        private void CollectRenderers(Transform root, GameObject device, List<Renderer> list)
+        {
+            foreach (var r in root.GetComponents<Renderer>())
+            {
+                if (r.gameObject.name != OverlayName && !list.Contains(r)) list.Add(r);
+            }
+            foreach (Transform child in root)
+            {
+                if (child.gameObject != device && _deviceBranches.Contains(child) && !device.transform.IsChildOf(child)) continue;
+                CollectRenderers(child, device, list);
+            }
         }
 
         private static void CollectEventTargets(MonoBehaviour comp, GameObject device, List<GameObject> visuals)
@@ -110,6 +158,13 @@ namespace PythonLink
             return new[] { go };
         }
 
+        /// <summary>裝置：對應到的模型（不含掛在它上面的別的裝置）；場景路徑（模組）：整個子樹。</summary>
+        private IEnumerable<Renderer> RenderersFor(string path, GameObject go)
+        {
+            if (_renderersOf.TryGetValue(path.Trim(), out var list) && list.Count > 0) return list;
+            return go.GetComponentsInChildren<Renderer>(true);
+        }
+
         private GameObject Resolve(string path)
         {
             path = path.Trim();
@@ -130,8 +185,7 @@ namespace PythonLink
                 _highlightedObjects.Add(go);
                 _block ??= new MaterialPropertyBlock();
                 var count = 0;
-                foreach (var visual in VisualsFor(p, go))
-                foreach (var r in visual.GetComponentsInChildren<Renderer>(true))
+                foreach (var r in RenderersFor(p, go))
                 {
                     if (r.gameObject.name == OverlayName) continue;
                     count++;
