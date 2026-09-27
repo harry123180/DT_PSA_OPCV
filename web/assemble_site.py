@@ -35,7 +35,8 @@ for f in (ROOT / "web").iterdir():
 
 if variant_dir:
     for f in variant_dir.iterdir():
-        shutil.copy2(f, out / f.name)
+        if f.is_file():
+            shutil.copy2(f, out / f.name)
 
 keep = {"pyodide.mjs", "pyodide.js", "pyodide.asm.mjs", "pyodide.asm.wasm", "python_stdlib.zip",
         "pyodide-lock.json", "package.json"}
@@ -48,6 +49,12 @@ for f in pyodide.iterdir():
 for f in ("dtlink.py", "dtlink_web.py", "dtlink_demo.py", "dtlink_devices.py", "README.md"):
     shutil.copy2(ROOT / "python" / f, out / "python" / f)
 shutil.copy2(out / "devices_zh.json", out / "python" / "devices_zh.json")  # 本機 dtlink.py 讀中文名稱用
+# 站點自帶的 Python 模組（variants/<名稱>/python/*.py）：放進 python/，清單寫進 modules.txt 讓網頁 worker 載入
+if variant_dir and (variant_dir / "python").is_dir():
+    mods = sorted(f.name for f in (variant_dir / "python").glob("*.py"))
+    for name in mods:
+        shutil.copy2(variant_dir / "python" / name, out / "python" / name)
+    (out / "python" / "modules.txt").write_text(chr(10).join(mods) + chr(10), encoding="utf-8")
 
 # 版本號：Cloudflare 會把 js 的快取時間改寫成數小時，檔名不變就會拿到舊版；每個網址都帶 ?v=版本
 import time as _t

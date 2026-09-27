@@ -1,0 +1,701 @@
+{
+ "name": "ParallelRobot",
+ "root": "FG_Robot",
+ "model": "ParallelRobot",
+ "devices": [
+  {
+   "name": "M_Leg1",
+   "type": "DrivePosition",
+   "speed": 400,
+   "mesh": "Leg1_Motor"
+  },
+  {
+   "name": "M_Leg2",
+   "type": "DrivePosition",
+   "speed": 400,
+   "mesh": "Leg2_Motor"
+  },
+  {
+   "name": "M_Leg3",
+   "type": "DrivePosition",
+   "speed": 400,
+   "mesh": "Leg3_Motor"
+  },
+  {
+   "name": "M_Leg4",
+   "type": "DrivePosition",
+   "speed": 400,
+   "mesh": "Leg4_Motor"
+  },
+  {
+   "name": "M_Leg5",
+   "type": "DrivePosition",
+   "speed": 400,
+   "mesh": "Leg5_Motor"
+  },
+  {
+   "name": "M_Leg6",
+   "type": "DrivePosition",
+   "speed": 400,
+   "mesh": "Leg6_Motor"
+  },
+  {
+   "name": "B_PoseX",
+   "type": "SensorAnalog"
+  },
+  {
+   "name": "B_PoseY",
+   "type": "SensorAnalog"
+  },
+  {
+   "name": "B_PoseZ",
+   "type": "SensorAnalog"
+  },
+  {
+   "name": "B_PoseRoll",
+   "type": "SensorAnalog"
+  },
+  {
+   "name": "B_PosePitch",
+   "type": "SensorAnalog"
+  },
+  {
+   "name": "B_PoseYaw",
+   "type": "SensorAnalog"
+  }
+ ],
+ "statics": [
+  {
+   "name": "Base_Leg1",
+   "mesh": "Leg1_Base"
+  },
+  {
+   "name": "Base_Leg2",
+   "mesh": "Leg2_Base"
+  },
+  {
+   "name": "Base_Leg3",
+   "mesh": "Leg3_Base"
+  },
+  {
+   "name": "Base_Leg4",
+   "mesh": "Leg4_Base"
+  },
+  {
+   "name": "Base_Leg5",
+   "mesh": "Leg5_Base"
+  },
+  {
+   "name": "Base_Leg6",
+   "mesh": "Leg6_Base"
+  }
+ ],
+ "axes": [
+  {
+   "name": "Leg1_Carriage",
+   "mesh": "Leg1_Carriage",
+   "actor": "M_Leg1",
+   "type": "translation",
+   "dir": [
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "factor": 0.001,
+   "offset": 0
+  },
+  {
+   "name": "Leg1_Screw",
+   "mesh": "Leg1_Screw",
+   "actor": "M_Leg1",
+   "type": "rotation",
+   "dir": [
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "factor": 36.0,
+   "offset": 0
+  },
+  {
+   "name": "Leg2_Carriage",
+   "mesh": "Leg2_Carriage",
+   "actor": "M_Leg2",
+   "type": "translation",
+   "dir": [
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "factor": 0.001,
+   "offset": 0
+  },
+  {
+   "name": "Leg2_Screw",
+   "mesh": "Leg2_Screw",
+   "actor": "M_Leg2",
+   "type": "rotation",
+   "dir": [
+    0.0,
+    -0.0,
+    1.0
+   ],
+   "factor": 36.0,
+   "offset": 0
+  },
+  {
+   "name": "Leg3_Carriage",
+   "mesh": "Leg3_Carriage",
+   "actor": "M_Leg3",
+   "type": "translation",
+   "dir": [
+    -0.8660190526287391,
+    -0.0,
+    -0.5000110003630134
+   ],
+   "factor": 0.001,
+   "offset": 0
+  },
+  {
+   "name": "Leg3_Screw",
+   "mesh": "Leg3_Screw",
+   "actor": "M_Leg3",
+   "type": "rotation",
+   "dir": [
+    -0.8660190526287391,
+    -0.0,
+    -0.5000110003630134
+   ],
+   "factor": 36.0,
+   "offset": 0
+  },
+  {
+   "name": "Leg4_Carriage",
+   "mesh": "Leg4_Carriage",
+   "actor": "M_Leg4",
+   "type": "translation",
+   "dir": [
+    -0.8660190526287391,
+    0.0,
+    -0.5000110003630134
+   ],
+   "factor": 0.001,
+   "offset": 0
+  },
+  {
+   "name": "Leg4_Screw",
+   "mesh": "Leg4_Screw",
+   "actor": "M_Leg4",
+   "type": "rotation",
+   "dir": [
+    -0.8660190526287391,
+    0.0,
+    -0.5000110003630134
+   ],
+   "factor": 36.0,
+   "offset": 0
+  },
+  {
+   "name": "Leg5_Carriage",
+   "mesh": "Leg5_Carriage",
+   "actor": "M_Leg5",
+   "type": "translation",
+   "dir": [
+    0.8660190526287391,
+    -0.0,
+    -0.5000110003630134
+   ],
+   "factor": 0.001,
+   "offset": 0
+  },
+  {
+   "name": "Leg5_Screw",
+   "mesh": "Leg5_Screw",
+   "actor": "M_Leg5",
+   "type": "rotation",
+   "dir": [
+    0.8660190526287391,
+    -0.0,
+    -0.5000110003630134
+   ],
+   "factor": 36.0,
+   "offset": 0
+  },
+  {
+   "name": "Leg6_Carriage",
+   "mesh": "Leg6_Carriage",
+   "actor": "M_Leg6",
+   "type": "translation",
+   "dir": [
+    0.8660190526287391,
+    0.0,
+    -0.5000110003630134
+   ],
+   "factor": 0.001,
+   "offset": 0
+  },
+  {
+   "name": "Leg6_Screw",
+   "mesh": "Leg6_Screw",
+   "actor": "M_Leg6",
+   "type": "rotation",
+   "dir": [
+    0.8660190526287391,
+    0.0,
+    -0.5000110003630134
+   ],
+   "factor": 36.0,
+   "offset": 0
+  }
+ ],
+ "free": [
+  {
+   "name": "Rod1",
+   "mesh": "Rod1"
+  },
+  {
+   "name": "Rod2",
+   "mesh": "Rod2"
+  },
+  {
+   "name": "Rod3",
+   "mesh": "Rod3"
+  },
+  {
+   "name": "Rod4",
+   "mesh": "Rod4"
+  },
+  {
+   "name": "Rod5",
+   "mesh": "Rod5"
+  },
+  {
+   "name": "Rod6",
+   "mesh": "Rod6"
+  },
+  {
+   "name": "Platform",
+   "mesh": "Platform"
+  }
+ ],
+ "custom": {
+  "type": "PythonLink.ParallelRobot6",
+  "platform": "Platform",
+  "rodLength": 210.0,
+  "platformCenter": [
+   0.0,
+   225.494,
+   0.0
+  ],
+  "legs": [
+   {
+    "carriage": "Leg1_Carriage",
+    "rod": "Rod1",
+    "bottom": [
+     -17.321,
+     38.721,
+     -126.0
+    ],
+    "top": [
+     -17.321,
+     225.494,
+     -30.0
+    ],
+    "u": [
+     0.0,
+     -0.0,
+     1.0
+    ],
+    "home": 35.0,
+    "travel": 98.0,
+    "range": [
+     -35.0,
+     63.0
+    ]
+   },
+   {
+    "carriage": "Leg2_Carriage",
+    "rod": "Rod2",
+    "bottom": [
+     17.321,
+     38.721,
+     -126.0
+    ],
+    "top": [
+     17.321,
+     225.494,
+     -30.0
+    ],
+    "u": [
+     0.0,
+     -0.0,
+     1.0
+    ],
+    "home": 35.0,
+    "travel": 98.0,
+    "range": [
+     -35.0,
+     63.0
+    ]
+   },
+   {
+    "carriage": "Leg3_Carriage",
+    "rod": "Rod3",
+    "bottom": [
+     117.779,
+     38.721,
+     48.0
+    ],
+    "top": [
+     34.641,
+     225.494,
+     0.0
+    ],
+    "u": [
+     -0.8660190526287391,
+     -0.0,
+     -0.5000110003630134
+    ],
+    "home": 35.0,
+    "travel": 98.0,
+    "range": [
+     -35.0,
+     63.0
+    ]
+   },
+   {
+    "carriage": "Leg4_Carriage",
+    "rod": "Rod4",
+    "bottom": [
+     100.459,
+     38.721,
+     78.0
+    ],
+    "top": [
+     17.321,
+     225.494,
+     30.0
+    ],
+    "u": [
+     -0.8660190526287391,
+     0.0,
+     -0.5000110003630134
+    ],
+    "home": 35.0,
+    "travel": 98.0,
+    "range": [
+     -35.0,
+     63.0
+    ]
+   },
+   {
+    "carriage": "Leg5_Carriage",
+    "rod": "Rod5",
+    "bottom": [
+     -100.459,
+     38.721,
+     78.0
+    ],
+    "top": [
+     -17.321,
+     225.494,
+     30.0
+    ],
+    "u": [
+     0.8660190526287391,
+     -0.0,
+     -0.5000110003630134
+    ],
+    "home": 35.0,
+    "travel": 98.0,
+    "range": [
+     -35.0,
+     63.0
+    ]
+   },
+   {
+    "carriage": "Leg6_Carriage",
+    "rod": "Rod6",
+    "bottom": [
+     -117.779,
+     38.721,
+     48.0
+    ],
+    "top": [
+     -34.641,
+     225.494,
+     -0.0
+    ],
+    "u": [
+     0.8660190526287391,
+     0.0,
+     -0.5000110003630134
+    ],
+    "home": 35.0,
+    "travel": 98.0,
+    "range": [
+     -35.0,
+     63.0
+    ]
+   }
+  ],
+  "pose": [
+   "B_PoseX",
+   "B_PoseY",
+   "B_PoseZ",
+   "B_PoseRoll",
+   "B_PosePitch",
+   "B_PoseYaw"
+  ]
+ },
+ "pivots": [
+  {
+   "mesh": "Leg1_Carriage",
+   "p": [
+    -17.32,
+    14.0,
+    -126.0
+   ]
+  },
+  {
+   "mesh": "Leg1_Screw",
+   "p": [
+    -17.32,
+    14.0,
+    -117.5
+   ]
+  },
+  {
+   "mesh": "Leg1_Motor",
+   "p": [
+    -17.32,
+    14.0,
+    -117.5
+   ]
+  },
+  {
+   "mesh": "Leg1_Base",
+   "p": [
+    -17.32,
+    14.0,
+    -117.5
+   ]
+  },
+  {
+   "mesh": "Rod1",
+   "p": [
+    -17.321,
+    38.721,
+    -126.0
+   ]
+  },
+  {
+   "mesh": "Leg2_Carriage",
+   "p": [
+    17.32,
+    14.0,
+    -126.0
+   ]
+  },
+  {
+   "mesh": "Leg2_Screw",
+   "p": [
+    17.32,
+    14.0,
+    -117.5
+   ]
+  },
+  {
+   "mesh": "Leg2_Motor",
+   "p": [
+    17.32,
+    14.0,
+    -117.5
+   ]
+  },
+  {
+   "mesh": "Leg2_Base",
+   "p": [
+    17.32,
+    14.0,
+    -117.5
+   ]
+  },
+  {
+   "mesh": "Rod2",
+   "p": [
+    17.321,
+    38.721,
+    -126.0
+   ]
+  },
+  {
+   "mesh": "Leg3_Carriage",
+   "p": [
+    117.78,
+    14.0,
+    48.0
+   ]
+  },
+  {
+   "mesh": "Leg3_Screw",
+   "p": [
+    110.42,
+    14.0,
+    43.75
+   ]
+  },
+  {
+   "mesh": "Leg3_Motor",
+   "p": [
+    110.42,
+    14.0,
+    43.75
+   ]
+  },
+  {
+   "mesh": "Leg3_Base",
+   "p": [
+    110.42,
+    14.0,
+    43.75
+   ]
+  },
+  {
+   "mesh": "Rod3",
+   "p": [
+    117.779,
+    38.721,
+    48.0
+   ]
+  },
+  {
+   "mesh": "Leg4_Carriage",
+   "p": [
+    100.46,
+    14.0,
+    78.0
+   ]
+  },
+  {
+   "mesh": "Leg4_Screw",
+   "p": [
+    93.1,
+    14.0,
+    73.75
+   ]
+  },
+  {
+   "mesh": "Leg4_Motor",
+   "p": [
+    93.1,
+    14.0,
+    73.75
+   ]
+  },
+  {
+   "mesh": "Leg4_Base",
+   "p": [
+    93.1,
+    14.0,
+    73.75
+   ]
+  },
+  {
+   "mesh": "Rod4",
+   "p": [
+    100.459,
+    38.721,
+    78.0
+   ]
+  },
+  {
+   "mesh": "Leg5_Carriage",
+   "p": [
+    -100.46,
+    14.0,
+    78.0
+   ]
+  },
+  {
+   "mesh": "Leg5_Screw",
+   "p": [
+    -93.1,
+    14.0,
+    73.75
+   ]
+  },
+  {
+   "mesh": "Leg5_Motor",
+   "p": [
+    -93.1,
+    14.0,
+    73.75
+   ]
+  },
+  {
+   "mesh": "Leg5_Base",
+   "p": [
+    -93.1,
+    14.0,
+    73.75
+   ]
+  },
+  {
+   "mesh": "Rod5",
+   "p": [
+    -100.459,
+    38.721,
+    78.0
+   ]
+  },
+  {
+   "mesh": "Leg6_Carriage",
+   "p": [
+    -117.78,
+    14.0,
+    48.0
+   ]
+  },
+  {
+   "mesh": "Leg6_Screw",
+   "p": [
+    -110.42,
+    14.0,
+    43.75
+   ]
+  },
+  {
+   "mesh": "Leg6_Motor",
+   "p": [
+    -110.42,
+    14.0,
+    43.75
+   ]
+  },
+  {
+   "mesh": "Leg6_Base",
+   "p": [
+    -110.42,
+    14.0,
+    43.75
+   ]
+  },
+  {
+   "mesh": "Rod6",
+   "p": [
+    -117.779,
+    38.721,
+    48.0
+   ]
+  },
+  {
+   "mesh": "Platform",
+   "p": [
+    0.0,
+    225.494,
+    0.0
+   ]
+  }
+ ]
+}

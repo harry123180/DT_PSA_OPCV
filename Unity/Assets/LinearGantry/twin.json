@@ -1,0 +1,162 @@
+{
+ "name": "LinearGantry",
+ "root": "FG_Gantry",
+ "model": "LinearGantry",
+ "devices": [
+  {
+   "name": "M_AxisX",
+   "type": "DrivePosition",
+   "speed": 100,
+   "mesh": "A_Motor",
+   "parent": null
+  },
+  {
+   "name": "M_AxisZ",
+   "type": "DrivePosition",
+   "speed": 100,
+   "mesh": "B_Motor",
+   "parent": "Module_Z"
+  }
+ ],
+ "statics": [
+  {
+   "name": "Base_X",
+   "mesh": "A_Base",
+   "parent": null
+  },
+  {
+   "name": "Module_Z",
+   "parent": "AxisX_Carriage"
+  },
+  {
+   "name": "Base_Z",
+   "mesh": "B_Base",
+   "parent": "Module_Z"
+  }
+ ],
+ "axes": [
+  {
+   "name": "AxisX_Screw",
+   "mesh": "A_Screw",
+   "actor": "M_AxisX",
+   "type": "rotation",
+   "dir": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "factor": 36.0,
+   "offset": 0,
+   "parent": null
+  },
+  {
+   "name": "AxisX_Carriage",
+   "mesh": "A_Carriage",
+   "actor": "M_AxisX",
+   "type": "translation",
+   "dir": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "factor": 0.001,
+   "offset": -206.0,
+   "parent": null
+  },
+  {
+   "name": "AxisZ_Screw",
+   "mesh": "B_Screw",
+   "actor": "M_AxisZ",
+   "type": "rotation",
+   "dir": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "factor": 36.0,
+   "offset": 0,
+   "parent": "Module_Z"
+  },
+  {
+   "name": "AxisZ_Carriage",
+   "mesh": "B_Carriage",
+   "actor": "M_AxisZ",
+   "type": "translation",
+   "dir": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "factor": 0.001,
+   "offset": -206.0,
+   "parent": "Module_Z"
+  }
+ ],
+ "free": [],
+ "pivots": [
+  {
+   "mesh": "A_Carriage",
+   "p": [
+    320.0,
+    30.0,
+    64.0
+   ]
+  },
+  {
+   "mesh": "A_Screw",
+   "p": [
+    312.5,
+    30.0,
+    64.0
+   ]
+  },
+  {
+   "mesh": "A_Base",
+   "p": [
+    312.5,
+    30.0,
+    64.0
+   ]
+  },
+  {
+   "mesh": "A_Motor",
+   "p": [
+    312.5,
+    30.0,
+    64.0
+   ]
+  },
+  {
+   "mesh": "B_Carriage",
+   "p": [
+    320.0,
+    375.0,
+    64.0
+   ]
+  },
+  {
+   "mesh": "B_Screw",
+   "p": [
+    320.0,
+    367.5,
+    64.0
+   ]
+  },
+  {
+   "mesh": "B_Base",
+   "p": [
+    320.0,
+    367.5,
+    64.0
+   ]
+  },
+  {
+   "mesh": "B_Motor",
+   "p": [
+    320.0,
+    367.5,
+    64.0
+   ]
+  }
+ ]
+}

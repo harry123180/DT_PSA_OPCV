@@ -45,9 +45,14 @@ async function init(msg) {
     pyodide.setStderr({ batched: (text) => post("err", { text }) });
     interruptBuffer = new Int32Array(new SharedArrayBuffer(4));
     pyodide.setInterruptBuffer(interruptBuffer);
-    for (const f of ["dtlink.py", "dtlink_web.py", "dtlink_demo.py"]) {
-      // 沿用 worker 自己網址上的 ?v=版本，Python 檔跟著網站版本走
-      const r = await fetch(new URL(`./python/${f}${new URL(import.meta.url).search}`, import.meta.url));
+    // 沿用 worker 自己網址上的 ?v=版本，Python 檔跟著網站版本走
+    const ver = new URL(import.meta.url).search;
+    const files = ["dtlink.py", "dtlink_web.py", "dtlink_demo.py"];
+    // 站點自帶的模組（例如並聯機器人的運動學），清單在 python/modules.txt，一行一個檔名
+    const extra = await fetch(new URL(`./python/modules.txt${ver}`, import.meta.url));
+    if (extra.ok) files.push(...(await extra.text()).split(/\s+/).filter((f) => f.endsWith(".py")));
+    for (const f of files) {
+      const r = await fetch(new URL(`./python/${f}${ver}`, import.meta.url));
       pyodide.FS.writeFile(`/home/pyodide/${f}`, await r.text());
     }
     pyodide.runPython(BOOT);

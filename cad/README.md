@@ -1,42 +1,45 @@
-# CAD → 數位孿生：直線模組範例
+# CAD → 數位孿生
 
-把廠商給的 STEP 組立檔，變成網頁上可以用 Python 控制的數位孿生。
-範例是 `linear-module-3`（SolidWorks 匯出，AP214）的 `Configuration 1.STEP`：兩支相同的滾珠螺桿直線模組組成 T 形，
-水平軸（X）的滑座上立著垂直軸（Z）。網址：<https://dt.qianpro.shop/gantry/>
+把廠商給的 STEP 組立檔，變成網頁上可以用 Python／PLC 控制的數位孿生（Unity WebGL＋Open Commissioning）。
 
-STEP 檔很大（40～130 MB），不放進 repo。
+| 機台 | CAD | 機構 | 網址 |
+|---|---|---|---|
+| 雙軸直線模組 | linear-module-3 `Configuration 1.STEP`（170 實體） | 串接：Z 軸整支掛在 X 軸滑座上 | <https://dt.qianpro.shop/gantry/> |
+| 六軸並聯機器人 | 6-dof-parallel-robot-1（199 實體） | 閉鏈：6 支滑座經 210 mm 連桿推動平台（6-PSS） | <https://dt.qianpro.shop/robot/> |
+
+CAD 原檔與轉出的 FBX 不放進 repo（第三方來源，授權不明），依下面流程重新產生。
 
 ## 流程
 
 ```bash
-S=工作目錄
-python cad/dump.py        "$S/Configuration 1.STEP" $S/c1.json          # 每個實體的包圍盒、體積（約 1 分鐘）
-python cad/classify.py    $S/c1.json $S/c1_groups.json                  # 自動分群
-python cad/export_groups.py "$S/Configuration 1.STEP" $S/c1_groups.json $S/c1_out   # 每群一個 STL＋meta.json（行程）
-blender --background --python cad/to_fbx.py -- $S/c1_out $S/c1_out/LinearGantry.fbx $S/c1_out/preview.png
-cp $S/c1_out/LinearGantry.fbx       Unity/Assets/LinearGantry/Models/
-cp $S/c1_out/meta.json              Unity/Assets/LinearGantry/Models/LinearGantry.motion.json
-Unity.exe -batchmode -quit -buildTarget WebGL -projectPath Unity -executeMethod PythonLink.Editor.GantryBuild.BuildWebGL
-python web/assemble_site.py <站台目錄> <pyodide 目錄> --variant gantry
-python python/e2e_gantry.py <站台目錄>
+python cad/dump.py <組立.STEP> dump.json                                  # 每個實體的體積、包圍盒、圓柱面軸線、球心
+python cad/<機台>/classify_*.py dump.json out/                             # 分群 → groups.json、twin.json（機台專屬）
+python cad/export_groups.py <組立.STEP> out/groups.json out/stl --tol 0.2  # 每群一個 STL
+blender --background --python cad/to_fbx.py -- out/stl out/<Model>.fbx out/preview.png   # Y 朝上、公尺、原點、材質
+cp out/<Model>.fbx Unity/Assets/<Name>/Models/ ; cp out/twin.json Unity/Assets/<Name>/
+Unity.exe -batchmode -quit -buildTarget WebGL -projectPath Unity \
+  -executeMethod PythonLink.Editor.TwinBuild.BuildFromCommandLine -twin Assets/<Name>/twin.json -out ../Build/<Variant>/WebGL
+python web/assemble_site.py <站台目錄> <pyodide 目錄> --variant <variant>
+python python/e2e_<variant>.py <站台目錄>
 ```
 
-Blender 路徑：`C:\Program Files\Blender Foundation\Blender 5.2\blender.exe`。CadQuery 用本機 python。
+- 雙軸模組：`cad/gantry/classify_gantry.py` 分群，`cad/gantry/make_twin.py` 產生 groups.json／twin.json
+- 並聯機器人：`cad/parallel_robot/classify_robot.py`；Python 逆向運動學的幾何用 `cad/parallel_robot/make_geometry.py` 從 twin.json 產生
 
-## 每一步做什麼
+## 分工
 
-| 步驟 | 做法 | 為什麼 |
+| 檔案 | 通用？ | 做什麼 |
 |---|---|---|
-| 分群 `classify.py` | STEP 裡零件名稱都是 `BaseBody1..N`，沒有意義，只能靠幾何：一支 605 mm 螺桿＋兩支 640 mm 導桿定義一個模組；四個大塊依體積認出滑座、馬達端座、惰輪端座、馬達；其他零件看落在哪個模組、軸向是否在滑座範圍內 | 會動的零件（滑座、軸承、螺帽與它們的螺絲）一定要跟固定件分開 |
-| 掛載關係 | 模組 B 的惰輪端座貼著模組 A 的滑座 → B 整支掛在 A 的滑座上 | A 動時 B 要跟著走 |
-| 行程 `export_groups.py` | 滑座群組在兩端座之間的空間：本例 ±205.9 mm，也就是 0～411.8 mm | 超出會撞端座 |
-| 轉 FBX `to_fbx.py` | mm → m；SolidWorks 是 Y 朝上，匯入時轉成 Blender Z 朝上，再用預設軸向匯出；原點放在螺桿軸心／滑座中心 | 進 Unity 後 Y 朝上、尺寸正確、旋轉件繞自己的軸 |
-| 建場景 `GantryBuild.cs` | 依 OC 慣例「邏輯元件 → Axis → 模型」：`M_AxisX`、`M_AxisZ` 是位置伺服（DrivePosition，FB_Drive）；各自帶一個直線 Axis（滑座）與一個旋轉 Axis（螺桿）；Z 模組放在 X 滑座的 Axis 底下 | Axis 的正方向依馬達實際位置判斷（FBX 會把 X 左右翻轉） |
-| 網頁 | `web/variants/gantry/`：site.js（標題、範例）、devices_zh.json（中文名稱、行程 `range`） | Python 的 `move_to()` 依 `range` 擋超出行程 |
+| `cad/dump.py`、`export_groups.py`、`to_fbx.py` | 通用 | 讀 STEP、依 groups.json 輸出網格、轉 FBX |
+| `cad/<機台>/classify_*.py` | 每台自己寫 | 只靠幾何辨識零件（名稱都是 `BaseBodyN`），分群、量行程與關節座標 |
+| `Unity/Assets/PythonLink/Editor/TwinBuild.cs` | 通用 | 讀 twin.json 建 OC 場景：裝置 → Axis → 模型，串接用 parent，自動偵測 CAD→Unity 軸向 |
+| `Unity/Assets/PythonLink/ParallelRobot6.cs` | 閉鏈範本 | 每幀正向運動學（牛頓法，double）擺平台與連桿，姿態寫進 SensorAnalog |
+| `web/variants/<variant>/` | 每台自己寫 | site.js（標題、範例）、devices_zh.json（中文說明、行程）、python/（例如逆向運動學） |
 
-## 換成別的機台時要改的地方
+twin.json 欄位見 `TwinBuild.cs` 開頭的註解。
 
-- `classify.py` 的體積常數與「一個模組＝一支螺桿＋兩支導桿」只適用這種模組；別的機構（氣缸、轉盤、皮帶）要改辨識規則，
-  或直接手寫一份「哪些實體屬於哪一群」的對照表。
-- 螺桿導程（`GantryBuild.ScrewLead`，預設 10 mm/轉）只影響螺桿轉的視覺速度，拿到規格再改。
-- 模擬沒有真實的力與極限開關：超出行程不會被擋住（Python 端會擋），要做原點復歸、極限感測器得另外加 SensorBinary。
+## 限制
+
+- 分群規則要依機構寫；會動的零件在 CAD 裡必須是獨立實體
+- 模擬沒有力、沒有極限開關：超行程只在 Python 端擋（`move_to()`、`hexapod.move()`）
+- 螺桿導程、伺服速度這類 CAD 裡沒有的規格是假設值（導程 10 mm/轉）

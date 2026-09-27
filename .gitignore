@@ -50,3 +50,7 @@ cad/*.STEP
 cad/*.step
 Unity/Assets/LinearGantry/Models/LinearGantry.fbx*
 Unity/Assets/LinearGantry/VC_LinearGantry.unity*
+python/robot_*.png
+build_robot.log
+Unity/Assets/ParallelRobot/Models/ParallelRobot.fbx*
+Unity/Assets/ParallelRobot/VC_ParallelRobot.unity*

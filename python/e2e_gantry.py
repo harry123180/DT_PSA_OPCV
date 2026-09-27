@@ -95,7 +95,7 @@ print("RANGE", x.range, z.range)
 print("START", round(x.value, 1), round(z.value, 1))
 print("DONE0")
 """, "DONE0")
-    check("X 軸" in out and "Z 軸" in out and "RANGE (0, 411.8) (0, 411.8)" in out, "列出兩支伺服（中文名稱、行程 0～411.8 mm）")
+    check("X 軸" in out and "Z 軸" in out and "RANGE (0, 412) (0, 412)" in out, "列出兩支伺服（中文名稱、行程 0～412 mm）")
 
     out = run("""from dtlink import Twin
 twin = Twin()

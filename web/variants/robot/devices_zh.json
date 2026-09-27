@@ -1,0 +1,188 @@
+{
+ "source": "6-DOF parallel robot.STEP",
+ "groups": {
+  "FG_Robot": "六軸並聯機器人"
+ },
+ "devices": {
+  "MAIN.FG_Robot.M_Leg1": {
+   "name": "M_Leg1",
+   "type": "FB_Drive",
+   "group": "FG_Robot",
+   "module": "FG_Robot",
+   "scenePath": "Project/FG_Robot/M_Leg1",
+   "groupLabel": "六軸並聯機器人",
+   "label": "腳 1 · 滑座伺服",
+   "function": "驅動第 1 支水平滾珠螺桿滑座；滑座上的球關節經 210 mm 連桿推動上平台。六支滑座一起決定平台姿態。",
+   "signal": "ControlData（%QD）寫滑座目標位置 mm；StatusData（%ID）回報目前位置；Status bit6＝移動中。0＝CAD 原始姿態（平台置中），往機器人中心為正，行程 -35～63 mm。",
+   "role": "位置控制伺服（DrivePosition）。",
+   "caution": "單獨移動一支腳平台會傾斜；要平移或旋轉平台請用 hexapod.py 的 move()，它會同時算好六支腳。",
+   "range": [
+    -35,
+    63
+   ]
+  },
+  "MAIN.FG_Robot.M_Leg2": {
+   "name": "M_Leg2",
+   "type": "FB_Drive",
+   "group": "FG_Robot",
+   "module": "FG_Robot",
+   "scenePath": "Project/FG_Robot/M_Leg2",
+   "groupLabel": "六軸並聯機器人",
+   "label": "腳 2 · 滑座伺服",
+   "function": "驅動第 2 支水平滾珠螺桿滑座；滑座上的球關節經 210 mm 連桿推動上平台。六支滑座一起決定平台姿態。",
+   "signal": "ControlData（%QD）寫滑座目標位置 mm；StatusData（%ID）回報目前位置；Status bit6＝移動中。0＝CAD 原始姿態（平台置中），往機器人中心為正，行程 -35～63 mm。",
+   "role": "位置控制伺服（DrivePosition）。",
+   "caution": "單獨移動一支腳平台會傾斜；要平移或旋轉平台請用 hexapod.py 的 move()，它會同時算好六支腳。",
+   "range": [
+    -35,
+    63
+   ]
+  },
+  "MAIN.FG_Robot.M_Leg3": {
+   "name": "M_Leg3",
+   "type": "FB_Drive",
+   "group": "FG_Robot",
+   "module": "FG_Robot",
+   "scenePath": "Project/FG_Robot/M_Leg3",
+   "groupLabel": "六軸並聯機器人",
+   "label": "腳 3 · 滑座伺服",
+   "function": "驅動第 3 支水平滾珠螺桿滑座；滑座上的球關節經 210 mm 連桿推動上平台。六支滑座一起決定平台姿態。",
+   "signal": "ControlData（%QD）寫滑座目標位置 mm；StatusData（%ID）回報目前位置；Status bit6＝移動中。0＝CAD 原始姿態（平台置中），往機器人中心為正，行程 -35～63 mm。",
+   "role": "位置控制伺服（DrivePosition）。",
+   "caution": "單獨移動一支腳平台會傾斜；要平移或旋轉平台請用 hexapod.py 的 move()，它會同時算好六支腳。",
+   "range": [
+    -35,
+    63
+   ]
+  },
+  "MAIN.FG_Robot.M_Leg4": {
+   "name": "M_Leg4",
+   "type": "FB_Drive",
+   "group": "FG_Robot",
+   "module": "FG_Robot",
+   "scenePath": "Project/FG_Robot/M_Leg4",
+   "groupLabel": "六軸並聯機器人",
+   "label": "腳 4 · 滑座伺服",
+   "function": "驅動第 4 支水平滾珠螺桿滑座；滑座上的球關節經 210 mm 連桿推動上平台。六支滑座一起決定平台姿態。",
+   "signal": "ControlData（%QD）寫滑座目標位置 mm；StatusData（%ID）回報目前位置；Status bit6＝移動中。0＝CAD 原始姿態（平台置中），往機器人中心為正，行程 -35～63 mm。",
+   "role": "位置控制伺服（DrivePosition）。",
+   "caution": "單獨移動一支腳平台會傾斜；要平移或旋轉平台請用 hexapod.py 的 move()，它會同時算好六支腳。",
+   "range": [
+    -35,
+    63
+   ]
+  },
+  "MAIN.FG_Robot.M_Leg5": {
+   "name": "M_Leg5",
+   "type": "FB_Drive",
+   "group": "FG_Robot",
+   "module": "FG_Robot",
+   "scenePath": "Project/FG_Robot/M_Leg5",
+   "groupLabel": "六軸並聯機器人",
+   "label": "腳 5 · 滑座伺服",
+   "function": "驅動第 5 支水平滾珠螺桿滑座；滑座上的球關節經 210 mm 連桿推動上平台。六支滑座一起決定平台姿態。",
+   "signal": "ControlData（%QD）寫滑座目標位置 mm；StatusData（%ID）回報目前位置；Status bit6＝移動中。0＝CAD 原始姿態（平台置中），往機器人中心為正，行程 -35～63 mm。",
+   "role": "位置控制伺服（DrivePosition）。",
+   "caution": "單獨移動一支腳平台會傾斜；要平移或旋轉平台請用 hexapod.py 的 move()，它會同時算好六支腳。",
+   "range": [
+    -35,
+    63
+   ]
+  },
+  "MAIN.FG_Robot.M_Leg6": {
+   "name": "M_Leg6",
+   "type": "FB_Drive",
+   "group": "FG_Robot",
+   "module": "FG_Robot",
+   "scenePath": "Project/FG_Robot/M_Leg6",
+   "groupLabel": "六軸並聯機器人",
+   "label": "腳 6 · 滑座伺服",
+   "function": "驅動第 6 支水平滾珠螺桿滑座；滑座上的球關節經 210 mm 連桿推動上平台。六支滑座一起決定平台姿態。",
+   "signal": "ControlData（%QD）寫滑座目標位置 mm；StatusData（%ID）回報目前位置；Status bit6＝移動中。0＝CAD 原始姿態（平台置中），往機器人中心為正，行程 -35～63 mm。",
+   "role": "位置控制伺服（DrivePosition）。",
+   "caution": "單獨移動一支腳平台會傾斜；要平移或旋轉平台請用 hexapod.py 的 move()，它會同時算好六支腳。",
+   "range": [
+    -35,
+    63
+   ]
+  },
+  "MAIN.FG_Robot.B_PoseX": {
+   "name": "B_PoseX",
+   "type": "FB_SensorAnalog",
+   "group": "FG_Robot",
+   "module": "FG_Robot",
+   "scenePath": "Project/FG_Robot/B_PoseX",
+   "groupLabel": "六軸並聯機器人",
+   "label": "平台位置 X",
+   "function": "孿生用正向運動學（由六個滑座位置解出平台姿態）算出的平台位置 X，相對原始姿態，單位 mm。",
+   "signal": "StatusData（%ID，REAL）。",
+   "role": "類比量測（SensorAnalog）。",
+   "caution": "平台到不了的滑座組合會保持上一個姿態。"
+  },
+  "MAIN.FG_Robot.B_PoseY": {
+   "name": "B_PoseY",
+   "type": "FB_SensorAnalog",
+   "group": "FG_Robot",
+   "module": "FG_Robot",
+   "scenePath": "Project/FG_Robot/B_PoseY",
+   "groupLabel": "六軸並聯機器人",
+   "label": "平台位置 Y",
+   "function": "孿生用正向運動學（由六個滑座位置解出平台姿態）算出的平台位置 Y，相對原始姿態，單位 mm。",
+   "signal": "StatusData（%ID，REAL）。",
+   "role": "類比量測（SensorAnalog）。",
+   "caution": "平台到不了的滑座組合會保持上一個姿態。"
+  },
+  "MAIN.FG_Robot.B_PoseZ": {
+   "name": "B_PoseZ",
+   "type": "FB_SensorAnalog",
+   "group": "FG_Robot",
+   "module": "FG_Robot",
+   "scenePath": "Project/FG_Robot/B_PoseZ",
+   "groupLabel": "六軸並聯機器人",
+   "label": "平台高度 Z",
+   "function": "孿生用正向運動學（由六個滑座位置解出平台姿態）算出的平台高度 Z，相對原始姿態，單位 mm。",
+   "signal": "StatusData（%ID，REAL）。",
+   "role": "類比量測（SensorAnalog）。",
+   "caution": "平台到不了的滑座組合會保持上一個姿態。"
+  },
+  "MAIN.FG_Robot.B_PoseRoll": {
+   "name": "B_PoseRoll",
+   "type": "FB_SensorAnalog",
+   "group": "FG_Robot",
+   "module": "FG_Robot",
+   "scenePath": "Project/FG_Robot/B_PoseRoll",
+   "groupLabel": "六軸並聯機器人",
+   "label": "平台 Roll（繞 X）",
+   "function": "孿生用正向運動學（由六個滑座位置解出平台姿態）算出的平台 Roll（繞 X），相對原始姿態，單位 度。",
+   "signal": "StatusData（%ID，REAL）。",
+   "role": "類比量測（SensorAnalog）。",
+   "caution": "平台到不了的滑座組合會保持上一個姿態。"
+  },
+  "MAIN.FG_Robot.B_PosePitch": {
+   "name": "B_PosePitch",
+   "type": "FB_SensorAnalog",
+   "group": "FG_Robot",
+   "module": "FG_Robot",
+   "scenePath": "Project/FG_Robot/B_PosePitch",
+   "groupLabel": "六軸並聯機器人",
+   "label": "平台 Pitch（繞 Y）",
+   "function": "孿生用正向運動學（由六個滑座位置解出平台姿態）算出的平台 Pitch（繞 Y），相對原始姿態，單位 度。",
+   "signal": "StatusData（%ID，REAL）。",
+   "role": "類比量測（SensorAnalog）。",
+   "caution": "平台到不了的滑座組合會保持上一個姿態。"
+  },
+  "MAIN.FG_Robot.B_PoseYaw": {
+   "name": "B_PoseYaw",
+   "type": "FB_SensorAnalog",
+   "group": "FG_Robot",
+   "module": "FG_Robot",
+   "scenePath": "Project/FG_Robot/B_PoseYaw",
+   "groupLabel": "六軸並聯機器人",
+   "label": "平台 Yaw（繞 Z）",
+   "function": "孿生用正向運動學（由六個滑座位置解出平台姿態）算出的平台 Yaw（繞 Z），相對原始姿態，單位 度。",
+   "signal": "StatusData（%ID，REAL）。",
+   "role": "類比量測（SensorAnalog）。",
+   "caution": "平台到不了的滑座組合會保持上一個姿態。"
+  }
+ }
+}
