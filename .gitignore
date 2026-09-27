@@ -54,3 +54,7 @@ python/robot_*.png
 build_robot.log
 Unity/Assets/ParallelRobot/Models/ParallelRobot.fbx*
 Unity/Assets/ParallelRobot/VC_ParallelRobot.unity*
+Unity/Assets/Gantry3/Models/Gantry3.fbx*
+Unity/Assets/Gantry3/VC_Gantry3.unity*
+python/xyz_*.png
+build_xyz.log

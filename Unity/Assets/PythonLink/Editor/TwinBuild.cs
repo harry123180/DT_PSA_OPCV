@@ -21,7 +21,8 @@ namespace PythonLink.Editor
     ///
     /// twin.json：
     ///   name、root（Hierarchy 名稱，PLC 路徑 MAIN.root.裝置）、model（Assets/name/Models/model.fbx）
-    ///   devices  [{name, type: DrivePosition|DriveSimple|Cylinder|SensorBinary|SensorAnalog, mesh?, speed?, parent?}]
+    ///   devices  [{name, type: DrivePosition|DriveSimple|Cylinder|SensorBinary|SensorAnalog, mesh?, meshes?[], speed?, parent?}]
+    ///            meshes：同一個裝置的其他模型（同步軸的第二顆馬達）
     ///   statics  [{name, mesh?, parent?}]                固定件；沒有 mesh 就是空的群組節點
     ///   axes     [{name, mesh, actor, type: translation|rotation, dir[3], factor, offset, parent?}]
     ///            translation：位移（m）=（程式給的值 + offset）× factor，沿 dir；rotation：角度（度）= 值 × factor，繞 dir
@@ -33,7 +34,7 @@ namespace PythonLink.Editor
     public static class TwinBuild
     {
         [Serializable] private class Spec { public string name, root, model; public Device[] devices; public Part[] statics, free; public AxisSpec[] axes; public Custom custom; public Pivot[] pivots; }
-        [Serializable] private class Device { public string name, type, mesh, parent; public float speed; }
+        [Serializable] private class Device { public string name, type, mesh, parent; public float speed; public string[] meshes; }
         [Serializable] private class Part { public string name, mesh, parent; }
         [Serializable] private class AxisSpec { public string name, mesh, actor, type, parent; public float[] dir; public float factor, offset; }
         [Serializable] private class Pivot { public string mesh; public float[] p; }
@@ -121,6 +122,14 @@ namespace PythonLink.Editor
                         if (v != null) { v.floatValue = dd.speed; so.ApplyModifiedPropertiesWithoutUndo(); }
                     }
                     if (!string.IsNullOrEmpty(dd.mesh)) Mesh(dd.mesh).SetParent(go.transform, true);   // 馬達模型放在裝置底下：高亮、點選對得到
+                    // 同步軸（例如龍門的 Y1、Y2 共用一個伺服）的其他馬達：固定在原位，不跟著裝置物件走
+                    foreach (var extra in dd.meshes ?? Array.Empty<string>())
+                    {
+                        var holder = new GameObject(extra + "_Mount").transform;
+                        holder.SetParent(go.transform, true);
+                        holder.position = Mesh(extra).position;
+                        Mesh(extra).SetParent(holder, true);
+                    }
                     actors[dd.name] = c;
                     nodes[dd.name] = go.transform;
                 }));

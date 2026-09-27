@@ -1,0 +1,59 @@
+{
+ "source": "linear-actuator-28 Configuration 5.STEP",
+ "groups": {
+  "FG_Gantry3": "三軸龍門"
+ },
+ "devices": {
+  "MAIN.FG_Gantry3.M_AxisY": {
+   "type": "FB_Drive",
+   "group": "FG_Gantry3",
+   "module": "FG_Gantry3",
+   "groupLabel": "三軸龍門",
+   "role": "位置控制伺服（DrivePosition）。",
+   "range": [
+    0,
+    98
+   ],
+   "name": "M_AxisY",
+   "scenePath": "Project/FG_Gantry3/M_AxisY",
+   "label": "Y 軸 · 雙馬達同步伺服",
+   "function": "驅動左右兩支平行的 Y 軸滑座（龍門的兩隻腳），兩顆馬達同步；橫梁（X 軸）與上面的 Z 軸一起前後移動。",
+   "signal": "ControlData（%QD）寫目標位置 mm；StatusData（%ID）回報目前位置；Status bit6＝移動中。0＝惰輪端，往馬達端（後方）為正，行程 0～98 mm，速度 100 mm/s。",
+   "caution": "實機兩顆馬達必須同步（電子齒輪），不同步會扭到橫梁；孿生裡用同一個伺服帶兩支，永遠同步。"
+  },
+  "MAIN.FG_Gantry3.M_AxisX": {
+   "type": "FB_Drive",
+   "group": "FG_Gantry3",
+   "module": "FG_Gantry3",
+   "groupLabel": "三軸龍門",
+   "role": "位置控制伺服（DrivePosition）。",
+   "range": [
+    0,
+    98
+   ],
+   "name": "M_AxisX",
+   "scenePath": "Project/FG_Gantry3/Module_X/M_AxisX",
+   "label": "X 軸 · 橫梁伺服",
+   "function": "驅動橫梁上的 X 滑座左右移動；Z 軸立在這個滑座上。整支橫梁架在兩支 Y 軸的滑座上。",
+   "signal": "ControlData（%QD）寫目標位置 mm；StatusData（%ID）回報目前位置；Status bit6＝移動中。0＝惰輪端，往馬達端（右）為正，行程 0～98 mm，速度 100 mm/s。",
+   "caution": "超出 0～98 mm 會撞端座（模擬不會擋），請先確認目標值。"
+  },
+  "MAIN.FG_Gantry3.M_AxisZ": {
+   "type": "FB_Drive",
+   "group": "FG_Gantry3",
+   "module": "FG_Gantry3",
+   "groupLabel": "三軸龍門",
+   "role": "位置控制伺服（DrivePosition）。",
+   "range": [
+    0,
+    98
+   ],
+   "name": "M_AxisZ",
+   "scenePath": "Project/FG_Gantry3/Module_X/Module_Z/M_AxisZ",
+   "label": "Z 軸 · 升降伺服",
+   "function": "驅動 Z 滑座上下移動（取放用）；整支 Z 軸立在 X 滑座上，跟著 X、Y 走。",
+   "signal": "ControlData（%QD）寫目標位置 mm；StatusData（%ID）回報目前位置；Status bit6＝移動中。0＝惰輪端，往上為正，行程 0～98 mm，速度 100 mm/s。",
+   "caution": "超出 0～98 mm 會撞端座（模擬不會擋），請先確認目標值。"
+  }
+ }
+}

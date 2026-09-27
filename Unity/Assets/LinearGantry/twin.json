@@ -6,16 +6,18 @@
   {
    "name": "M_AxisX",
    "type": "DrivePosition",
-   "speed": 100,
+   "speed": 100.0,
    "mesh": "A_Motor",
-   "parent": null
+   "parent": null,
+   "meshes": []
   },
   {
    "name": "M_AxisZ",
    "type": "DrivePosition",
-   "speed": 100,
+   "speed": 100.0,
    "mesh": "B_Motor",
-   "parent": "Module_Z"
+   "parent": "Module_Z",
+   "meshes": []
   }
  ],
  "statics": [
