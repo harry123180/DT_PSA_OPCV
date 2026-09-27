@@ -74,6 +74,8 @@ with sync_playwright() as p:
     def run(code, timeout=120000):
         page.click("#clear")
         page.evaluate("c => document.querySelector('.CodeMirror').CodeMirror.setValue(c)", code)
+        # 狀態列可能還留著上一次的「完成」：先清掉，等到的才是這一次的
+        page.evaluate("document.getElementById('status').textContent = ''")
         page.click("#run")
         page.wait_for_function("/完成|已結束/.test(document.getElementById('status').textContent)", timeout=timeout)
         time.sleep(0.3)
@@ -134,6 +136,28 @@ print("ONE", robot.settle())
     tilt = max(abs(float(m.group(1))), abs(float(m.group(2)))) if m else 0
     check(tilt > 1, f"只推腳 1 到 30 mm，平台傾斜 {tilt:.1f} 度（正向運動學）")
     shot2 = HERE / "robot_2.png"; canvas.screenshot(path=str(shot2))
+
+    # 連續軌跡：follow() 中途不能停頓（move() 串很多小段會一頓一頓的）
+    out, bad = run("""import math, time
+from dtlink import Twin
+from hexapod import Hexapod
+robot = Hexapod(Twin()); leg = robot.legs[2]
+samples = []
+def circle(t):
+    a = t / 6 * 2 * math.pi
+    return dict(x=10 * math.cos(a), y=10 * math.sin(a), roll=5 * math.sin(a), pitch=5 * math.cos(a))
+robot.follow(circle, duration=6, on_step=lambda t: samples.append((time.time(), leg.value)))
+worst, t0, last = 0, None, None
+for t, v in samples:
+    if last is None or abs(v - last) > 1e-3:
+        if t0 is not None: worst = max(worst, t - t0)
+        t0, last = t, v
+print("GAP", round(worst, 3))
+robot.home()
+""", timeout=180000)
+    m = re.search(r"GAP ([\d.]+)", out)
+    gap = float(m.group(1)) if m else 9
+    check(not bad and gap < 0.2, f"連續軌跡 follow() 最長停頓 {gap} 秒（< 0.2）")
 
     page.evaluate("window.DTHighlight('highlight', 'MAIN.FG_Robot.M_Leg1')")
     time.sleep(1.2)

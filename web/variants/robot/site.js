@@ -27,17 +27,21 @@ print("回原位", robot.pose())
 `,
     },
     dance: {
-      label: "平台畫圓、搖擺",
-      code: `# 平台在水平面畫圓，同時搖擺
+      label: "平台畫圓、搖擺（連續軌跡）",
+      code: `# 平台在水平面畫圓，同時搖擺：follow() 給「時間 → 姿態」，連續送出、中途不停
+# （move() 是點到點，每段都會起停，拿來串很多小段會一頓一頓的）
 import math
 from dtlink import Twin
 from hexapod import Hexapod
 
 twin = Twin()
 robot = Hexapod(twin)
-for k in range(24):
-    a = k / 24 * 2 * math.pi
-    robot.move(x=10 * math.cos(a), y=10 * math.sin(a), roll=5 * math.sin(a), pitch=5 * math.cos(a), duration=0.25)
+
+def circle(t):                       # t：秒；一圈 4 秒
+    a = t / 4 * 2 * math.pi
+    return dict(x=10 * math.cos(a), y=10 * math.sin(a), roll=5 * math.sin(a), pitch=5 * math.cos(a))
+
+robot.follow(circle, duration=8)     # 兩圈
 robot.home()
 print("完成", robot.pose())
 `,

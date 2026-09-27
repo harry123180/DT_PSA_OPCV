@@ -88,6 +88,28 @@ class Hexapod:
         self.twin.wait_until(lambda: all(abs(leg.value - s) < 0.05 for leg, s in zip(self.legs, end)), timeout=5)
         self.settle()
 
+    def follow(self, pose_at, duration, rate=50, on_step=None):
+        """連續軌跡：pose_at(t) 回傳 t 秒時的姿態 dict（x、y、z、roll、pitch、yaw，缺的當 0），
+        以 rate Hz 連續送滑座目標，中途不減速、不停。畫圓、搖擺這類動作用這個；move() 是點到點（每段起停）。
+
+        整條軌跡先全部檢查過（逆向運動學、行程），有任何一點到不了就不動、直接丟 ValueError。
+        軌跡起點離目前姿態太遠會先用 move() 平順移過去。on_step(t) 每送一步呼叫一次（印進度、記錄用）。"""
+        steps = max(1, int(duration * rate))
+        path = [ik(**{a: float(pose_at(i / rate).get(a, 0.0)) for a in AXES}) for i in range(steps + 1)]
+        first = pose_at(0)
+        now = self.pose()
+        if max(abs(now[a] - first.get(a, 0.0)) for a in AXES) > 0.5:
+            self.move(**{a: first.get(a, 0.0) for a in AXES})
+        for i, targets in enumerate(path):
+            for leg, s in zip(self.legs, targets):
+                leg.target = s
+            if on_step:
+                on_step(i / rate)
+            self.twin.sleep(1 / rate)
+        end = path[-1]
+        self.twin.wait_until(lambda: all(abs(leg.value - s) < 0.05 for leg, s in zip(self.legs, end)), timeout=5)
+        self.settle()
+
     def settle(self, timeout=2.0):
         """等平台姿態穩定：滑座位置先回報，平台姿態是孿生下一幀才解出來的，到位當下讀會晚一幀。"""
         last = None
