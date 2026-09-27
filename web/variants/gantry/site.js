@@ -3,7 +3,7 @@ window.DT_SITE = {
   id: "gantry",
   title: "雙軸直線模組",
   sub: "CAD 自動轉出的數位孿生 · 用 Python 控制兩支伺服",
-  other: { href: "../", text: "產線孿生" },
+  other: { href: "../", text: "所有機台" },
   defaultExample: "basic",
   examples: {
     basic: {

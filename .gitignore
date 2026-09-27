@@ -58,3 +58,6 @@ Unity/Assets/Gantry3/Models/Gantry3.fbx*
 Unity/Assets/Gantry3/VC_Gantry3.unity*
 python/xyz_*.png
 build_xyz.log
+python/e2e_gallery_*.png
+python/gallery_*.png
+python/thumb*.png

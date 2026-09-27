@@ -3,7 +3,7 @@ window.DT_SITE = {
   id: "xyz",
   title: "三軸龍門",
   sub: "CAD 自動轉出的數位孿生 · 雙 Y 同步＋X＋Z，用 Python 當運動控制器",
-  other: { href: "../", text: "產線孿生" },
+  other: { href: "../", text: "所有機台" },
   defaultExample: "basic",
   examples: {
     basic: {

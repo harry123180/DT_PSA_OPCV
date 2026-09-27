@@ -3,7 +3,7 @@ window.DT_SITE = {
   id: "robot",
   title: "六軸並聯機器人",
   sub: "CAD 自動轉出的數位孿生 · 六支滑座推動平台（閉鏈運動學）",
-  other: { href: "../", text: "產線孿生" },
+  other: { href: "../", text: "所有機台" },
   defaultExample: "basic",
   examples: {
     basic: {

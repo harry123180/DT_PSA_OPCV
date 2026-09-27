@@ -1,13 +1,13 @@
 # 用 Python 控制網頁版產線孿生
 
-網頁版：<https://dt.qianpro.shop>（瀏覽器直接開，不用安裝 Unity）
+網頁版：<https://dt.qianpro.shop>（機台列表；這份說明是其中的產線 <https://dt.qianpro.shop/line/>，瀏覽器直接開，不用安裝 Unity）
 
 網頁裡的孿生會連到**你自己電腦**上的 Python。你的 Python 程式就是這條產線的 PLC：
 寫「控制」讓氣缸伸縮、輸送帶轉動、燈亮；讀「狀態」知道氣缸到位沒、感測器有沒有偵測到托盤。
 
 ## 最快：直接在網頁寫 Python（不用安裝）
 
-開 <https://dt.qianpro.shop>，右邊就是 Python 編輯器（瀏覽器裡跑的 Pyodide）：
+開 <https://dt.qianpro.shop/line/>，右邊就是 Python 編輯器（瀏覽器裡跑的 Pyodide）：
 
 1. 「載入範例…」選一個，或自己寫
 2. 按 **執行**（或 Ctrl+Enter），`print` 的結果顯示在下方
@@ -28,7 +28,7 @@ pip install websockets
 python dtlink_demo.py          # 開本機伺服器 ws://127.0.0.1:8765，等網頁連上
 ```
 
-再用 Chrome 開 <https://dt.qianpro.shop/?ws=ws://127.0.0.1:8765>。右下角顯示 **Python connected** 就接上了。
+再用 Chrome 開 <https://dt.qianpro.shop/line/?ws=ws://127.0.0.1:8765>。右下角顯示 **Python connected** 就接上了。
 
 > Chrome 第一次可能會跳出「允許這個網站存取區域網路上的裝置」，請按允許——
 > 那是網頁要連到你電腦上的 Python（127.0.0.1），資料不會離開你的電腦。
