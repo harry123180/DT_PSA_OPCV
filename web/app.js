@@ -243,7 +243,8 @@ print("結束")
 
   if (!localMode) {
     if (!window.crossOriginIsolated || typeof SharedArrayBuffer === "undefined") {
-      log("這個瀏覽器不支援網頁 Python 需要的共享記憶體。請用最新版 Chrome、Edge 或 Firefox。", "err");
+      log("這個分頁沒有網頁 Python 需要的共享記憶體（跨來源隔離沒開）。常見原因是瀏覽器擴充功能拿掉了安全標頭：" +
+          "請重新整理一次；還是不行就用無痕視窗，或暫停廣告阻擋／改標頭類的擴充功能。3D 與暫存器表不受影響。", "err");
       $("run").disabled = true;
     } else {
       startWorker();

@@ -76,7 +76,10 @@
       const c = m.controlSize, s = m.statusSize;
       const sameLayout = B.manifest && B.manifest.controlSize === c && B.manifest.statusSize === s;
       if (!sameLayout) {
-        B.sab = new SharedArrayBuffer(HEADER_BYTES + c + s);
+        // 沒有跨來源隔離（例如擴充功能拿掉了 COEP）就沒有 SharedArrayBuffer：改用一般記憶體，
+        // 3D 與暫存器表照常運作，只有網頁 Python（要跟 Worker 共享）不能用
+        const Buf = typeof SharedArrayBuffer !== "undefined" ? SharedArrayBuffer : ArrayBuffer;
+        B.sab = new Buf(HEADER_BYTES + c + s);
         B.hdr = new Int32Array(B.sab, 0, 4);
         B.ctrl = new Uint8Array(B.sab, HEADER_BYTES, c);
         B.stat = new Uint8Array(B.sab, HEADER_BYTES + c, s);

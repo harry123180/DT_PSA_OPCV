@@ -4,6 +4,28 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
+  <script>
+    // 跨來源隔離備援：伺服器有送 COOP／COEP，但有些瀏覽器擴充功能會拿掉 COEP（沒有 SharedArrayBuffer，網頁 Python 不能用）。
+    // 這時註冊 coi-sw.js 替回應補標頭，重新載入一次；同一個分頁只試一次，避免無限重載。
+    (function () {
+      var KEY = "dt.coi.reloaded";
+      if (window.crossOriginIsolated) {
+        try { sessionStorage.removeItem(KEY); } catch (e) {}
+        // 已經由 Service Worker 補標頭的分頁：照樣註冊目前版本，舊版 SW 才會被換掉
+        if (navigator.serviceWorker && navigator.serviceWorker.controller) navigator.serviceWorker.register("coi-sw.js?v=__BUILD__");
+        return;
+      }
+      if (!window.isSecureContext || !("serviceWorker" in navigator)) return;
+      navigator.serviceWorker.register("coi-sw.js?v=__BUILD__").then(function () {
+        var reload = function () {
+          try { if (sessionStorage.getItem(KEY)) return; sessionStorage.setItem(KEY, "1"); } catch (e) { return; }
+          location.reload();
+        };
+        if (navigator.serviceWorker.controller) reload();
+        else navigator.serviceWorker.addEventListener("controllerchange", reload);
+      }).catch(function (e) { console.warn("coi-sw", e); });
+    })();
+  </script>
   <title>產線數位孿生 · Python 控制</title>
   <link rel="stylesheet" href="vendor/codemirror/codemirror.min.css">
   <link rel="stylesheet" href="style.css?v=__BUILD__">
