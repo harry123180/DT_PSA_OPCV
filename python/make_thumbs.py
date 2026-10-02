@@ -1,6 +1,6 @@
 """機台列表頁的縮圖：打開各站，等 3D 載入完成，截 3D 畫面裁掉工具列與狀態框，存成 web/gallery/img/<站>.jpg。
 
-    python make_thumbs.py <組好的整站目錄>        # web/assemble_all.py 的輸出
+    python make_thumbs.py <組好的整站目錄> [機台…]   # web/assemble_all.py 的輸出；沒給機台就全部重拍
 """
 import functools
 import http.server
@@ -109,7 +109,7 @@ httpd = http.server.ThreadingHTTPServer(("127.0.0.1", 8170), functools.partial(H
 threading.Thread(target=httpd.serve_forever, daemon=True).start()
 with sync_playwright() as p:
     browser = p.chromium.launch(channel="chrome", headless=True, args=["--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"])
-    for name in ("line", "gantry", "xyz", "robot"):
+    for name in sys.argv[2:] or ("line", "gantry", "xyz", "robot", "vmc", "vf2"):
         page = browser.new_page(viewport={"width": 1600, "height": 900})
         page.goto(f"http://127.0.0.1:8170/{name}/", wait_until="load", timeout=120000)
         page.wait_for_function("window.dtUnity && document.getElementById('status').textContent.includes('就緒')", timeout=240000)

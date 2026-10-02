@@ -17,6 +17,7 @@
       --t-closed: #9a3412; --t-closed-bg: #ffedd5;
       --t-sync: #6d28d9; --t-sync-bg: #ede9fe;
       --t-plc: #1d4ed8; --t-plc-bg: #dbeafe;
+      --t-cnc: #b45309; --t-cnc-bg: #fef3c7;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; }
@@ -52,6 +53,7 @@
     .tag.closed { color: var(--t-closed); background: var(--t-closed-bg); }
     .tag.sync { color: var(--t-sync); background: var(--t-sync-bg); }
     .tag.plc { color: var(--t-plc); background: var(--t-plc-bg); }
+    .tag.cnc { color: var(--t-cnc); background: var(--t-cnc-bg); }
     .level { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
     .dots { display: inline-flex; gap: 3px; }
     .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); display: inline-block; }
@@ -99,6 +101,7 @@
       <button type="button" data-f="serial">串接軸</button>
       <button type="button" data-f="sync">同步軸</button>
       <button type="button" data-f="closed">閉鏈運動學</button>
+      <button type="button" data-f="cnc">CNC 加工</button>
     </div>
 
     <div class="grid" id="grid"></div>
@@ -115,7 +118,7 @@
   <script>
     const V = "?v=__BUILD__";
     const LEVEL = ["", "入門", "進階", "挑戰"];
-    const TAG = { plc: "產線 PLC", serial: "串接軸", sync: "同步軸", closed: "閉鏈運動學" };
+    const TAG = { plc: "產線 PLC", serial: "串接軸", sync: "同步軸", closed: "閉鏈運動學", cnc: "CNC 加工" };
     const MACHINES = [
       {
         dir: "line", title: "產線：雷射焊接與組裝線", tags: ["plc"], level: 1,
@@ -140,6 +143,18 @@
         desc: "六支水平滑座各接一根 210 mm 連桿推動上平台（6-PSS），平台的位置與姿態由六支腳共同決定。",
         stats: [["6", "支伺服"], ["6", "個姿態感測"]],
         learn: ["逆向運動學：姿態換算成六支腳", "正向運動學：孿生回報平台姿態", "點到點 move() 與連續軌跡 follow()"],
+      },
+      {
+        dir: "vmc", title: "立式加工中心（CNC）", tags: ["cnc", "serial"], level: 3,
+        desc: "整台立式加工中心：三軸、主軸、10 刀位傘式刀庫自動換刀，寫 G-code 真的把素材切出形狀。機構取自 LinuxCNC 的 VMC 模擬機。",
+        stats: [["3", "軸＋主軸"], ["10", "把刀"], ["13", "種警報"]],
+        learn: ["G-code：G0／G1／G2／G3、鑽孔循環、M6 換刀", "換刀順序與互鎖：一步錯就撞刀", "接 LinuxCNC 當真的 CNC 控制器（虛擬試運轉）"],
+      },
+      {
+        dir: "vf2", title: "Haas VF-2 立式加工中心", tags: ["cnc", "serial"], level: 2,
+        desc: "真實機型 Haas VF-2（Autodesk Fusion 360 機台庫的模擬模型）：X 762 × Y 406 × Z 508 mm，整台含外罩與操作面板，手動換刀、切削模擬。",
+        stats: [["3", "軸＋主軸"], ["762", "mm X 行程"], ["10", "把刀"]],
+        learn: ["同一支 G-code 在不同機台上跑", "工件座標與刀長補正", "Fusion 機台模型轉數位孿生"],
       },
     ];
 

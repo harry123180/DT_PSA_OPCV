@@ -1,0 +1,11 @@
+{
+  "autodeskProduct": "Fusion360",
+  "type": "addin",
+  "id": "5d8e3a52-7c1b-4f0e-9a51-2f6b8c0d4e17",
+  "author": "DT_PSA_OPCV",
+  "description": {"": "One-shot: import a machine-library simulation model (.f3d) and export STEP + component tree"},
+  "version": "1.0",
+  "runOnStartup": true,
+  "supportedOS": "windows|mac",
+  "editEnabled": true
+}

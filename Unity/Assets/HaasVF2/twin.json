@@ -1,0 +1,345 @@
+{
+ "name": "HaasVF2",
+ "root": "FG_VF2",
+ "model": "HaasVF2",
+ "devices": [
+  {
+   "name": "M_AxisX",
+   "type": "DrivePosition",
+   "speed": 300
+  },
+  {
+   "name": "M_AxisY",
+   "type": "DrivePosition",
+   "speed": 300
+  },
+  {
+   "name": "M_AxisZ",
+   "type": "DrivePosition",
+   "speed": 300
+  },
+  {
+   "name": "M_Spindle",
+   "type": "DriveSpeed",
+   "accel": 4000
+  },
+  {
+   "name": "Q_ToolSelect",
+   "type": "DrivePosition",
+   "speed": 1000
+  },
+  {
+   "name": "Q_ResetStock",
+   "type": "Lamp"
+  },
+  {
+   "name": "Q_ResetAlarm",
+   "type": "Lamp"
+  },
+  {
+   "name": "B_Tool",
+   "type": "SensorAnalog"
+  },
+  {
+   "name": "B_Alarm",
+   "type": "SensorAnalog"
+  },
+  {
+   "name": "B_CutVolume",
+   "type": "SensorAnalog"
+  }
+ ],
+ "statics": [
+  {
+   "name": "Machine_Base",
+   "mesh": "Base"
+  },
+  {
+   "name": "Enclosure",
+   "mesh": "Enclosure"
+  },
+  {
+   "name": "Pendant",
+   "mesh": "Pendant"
+  },
+  {
+   "name": "Fixture",
+   "mesh": "Riser",
+   "parent": "Table_X"
+  }
+ ],
+ "axes": [
+  {
+   "name": "Saddle_Y",
+   "mesh": "Saddle",
+   "actor": "M_AxisY",
+   "type": "translation",
+   "dir": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "factor": 0.001,
+   "offset": 0
+  },
+  {
+   "name": "Table_X",
+   "mesh": "Table",
+   "actor": "M_AxisX",
+   "type": "translation",
+   "dir": [
+    -1.0,
+    0.0,
+    -0.0
+   ],
+   "factor": 0.001,
+   "offset": 0,
+   "parent": "Saddle_Y"
+  },
+  {
+   "name": "Head_Z",
+   "mesh": "Head",
+   "actor": "M_AxisZ",
+   "type": "translation",
+   "dir": [
+    0.0,
+    1.0,
+    -0.0
+   ],
+   "factor": 0.001,
+   "offset": 0
+  },
+  {
+   "name": "Spindle",
+   "mesh": "Spindle",
+   "actor": "M_Spindle",
+   "type": "rotation",
+   "dir": [
+    0.0,
+    1.0,
+    -0.0
+   ],
+   "factor": 6,
+   "offset": 0,
+   "mode": "speed",
+   "parent": "Head_Z"
+  }
+ ],
+ "custom": {
+  "type": "PythonLink.VmcToolChanger",
+  "spindleGauge": [
+   0.0,
+   610.0,
+   -0.0
+  ],
+  "pocketList": [],
+  "toolList": [
+   {
+    "name": "T1",
+    "label": "Ø10 平銑刀",
+    "diameter": 10,
+    "length": 100,
+    "flute": 30,
+    "inSpindle": true,
+    "holder": "Tool1_Holder",
+    "cutter": "Tool1_Cutter",
+    "pocket": 1
+   },
+   {
+    "name": "T2",
+    "label": "Ø6 平銑刀",
+    "diameter": 6,
+    "length": 95,
+    "flute": 20,
+    "inSpindle": false,
+    "holder": "Tool2_Holder",
+    "cutter": "Tool2_Cutter",
+    "pocket": 2
+   },
+   {
+    "name": "T3",
+    "label": "Ø16 平銑刀",
+    "diameter": 16,
+    "length": 105,
+    "flute": 35,
+    "inSpindle": false,
+    "holder": "Tool3_Holder",
+    "cutter": "Tool3_Cutter",
+    "pocket": 3
+   },
+   {
+    "name": "T4",
+    "label": "Ø8 鑽頭",
+    "diameter": 8,
+    "length": 110,
+    "flute": 45,
+    "inSpindle": false,
+    "holder": "Tool4_Holder",
+    "cutter": "Tool4_Cutter",
+    "pocket": 4
+   },
+   {
+    "name": "T5",
+    "label": "Ø50 面銑刀",
+    "diameter": 50,
+    "length": 80,
+    "flute": 8,
+    "inSpindle": false,
+    "holder": "Tool5_Holder",
+    "cutter": "Tool5_Cutter",
+    "pocket": 5
+   },
+   {
+    "name": "T6",
+    "label": "Ø4 平銑刀",
+    "diameter": 4,
+    "length": 90,
+    "flute": 12,
+    "inSpindle": false,
+    "holder": "Tool6_Holder",
+    "cutter": "Tool6_Cutter",
+    "pocket": 6
+   },
+   {
+    "name": "T7",
+    "label": "Ø12 平銑刀",
+    "diameter": 12,
+    "length": 100,
+    "flute": 30,
+    "inSpindle": false,
+    "holder": "Tool7_Holder",
+    "cutter": "Tool7_Cutter",
+    "pocket": 7
+   },
+   {
+    "name": "T8",
+    "label": "Ø20 平銑刀",
+    "diameter": 20,
+    "length": 100,
+    "flute": 35,
+    "inSpindle": false,
+    "holder": "Tool8_Holder",
+    "cutter": "Tool8_Cutter",
+    "pocket": 8
+   },
+   {
+    "name": "T9",
+    "label": "Ø3 中心鑽",
+    "diameter": 3,
+    "length": 85,
+    "flute": 6,
+    "inSpindle": false,
+    "holder": "Tool9_Holder",
+    "cutter": "Tool9_Cutter",
+    "pocket": 9
+   },
+   {
+    "name": "T10",
+    "label": "Ø25 平銑刀",
+    "diameter": 25,
+    "length": 95,
+    "flute": 30,
+    "inSpindle": false,
+    "holder": "Tool10_Holder",
+    "cutter": "Tool10_Cutter",
+    "pocket": 10
+   }
+  ],
+  "stockSize": [
+   160.0,
+   120.0,
+   40.0
+  ],
+  "stockOrigin": [
+   0.0,
+   70.0,
+   -0.0
+  ],
+  "stockCell": 1.5,
+  "changeZ": 0,
+  "spindle": "M_Spindle",
+  "carousel": "",
+  "zAxis": "M_AxisZ",
+  "arm": "",
+  "release": "",
+  "lockPin": "",
+  "manualSelect": "Q_ToolSelect",
+  "resetStock": "Q_ResetStock",
+  "resetAlarm": "Q_ResetAlarm",
+  "toolSensor": "B_Tool",
+  "alarmSensor": "B_Alarm",
+  "volumeSensor": "B_CutVolume",
+  "fixture": "Fixture",
+  "spindleNode": "Spindle",
+  "carouselNode": "",
+  "stockMaterialMesh": "Stock"
+ },
+ "travel": {
+  "X": [
+   -381,
+   381
+  ],
+  "Y": [
+   -203,
+   203
+  ],
+  "Z": [
+   -508,
+   0
+  ]
+ },
+ "camera": [
+  20,
+  145
+ ],
+ "pivots": [
+  {
+   "mesh": "Pendant",
+   "p": [
+    854.05,
+    541.8,
+    750.45
+   ]
+  },
+  {
+   "mesh": "Head",
+   "p": [
+    0.0,
+    610.0,
+    -0.0
+   ]
+  },
+  {
+   "mesh": "Spindle",
+   "p": [
+    0.0,
+    670.5,
+    -0.0
+   ]
+  },
+  {
+   "mesh": "Table",
+   "p": [
+    0.0,
+    0.0,
+    -0.0
+   ]
+  },
+  {
+   "mesh": "Saddle",
+   "p": [
+    3.449999999999932,
+    -198.25,
+    -0.0
+   ]
+  },
+  {
+   "mesh": "Riser",
+   "p": [
+    0.0,
+    70.0,
+    -0.0
+   ]
+  }
+ ]
+}

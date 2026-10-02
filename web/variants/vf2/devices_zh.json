@@ -1,0 +1,154 @@
+{
+ "source": "Autodesk Fusion Machine Library：Haas VF-2 模擬模型（haas vf-2.f3d）",
+ "groups": {
+  "FG_VF2": "Haas VF-2 立式加工中心"
+ },
+ "devices": {
+  "MAIN.FG_VF2.M_AxisX": {
+   "type": "FB_Drive",
+   "group": "FG_VF2",
+   "module": "FG_VF2",
+   "groupLabel": "Haas VF-2 立式加工中心",
+   "role": "位置控制伺服（DrivePosition）。",
+   "name": "M_AxisX",
+   "scenePath": "Project/FG_VF2/M_AxisX",
+   "label": "X 軸 · 工作台左右",
+   "function": "移動工作台左右（.mch 的方向 -X：X 增加工作台往左，刀具相對工件往右）。行程 762 mm（30 吋）。",
+   "signal": "ControlData（%QD）寫目標位置 mm；StatusData（%ID）回報目前位置。行程 -381～381，速度上限 300 mm/s。",
+   "caution": "機械座標；G-code 的工件座標 X0 在素材中心，數值相同。",
+   "range": [
+    -381,
+    381
+   ]
+  },
+  "MAIN.FG_VF2.M_AxisY": {
+   "type": "FB_Drive",
+   "group": "FG_VF2",
+   "module": "FG_VF2",
+   "groupLabel": "Haas VF-2 立式加工中心",
+   "role": "位置控制伺服（DrivePosition）。",
+   "name": "M_AxisY",
+   "scenePath": "Project/FG_VF2/M_AxisY",
+   "label": "Y 軸 · 鞍座前後",
+   "function": "移動鞍座（連同工作台）前後。Y 增加工作台往操作員這邊，刀具相對工件往立柱。行程 406 mm（16 吋）。",
+   "signal": "ControlData（%QD）寫目標位置 mm；StatusData（%ID）回報目前位置。行程 -203～203。",
+   "caution": "工件座標 Y0 在素材中心。",
+   "range": [
+    -203,
+    203
+   ]
+  },
+  "MAIN.FG_VF2.M_AxisZ": {
+   "type": "FB_Drive",
+   "group": "FG_VF2",
+   "module": "FG_VF2",
+   "groupLabel": "Haas VF-2 立式加工中心",
+   "role": "位置控制伺服（DrivePosition）。",
+   "name": "M_AxisZ",
+   "scenePath": "Project/FG_VF2/M_AxisZ",
+   "label": "Z 軸 · 主軸頭升降",
+   "function": "主軸頭上下。0＝最上面，往下為負，行程 508 mm（20 吋）。Z＝0 時主軸鼻端離工作台面 610 mm。",
+   "signal": "ControlData（%QD）寫目標位置 mm；StatusData（%ID）回報目前位置。",
+   "caution": "主軸鼻端的機械座標，不是刀尖：工件座標 Z0（素材上表面）對應的機械 Z＝刀長 - 500。",
+   "range": [
+    -508,
+    0
+   ]
+  },
+  "MAIN.FG_VF2.M_Spindle": {
+   "type": "FB_Drive",
+   "group": "FG_VF2",
+   "module": "FG_VF2",
+   "groupLabel": "Haas VF-2 立式加工中心",
+   "role": "速度控制驅動（DriveSpeed）。",
+   "name": "M_Spindle",
+   "scenePath": "Project/FG_VF2/M_Spindle",
+   "label": "主軸馬達",
+   "function": "主軸轉速。正值＝順時針（M3），負值＝逆時針（M4），0＝停（M5）。",
+   "signal": "ControlData（%QD）寫目標轉速 rpm；StatusData（%ID）回報目前轉速。",
+   "caution": "沒轉就切入工件會撞刀（警報 10）。"
+  },
+  "MAIN.FG_VF2.Q_ToolSelect": {
+   "type": "FB_Drive",
+   "group": "FG_VF2",
+   "module": "FG_VF2",
+   "groupLabel": "Haas VF-2 立式加工中心",
+   "role": "位置控制伺服（DrivePosition）。",
+   "name": "Q_ToolSelect",
+   "scenePath": "Project/FG_VF2/Q_ToolSelect",
+   "label": "手動換刀 · 選刀",
+   "function": "這個模型沒有刀庫：寫入刀號（1～10），主軸停著時就換上那支刀（操作員手動換刀）；0＝卸刀。",
+   "signal": "ControlData（%QD）寫刀號。",
+   "caution": "主軸旋轉中換刀是警報 14；cnc.py 的 tool_change() 會先停主軸、Z 回到最上面。",
+   "range": [
+    0,
+    10
+   ]
+  },
+  "MAIN.FG_VF2.Q_ResetStock": {
+   "type": "FB_Lamp",
+   "group": "FG_VF2",
+   "module": "FG_VF2",
+   "groupLabel": "Haas VF-2 立式加工中心",
+   "role": "數位輸出（一個位元）。",
+   "name": "Q_ResetStock",
+   "scenePath": "Project/FG_VF2/Q_ResetStock",
+   "label": "換新素材",
+   "function": "上升緣時把工件換成一塊新的 160 × 120 × 40 mm 素材，切削體積歸零。",
+   "signal": "Control bit0。",
+   "caution": "cnc.py 的 new_stock()。"
+  },
+  "MAIN.FG_VF2.Q_ResetAlarm": {
+   "type": "FB_Lamp",
+   "group": "FG_VF2",
+   "module": "FG_VF2",
+   "groupLabel": "Haas VF-2 立式加工中心",
+   "role": "數位輸出（一個位元）。",
+   "name": "Q_ResetAlarm",
+   "scenePath": "Project/FG_VF2/Q_ResetAlarm",
+   "label": "警報重置",
+   "function": "上升緣時清除警報。",
+   "signal": "Control bit0。",
+   "caution": "cnc.py 的 reset_alarm()。"
+  },
+  "MAIN.FG_VF2.B_Tool": {
+   "type": "FB_SensorAnalog",
+   "group": "FG_VF2",
+   "module": "FG_VF2",
+   "groupLabel": "Haas VF-2 立式加工中心",
+   "role": "類比量測（SensorAnalog），孿生計算後回報。",
+   "name": "B_Tool",
+   "scenePath": "Project/FG_VF2/B_Tool",
+   "label": "主軸上的刀號",
+   "function": "目前在主軸上的刀號（1～10），0＝沒有刀。",
+   "signal": "StatusData（%ID，REAL）。",
+   "caution": "開機時是 T1。"
+  },
+  "MAIN.FG_VF2.B_Alarm": {
+   "type": "FB_SensorAnalog",
+   "group": "FG_VF2",
+   "module": "FG_VF2",
+   "groupLabel": "Haas VF-2 立式加工中心",
+   "role": "類比量測（SensorAnalog），孿生計算後回報。",
+   "name": "B_Alarm",
+   "scenePath": "Project/FG_VF2/B_Alarm",
+   "label": "警報碼",
+   "function": "0＝正常。10 主軸沒轉就切削、11 切深超過刃長、12 撞到治具、13 主軸沒刀撞到工件、14 主軸旋轉中手動換刀。",
+   "signal": "StatusData（%ID，REAL）。第一個警報保持到 Q_ResetAlarm。",
+   "caution": "孿生不會自動停機：控制程式要讀這個值自己停。"
+  },
+  "MAIN.FG_VF2.B_CutVolume": {
+   "type": "FB_SensorAnalog",
+   "group": "FG_VF2",
+   "module": "FG_VF2",
+   "groupLabel": "Haas VF-2 立式加工中心",
+   "role": "類比量測（SensorAnalog），孿生計算後回報。",
+   "name": "B_CutVolume",
+   "scenePath": "Project/FG_VF2/B_CutVolume",
+   "label": "切削體積",
+   "function": "到目前為止切掉的體積（cm³），換新素材時歸零。",
+   "signal": "StatusData（%ID，REAL）。",
+   "caution": "以 1.5 mm 的網格估算。"
+  }
+ }
+}

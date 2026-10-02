@@ -1,4 +1,4 @@
-"""機台列表頁：四張卡片、縮圖載得到、篩選、點「進入」進得去機台而且 3D 載得起來、機台頁的「所有機台」回得來、
+"""機台列表頁：五張卡片、縮圖載得到、篩選、點「進入」進得去機台而且 3D 載得起來、機台頁的「所有機台」回得來、
 舊網址（?ws=、/registers.html）轉到產線、手機寬度沒有水平捲動。
 
     python e2e_gallery.py https://dt.qianpro.shop/
@@ -9,6 +9,7 @@ import time
 from playwright.sync_api import sync_playwright
 
 base = sys.argv[1].rstrip("/") + "/"
+N = 6   # 產線、雙軸模組、三軸龍門、並聯機器人、立式加工中心、Haas VF-2
 results = []
 
 
@@ -25,12 +26,15 @@ with sync_playwright() as p:
     pg.on("pageerror", lambda e: errs.append(str(e)))
     pg.goto(base, wait_until="networkidle")
     titles = pg.evaluate("[...document.querySelectorAll('.card h2')].map(h => h.textContent)")
-    check(len(titles) == 4, f"四張機台卡片：{titles}")
+    check(len(titles) == N, f"{N} 張機台卡片：{titles}")
     loaded = pg.evaluate("[...document.querySelectorAll('.card img')].map(i => i.complete && i.naturalWidth > 0)")
-    check(all(loaded) and len(loaded) == 4, f"縮圖都載得到 {loaded}")
+    check(all(loaded) and len(loaded) == N, f"縮圖都載得到 {loaded}")
     pg.click("button[data-f=sync]")
     shown = pg.evaluate("[...document.querySelectorAll('.card')].filter(c => !c.hidden).map(c => c.querySelector('h2').textContent)")
     check(shown == ["三軸龍門"], f"篩選「同步軸」只剩 {shown}")
+    pg.click("button[data-f=cnc]")
+    shown = pg.evaluate("[...document.querySelectorAll('.card')].filter(c => !c.hidden).map(c => c.querySelector('h2').textContent)")
+    check(shown == ["立式加工中心（CNC）", "Haas VF-2 立式加工中心"], f"篩選「CNC 加工」只剩 {shown}")
     pg.click("button[data-f=all]")
     pg.screenshot(path="e2e_gallery_desktop.png", full_page=True)
 
@@ -40,7 +44,7 @@ with sync_playwright() as p:
     check(pg.inner_text("#site-title") == "六軸並聯機器人", "點「進入」→ 機器人頁，3D 與 Python 都就緒")
     pg.click("#other-site")
     pg.wait_for_url(base, timeout=20000)
-    check(pg.locator(".card").count() == 4, "機台頁的「所有機台」回到列表")
+    check(pg.locator(".card").count() == N, "機台頁的「所有機台」回到列表")
 
     pg.goto(base + "?ws=ws://127.0.0.1:8765")
     pg.wait_for_url(lambda u: "/line/?ws=" in u, wait_until="commit", timeout=15000)   # 產線頁要載 Unity，不等 load

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using OC.Communication;
 using OC.Components;
+using OC.Interactions;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
 using UnityEditor.SceneManagement;
@@ -21,24 +22,39 @@ namespace PythonLink.Editor
     ///
     /// twin.json：
     ///   name、root（Hierarchy 名稱，PLC 路徑 MAIN.root.裝置）、model（Assets/name/Models/model.fbx）
-    ///   devices  [{name, type: DrivePosition|DriveSimple|Cylinder|SensorBinary|SensorAnalog, mesh?, meshes?[], speed?, parent?}]
-    ///            meshes：同一個裝置的其他模型（同步軸的第二顆馬達）
+    ///   devices  [{name, type: DrivePosition|DriveSpeed|DriveSimple|Cylinder|SensorBinary|SensorAnalog|Lamp, mesh?, meshes?[], speed?, accel?, time?, parent?}]
+    ///            meshes：同一個裝置的其他模型（同步軸的第二顆馬達）；speed：DrivePosition 的速度；accel：DriveSpeed 的加速度；
+    ///            time：Cylinder 伸出／縮回各要幾秒
     ///   statics  [{name, mesh?, parent?}]                固定件；沒有 mesh 就是空的群組節點
     ///   axes     [{name, mesh, actor, type: translation|rotation, dir[3], factor, offset, parent?}]
-    ///            translation：位移（m）=（程式給的值 + offset）× factor，沿 dir；rotation：角度（度）= 值 × factor，繞 dir
+    ///            translation：位移（m）=（程式給的值 + offset）× factor，沿 dir；rotation：角度（度）=（值 + offset）× factor，繞 dir
+    ///            mode：position（預設）或 speed（值是速度，例如主軸轉速 × factor＝度／秒）
+    ///            Unity 是左手座標：rotation 的正角度，從 dir 的箭頭往回看是順時針（CAD 的右手定則是逆時針）
     ///   free     [{name, mesh, parent?}]                 由自訂元件擺放（例如並聯機構的連桿、平台）
     ///   custom   {type: PythonLink.ParallelRobot6, …}    閉鏈機構的運動學元件
+    ///            {type: PythonLink.VmcToolChanger, …}    加工中心的換刀＋切削（BuildVmc）
     ///   pivots   [{mesh, p[3]}]                          模型原點的 CAD 座標，用來確認 CAD→Unity 的軸向
+    ///   camera   [俯角, 方位角]                           開場鏡頭（度，Unity 的 Euler X、Y），預設 [24, -35]；機台正面朝另一邊時改方位角
     /// parent 可以是另一個 axis 的名稱（串接：掛在它底下一起動），省略就放在 root。
     /// </summary>
     public static class TwinBuild
     {
-        [Serializable] private class Spec { public string name, root, model; public Device[] devices; public Part[] statics, free; public AxisSpec[] axes; public Custom custom; public Pivot[] pivots; }
-        [Serializable] private class Device { public string name, type, mesh, parent; public float speed; public string[] meshes; }
+        [Serializable] private class Spec { public string name, root, model; public Device[] devices; public Part[] statics, free; public AxisSpec[] axes; public Custom custom; public Pivot[] pivots; public float[] camera; }
+        [Serializable] private class Device { public string name, type, mesh, parent; public float speed, accel, time; public string[] meshes; }
         [Serializable] private class Part { public string name, mesh, parent; }
-        [Serializable] private class AxisSpec { public string name, mesh, actor, type, parent; public float[] dir; public float factor, offset; }
+        [Serializable] private class AxisSpec { public string name, mesh, actor, type, parent, mode; public float[] dir; public float factor, offset; }
         [Serializable] private class Pivot { public string mesh; public float[] p; }
-        [Serializable] private class Custom { public string type, platform; public float rodLength; public float[] platformCenter; public LegSpec[] legs; public string[] pose; }
+        [Serializable] private class Custom
+        {
+            public string type, platform; public float rodLength; public float[] platformCenter; public LegSpec[] legs; public string[] pose;
+            // VmcToolChanger
+            public float[] spindleGauge, stockSize, stockOrigin; public float stockCell, changeZ;
+            public PocketSpec[] pocketList; public ToolSpec[] toolList;
+            public string spindle, carousel, zAxis, arm, release, lockPin, resetStock, resetAlarm, toolSensor, alarmSensor, volumeSensor,
+                fixture, spindleNode, carouselNode, stockMaterialMesh, manualSelect;
+        }
+        [Serializable] private class PocketSpec { public float[] p; }
+        [Serializable] private class ToolSpec { public string name, label, holder, cutter; public float diameter, length, flute; public int pocket; public bool inSpindle; }
         [Serializable] private class LegSpec { public string carriage, rod; public float[] bottom, top, u; public float home, travel; }
 
         public static void BuildFromCommandLine()
@@ -109,18 +125,24 @@ namespace PythonLink.Editor
                     Component c = dd.type switch
                     {
                         "DrivePosition" => go.AddComponent<DrivePosition>(),
+                        "DriveSpeed" => go.AddComponent<DriveSpeed>(),
                         "DriveSimple" => go.AddComponent<DriveSimple>(),
+                        "Lamp" => go.AddComponent<Lamp>(),
                         "Cylinder" => go.AddComponent<Cylinder>(),
                         "SensorBinary" => go.AddComponent<SensorBinary>(),
                         "SensorAnalog" => go.AddComponent<SensorAnalog>(),
                         _ => throw new Exception($"不支援的裝置類型 {dd.type}"),
                     };
-                    if (dd.speed > 0)
+                    void SetProp(string prop, float value)
                     {
                         var so = new SerializedObject(c);
-                        var v = so.FindProperty("_speed")?.FindPropertyRelative("_value");
-                        if (v != null) { v.floatValue = dd.speed; so.ApplyModifiedPropertiesWithoutUndo(); }
+                        var v = so.FindProperty(prop)?.FindPropertyRelative("_value");
+                        if (v != null) { v.floatValue = value; so.ApplyModifiedPropertiesWithoutUndo(); }
+                        else Debug.LogWarning($"[PythonLink] {dd.name} 沒有 {prop}");
                     }
+                    if (dd.speed > 0) SetProp("_speed", dd.speed);
+                    if (dd.accel > 0) SetProp("_acceleration", dd.accel);
+                    if (dd.time > 0) { SetProp("_timeToMin", dd.time); SetProp("_timeToMax", dd.time); }
                     if (!string.IsNullOrEmpty(dd.mesh)) Mesh(dd.mesh).SetParent(go.transform, true);   // 馬達模型放在裝置底下：高亮、點選對得到
                     // 同步軸（例如龍門的 Y1、Y2 共用一個伺服）的其他馬達：固定在原位，不跟著裝置物件走
                     foreach (var extra in dd.meshes ?? Array.Empty<string>())
@@ -163,7 +185,7 @@ namespace PythonLink.Editor
                     so.FindProperty("_actor").objectReferenceValue = actors[aa.actor];
                     so.FindProperty("_type").enumValueIndex = (int)(aa.type == "rotation" ? AxisType.Rotation : AxisType.Translation);
                     so.FindProperty("_direction").enumValueIndex = (int)AxisDirection.Z;
-                    so.FindProperty("_controlMode").enumValueIndex = (int)AxisControlMode.Position;
+                    so.FindProperty("_controlMode").enumValueIndex = (int)(aa.mode == "speed" ? AxisControlMode.Speed : AxisControlMode.Position);
                     so.FindProperty("_factor").floatValue = aa.factor;
                     so.FindProperty("_offset").floatValue = aa.offset;
                     so.ApplyModifiedPropertiesWithoutUndo();
@@ -185,9 +207,10 @@ namespace PythonLink.Editor
             }
 
             if (spec.custom != null && spec.custom.type == "PythonLink.ParallelRobot6") BuildParallelRobot(spec, root, nodes, actors, Point, sign);
+            if (spec.custom != null && spec.custom.type == "PythonLink.VmcToolChanger") BuildVmc(spec, root, nodes, actors, Mesh, Point);
 
             Object.DestroyImmediate(model);
-            FrameCamera(root.gameObject);
+            FrameCamera(root.gameObject, spec.camera);
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
             AssetDatabase.SaveAssets();
@@ -256,7 +279,71 @@ namespace PythonLink.Editor
             Debug.Log($"[PythonLink] ParallelRobot6：{c.legs.Length} 支腳、連桿 {c.rodLength} mm、平台原點 {platform.position}");
         }
 
-        private static void FrameCamera(GameObject target)
+        /// <summary>
+        /// 加工中心：主軸鼻端與刀位的基準點、把每支刀的刀把＋刀身包成一個物件、在治具上放工件。
+        /// 基準點的世界方向不轉（刀具對稱，只看位置），刀位掛在刀庫軸底下跟著轉、主軸鼻端掛在主軸底下。
+        /// </summary>
+        private static void BuildVmc(Spec spec, Transform root, Dictionary<string, Transform> nodes,
+            Dictionary<string, Component> actors, Func<string, Transform> mesh, Func<float[], Vector3> point)
+        {
+            var c = spec.custom;
+            Transform Anchor(string name, Transform parent, Vector3 position)
+            {
+                var t = new GameObject(name).transform;
+                t.SetParent(parent, false);
+                t.SetPositionAndRotation(position, Quaternion.identity);
+                return t;
+            }
+            var changer = root.gameObject.AddComponent<VmcToolChanger>();
+            changer.spindleGauge = Anchor("SpindleGauge", nodes[c.spindleNode], point(c.spindleGauge));
+            changer.pockets = (c.pocketList ?? Array.Empty<PocketSpec>())
+                .Select((p, i) => Anchor($"Pocket{i + 1}", nodes[c.carouselNode], point(p.p))).ToArray();
+            var tools = new GameObject("Tools").transform;
+            tools.SetParent(root, false);
+            changer.tools = c.toolList.Select(t =>
+            {
+                var holder = mesh(t.holder);
+                var go = new GameObject($"Tool_{t.name}").transform;
+                go.SetParent(tools, false);
+                go.SetPositionAndRotation(holder.position, Quaternion.identity);
+                holder.SetParent(go, true);
+                mesh(t.cutter).SetParent(go, true);
+                return new VmcToolChanger.Tool
+                {
+                    name = t.name, label = t.label, transform = go, diameter = t.diameter, length = t.length, flute = t.flute,
+                    home = t.pocket - 1, inSpindle = t.inSpindle,
+                };
+            }).ToArray();
+            changer.changeZ = c.changeZ;
+            T Actor<T>(string n) where T : Component => string.IsNullOrEmpty(n) ? null : (T)actors[n];
+            changer.spindle = Actor<DriveSpeed>(c.spindle);
+            changer.carousel = Actor<DrivePosition>(c.carousel);
+            changer.zAxis = Actor<DrivePosition>(c.zAxis);
+            changer.arm = Actor<Cylinder>(c.arm);
+            changer.release = Actor<Cylinder>(c.release);
+            changer.lockPin = Actor<Cylinder>(c.lockPin);
+            changer.manualSelect = Actor<DrivePosition>(c.manualSelect);
+            changer.resetAlarm = (Lamp)actors[c.resetAlarm];
+            changer.toolSensor = (SensorAnalog)actors[c.toolSensor];
+            changer.alarmSensor = (SensorAnalog)actors[c.alarmSensor];
+
+            var fixture = nodes[c.fixture];
+            var wp = new GameObject("Workpiece");
+            wp.transform.SetParent(fixture, false);
+            wp.transform.SetPositionAndRotation(point(c.stockOrigin), Quaternion.identity);
+            wp.AddComponent<MeshFilter>();
+            var renderer = wp.AddComponent<MeshRenderer>();
+            renderer.sharedMaterial = mesh(c.stockMaterialMesh).GetComponent<MeshRenderer>().sharedMaterial;
+            var piece = wp.AddComponent<VmcWorkpiece>();
+            piece.changer = changer;
+            piece.size = new Vector3(c.stockSize[0], c.stockSize[2], c.stockSize[1]) * 0.001f;
+            piece.cell = c.stockCell * 0.001f;
+            piece.resetStock = (Lamp)actors[c.resetStock];
+            piece.volumeSensor = (SensorAnalog)actors[c.volumeSensor];
+            Debug.Log($"[PythonLink] VMC：{changer.pockets.Length} 刀位、{changer.tools.Length} 支刀，主軸鼻端 {changer.spindleGauge.position}，工件 {piece.size}");
+        }
+
+        private static void FrameCamera(GameObject target, float[] angles = null)
         {
             var renderers = target.GetComponentsInChildren<Renderer>();
             if (renderers.Length == 0) return;
@@ -265,7 +352,7 @@ namespace PythonLink.Editor
             var cam = Object.FindAnyObjectByType<OC.UI.CameraController>();
             if (cam == null) return;
             var distance = Mathf.Max(bounds.extents.magnitude * 1.9f, 0.5f);
-            var rot = Quaternion.Euler(24f, -35f, 0f);
+            var rot = angles != null && angles.Length >= 2 ? Quaternion.Euler(angles[0], angles[1], 0f) : Quaternion.Euler(24f, -35f, 0f);
             cam.transform.SetPositionAndRotation(bounds.center - rot * Vector3.forward * distance, rot);
             var so = new SerializedObject(cam);
             so.FindProperty("_distance").floatValue = distance;

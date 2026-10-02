@@ -1,0 +1,109 @@
+# twin_vmc.hal — 取代 LinuxCNC 範例 VMC_toolchange 的 sim_vmc.hal：機台換成網頁上的數位孿生
+#   https://dt.qianpro.shop/vmc/?ws=ws://127.0.0.1:8765
+#
+# sim_vmc.hal 在 HAL 裡模擬整台機台（換刀臂、拉刀桿、鎖銷的位置與極限開關）並開 vismach 的 3D 畫面；
+# 這裡把那些交給孿生：電磁閥命令送給孿生的氣缸，極限開關讀孿生的感測器。
+# 留在 HAL 裡的：軸的極限開關（由位置命令算）、刀庫馬達＋index／pulse 編碼器、主軸轉速與角度（M19 定位用）。
+# 孿生發警報（撞刀、扯刀……）→ dtvmc.ok 變 0 → LinuxCNC E-stop。
+#
+# 改寫自 LinuxCNC configs/sim/axis/vismach/VMC_toolchange/sim_vmc.hal（GPL-2.0-or-later）。
+# 型別轉換元件用 2.9 的名稱（conv_float_s32、conv_s32_float）；2.10 以後改名，setup.sh 會自動換。
+
+loadusr -Wn dtvmc python3 ./dtvmc.py
+
+loadrt wcomp names=xlim,ylim,zlim
+loadrt mux2 names=mux2.0
+loadrt sum2 names=carpos,spindlepos
+loadrt limit2 names=spindlelim,carlim
+loadrt and2 names=twin-estop
+
+addf xlim servo-thread
+addf ylim servo-thread
+addf zlim servo-thread
+addf carpos servo-thread
+addf carlim servo-thread
+addf twin-estop servo-thread
+
+# ── 軸：位置命令 → 孿生；極限開關照 sim_vmc.hal 由位置算 ──
+setp xlim.max 301
+setp xlim.min -301
+setp ylim.max 101
+setp ylim.min -101
+setp zlim.max 1
+setp zlim.min -401
+net x-pos-lim xlim.over
+net x-neg-lim xlim.under
+net y-pos-lim ylim.over
+net y-neg-lim ylim.under
+net z-pos-lim zlim.over
+net z-neg-lim zlim.under
+net x-pos xlim.in dtvmc.x
+net y-pos ylim.in dtvmc.y
+net z-pos zlim.in dtvmc.z
+
+# ── 換刀臂、拉刀桿、刀庫鎖銷：孿生的氣缸 ──
+net arm-act dtvmc.arm-act
+net arm-in dtvmc.arm-in
+net arm-out dtvmc.arm-out
+net tool-release dtvmc.tool-release
+net tool-released dtvmc.tool-released
+net tool-locked dtvmc.tool-locked
+net car-lock dtvmc.car-lock
+net car-locked dtvmc.car-locked
+
+# ── 刀庫：馬達＋編碼器留在 HAL（index／pulse 是毫秒級脈波），位置鏡射給孿生 ──
+setp carlim.maxv 0.01
+net car-vel carlim.in
+net car-vel-lim carlim.out carpos.in0
+net car-pos carpos.out carpos.in1 dtvmc.car-pos
+loadrt conv_s32_float count=2
+loadrt conv_float_s32 count=3
+loadrt near count=3
+loadrt scale
+addf conv-s32-float.0 servo-thread
+addf conv-float-s32.0 servo-thread
+addf conv-s32-float.1 servo-thread
+addf conv-float-s32.1 servo-thread
+addf scale.0 servo-thread
+addf near.1 servo-thread
+addf near.2 servo-thread
+net car-pos conv-float-s32.0.in
+net car-pos-int conv-float-s32.0.out conv-s32-float.0.in
+net car-pos-float conv-s32-float.0.out near.1.in2
+net car-pos near.1.in1
+net pulse near.1.out
+setp near.1.difference 0.01
+setp scale.0.gain 0.1
+setp scale.0.offset -1
+net car-pos scale.0.in
+net car-pos-div10 scale.0.out conv-float-s32.1.in
+net car-pos-div10-int conv-float-s32.1.out conv-s32-float.1.in
+net car-pos-div10-float conv-s32-float.1.out near.2.in2
+net car-pos-div10 near.2.in1
+net index near.2.out
+setp near.2.difference 0.009
+
+# ── 主軸：轉速與角度在 HAL（M19 定位要角度回授），轉速送給孿生 ──
+addf spindlepos servo-thread
+addf spindlelim servo-thread
+setp spindlelim.max 10000
+setp spindlelim.min -10000
+setp spindlelim.maxv 4000
+net spindle-cmd spindlelim.in
+net spindle-vel spindlelim.out spindlepos.in0 dtvmc.spindle-vel
+setp spindlepos.gain0 .00001666
+setp spindlepos.in1 0
+net spindle-pos spindlepos.out spindlepos.in1
+net orient-mode dtvmc.orient                      # M19 定位中：孿生不跟著轉（spindle.hal 定義的訊號）
+
+# ── E-stop 鏈：孿生沒連上或有警報就不能啟動；解除 E-stop 時順便清除孿生警報 ──
+unlinkp iocontrol.0.emc-enable-in
+net estop-loop twin-estop.in0
+net twin-ok dtvmc.ok twin-estop.in1
+net estop-chain twin-estop.out iocontrol.0.emc-enable-in
+loadrt oneshot names=twin-reset
+addf twin-reset servo-thread
+setp twin-reset.width 0.5
+setp twin-reset.retriggerable 1
+net estop-request iocontrol.0.user-request-enable twin-reset.in
+net twin-reset-pulse twin-reset.out dtvmc.reset-request

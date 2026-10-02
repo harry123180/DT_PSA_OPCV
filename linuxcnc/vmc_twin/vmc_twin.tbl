@@ -1,0 +1,10 @@
+T1 P1 D10.000 Z100.000 ;D10 flat end mill, flute 30
+T2 P2 D6.000 Z95.000 ;D6 flat end mill, flute 20
+T3 P3 D16.000 Z105.000 ;D16 flat end mill, flute 35
+T4 P4 D8.000 Z110.000 ;D8 drill, flute 45
+T5 P5 D50.000 Z80.000 ;D50 face mill, flute 8
+T6 P6 D4.000 Z90.000 ;D4 flat end mill, flute 12
+T7 P7 D12.000 Z100.000 ;D12 flat end mill, flute 30
+T8 P8 D20.000 Z100.000 ;D20 flat end mill, flute 35
+T9 P9 D3.000 Z85.000 ;D3 center drill, flute 6
+T10 P10 D25.000 Z95.000 ;D25 flat end mill, flute 30

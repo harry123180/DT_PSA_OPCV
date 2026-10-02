@@ -61,3 +61,12 @@ build_xyz.log
 python/e2e_gallery_*.png
 python/gallery_*.png
 python/thumb*.png
+Unity/Assets/VMC/Models/VMC.fbx*
+Unity/Assets/VMC/VC_VMC.unity*
+build_vmc.log
+Unity/Assets/HaasVF2/Models/HaasVF2.fbx*
+Unity/Assets/HaasVF2/VC_HaasVF2.unity*
+build_vf2.log
+python/vmc_*.png
+python/vf2_*.png
+python/lcnc_*.png

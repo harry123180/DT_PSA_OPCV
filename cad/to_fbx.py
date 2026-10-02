@@ -7,6 +7,7 @@
   再用預設軸向匯出；Unity 讀進來就是 Y 朝上
 - 原點：pivots.json 指定的點（CAD 座標 mm）；沒指定的放在包圍盒中心
 - 材質依名稱：含 Motor → 深色；含 Screw／Rod → 鋼色；其他 → 鋁色。FBX 帶的是 Principled BSDF 底色
+  STL 目錄裡有 colors.json（{"網格名": [r, g, b]}）時，列在裡面的網格改用指定顏色
 - --max-tris：單一物件超過就用 Decimate（collapse）減到這個數（預設 40000）
 - 印出每個物件的三角面數、尺寸（公尺）、原點，並渲一張預覽圖：跑得過不代表長得對，要看圖
 """
@@ -22,6 +23,7 @@ src, out_fbx, out_png = argv[:3]
 up = argv[argv.index("--up") + 1] if "--up" in argv else "Y"
 max_tris = int(argv[argv.index("--max-tris") + 1]) if "--max-tris" in argv else 40000
 pivots = json.load(open(os.path.join(src, "pivots.json"))) if os.path.exists(os.path.join(src, "pivots.json")) else {}
+colors = json.load(open(os.path.join(src, "colors.json"))) if os.path.exists(os.path.join(src, "colors.json")) else {}
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
 
@@ -72,6 +74,12 @@ for f in sorted(os.listdir(src)):
         bpy.ops.object.modifier_apply(modifier=mod.name)
     bpy.ops.object.shade_auto_smooth(angle=0.6)
     kind = "motor" if "Motor" in name else "steel" if ("Screw" in name or "Rod" in name) else "body"
+    if name in colors:
+        rgb = tuple(colors[name])
+        key = "rgb_%.2f_%.2f_%.2f" % rgb
+        if key not in mats:
+            mats[key] = material(key, rgb, 0.3, 0.5)
+        kind = key
     ob.data.materials.append(mats[kind])
     for v in ob.bound_box:
         w = ob.matrix_world @ mathutils.Vector(v)
